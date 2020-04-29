@@ -95,6 +95,8 @@ function AppendBand() {
     var workflow = document.getElementById("workflow");
     workflow.appendChild(tile);
 
+    CreateManager(bandID);
+
     function UpdateBandStats() {
         bandInfo[bandID][3] = bandInfo[bandID][3] * bandCoeffs[bandID][0];
     }
@@ -103,7 +105,7 @@ function AppendBand() {
         bandGenreText.innerHTML = "Genre: " + bandInfo[bandID][1] + 
         "<br>Albums: " + bandInfo[bandID][2] + 
         "<br>Fans: " + bandInfo[bandID][3].toFixed(0);
-        bandPromoDataText.innerHTML = "Promo Points: " + bandPoints[bandID][0] +
+        bandPromoDataText.innerHTML = "Promo Points: " + bandPoints[bandID][0].toFixed(1) +
                                         "<br>Tours: " + bandPoints[bandID][1];
 
         if (bandInfo[bandID][3] >= 2 && 
