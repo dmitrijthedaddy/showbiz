@@ -116,3 +116,25 @@ function TheyGoAwayAlert(bandID) {
         $(theyGoAwayAlert).css("visibility", "hidden");
     }, 15000);
 }
+
+function RevivalAlert(bandID) {
+    var revivalAlert = document.createElement("div");
+    revivalAlert.className = "alert";
+
+    var alertHeader = document.createElement("p");
+    alertHeader.innerHTML = "Revival";
+    alertHeader.id = "alertheader";
+    revivalAlert.appendChild(alertHeader);
+
+    var alertContent = document.createElement("p");
+    alertContent.innerHTML = "You turned back " + bandInfo[bandID][0] + "'s fans " +
+                             "curiosity. Don't do bad things more!";
+    alertContent.id = "alertcontent";
+    revivalAlert.appendChild(alertContent);
+
+    notifications.appendChild(revivalAlert);
+
+    setTimeout(function() {
+        $(revivalAlert).css("visibility", "hidden");
+    }, 15000);
+}

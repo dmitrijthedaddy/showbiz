@@ -64,7 +64,7 @@ function AppendBand() {
         recordAlbumButton.onclick = function() {
             if (money >= recordAlbumPrice) {
                 money = money - recordAlbumPrice;
-                bandCoeffs[bandID][0] += 0.0002;
+                bandCoeffs[bandID][0] += 0.0005;
                 bandInfo[bandID][2]++;
                 bandPoints[bandID][0] += 4;     
                 recordAlbumPrice *= recordAlbumPriceInc;          
@@ -81,7 +81,7 @@ function AppendBand() {
         goTourButton.onclick = function() {
             if (money >= tourPrice) {
                 money = money - tourPriceInc;
-                bandCoeffs[bandID][0] += 0.0004;
+                bandCoeffs[bandID][0] += 0.0016;
                 bandPoints[bandID][1]++;
                 bandPoints[bandID][0] += 16;
                 tourPrice *= tourPriceInc;
@@ -117,7 +117,7 @@ function AppendBand() {
             !stillNoAlbumWarning) {
             StillNoAlbumAlert(bandID);
             coeffBuffer = bandCoeffs[bandID][0];
-            bandCoeffs[bandID][0] = 1.0005;
+            bandCoeffs[bandID][0] = 1.00001;
             stillNoAlbumWarning = true;
         }
 
@@ -128,6 +128,7 @@ function AppendBand() {
         if (bandInfo[bandID][2] >= 1 && stillNoAlbumWarning) {
             bandCoeffs[bandID][0] = coeffBuffer;
             stillNoAlbumWarning = false;
+            RevivalAlert(bandID);
         }
     }
 
