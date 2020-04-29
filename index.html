@@ -171,10 +171,10 @@
 
     </div>
     
-    <script src="band-engine.js"></script>
-    <script src="stuff.js"></script>
-    <script src="core.js"></script>
-    <script src="object-spawner.js"></script>
+    <script src="scripts/band-engine.js"></script>
+    <script src="scripts/stuff.js"></script>
+    <script src="scripts/core.js"></script>
+    <script src="scripts/object-spawner.js"></script>
     <script src="scripts/manager-engine.js"></script>
     <script>
       $(".dialog").draggable({
@@ -184,6 +184,8 @@
       $(".tile").draggable({
         revert: false
       });
+
+      CreateManager();
 
       setTimeout(NewbieAlert, 3000);
 
