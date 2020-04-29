@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>showbiz</title>
+    <meta content="">
+    <style>
+      body, html {
+        font-family: monospace;
+        margin: 0;
+        padding: 0;
+        background-color: rgb(131, 167, 235);
+      }
+      /* basic elements */
+      .toolbar {
+        padding: 10px;
+        width: 100%; height: fit-content;
+        background-color: cornflowerblue;
+        display: flex;
+      }
+      .workflow {
+        padding: 10px;
+        position: relative;
+        z-index: 1;
+      }
+
+      #workflow
+
+      .tile {
+        position: absolute;
+        margin: 10px;
+        padding: 10px;
+        color: azure;
+        width: 300px; height: 200px;
+        border: 2px groove purple;
+        background-color: rgb(145, 34, 145);
+        box-shadow: 5px 5px darkblue;
+        z-index: 0;
+      }
+
+      .notifications {
+        position: absolute;
+        padding: 5px;
+        width: 500px; height: 100%;
+        top: 20px;
+        left: 1200px;
+      }
+
+      #notifications
+
+      .alert {
+        position: absolute;
+        margin: 5px;
+        border: 5px groove darkgreen;
+        background-color: rgb(77, 202, 77);
+
+        box-shadow: 5px 5px midnightblue;
+      }
+
+      #alertheader {
+        font-size: x-large;
+        font-weight: bolder;
+        color: black;
+      }
+      
+      #alertcontent {
+        color: black;
+      }
+
+      #alertheader, #alertcontent {
+        padding: 5px;
+      }
+
+      /* tile section */
+      .tilebuttonsection {
+        position: absolute;
+        top: 90px;
+        left: 200px;
+        z-index: 1;
+      }
+
+      #tile
+
+      #tileheader {
+        font-size: x-large;
+      }
+
+      #tilebutton {
+        padding: 5px;
+        border: 1px groove rgb(43, 110, 235);
+        cursor: pointer;        
+      }
+
+      .dialog {
+        position: absolute;
+        width: 400px; height: 300px;
+        top: 300px; left: 700px;
+        border: 3px groove rgb(109, 79, 109);
+        background-color: plum;
+        visibility: hidden;
+        box-shadow: 5px 5px darkviolet ;
+        z-index: 999;
+      }
+
+      #dialog {
+        
+      }
+
+      /* toolbar section */
+      #createbandbutton, #moneyscreenbutton, #changespeedbutton {
+        padding: 5px;
+        margin: 5px;
+        width: 100px;
+        height: fit-content;
+        text-align: center;
+        border: 1px groove rgb(43, 110, 235);
+        cursor: pointer;
+      }
+
+      /* dialog section */
+      .dialogheader {
+        height: 20px;
+        background-color: rgb(214, 119, 214);
+        text-align: center;
+      }
+
+      #dialogheadercontent {
+        margin: 0; padding: 0;
+        font-weight: bold;
+      }
+
+      #dialogbutton {
+        position: absolute;
+        width: 100%;
+        bottom: 20px;
+        border: 1px groove rgb(109, 79, 109);
+        background-color: rgb(214, 119, 214);
+      }      
+    </style>
+
+    <script src="lib/jquery-3.4.1.min.js"></script>
+    <script src="lib/jquery-ui.min.js"></script>
+    
+  </head>
+  <body>
+    <div class="toolbar">    
+        <p id="createbandbutton" 
+          onmouseover="this.style.backgroundColor='red'"
+          onmouseout="this.style.backgroundColor=null"
+          onclick="createNewbandDialog()">Create artist
+        </p>
+        <p id="moneyscreenbutton" 
+          onmouseover="this.style.backgroundColor='red'"
+          onmouseout="this.style.backgroundColor=null">Money: $<span id="moneylong"></span>       
+        </p>
+    </div>
+    
+    <div class="workflow" id="workflow">
+
+    </div>
+
+    <div class="dialog" id="dialog">
+      <div class="dialogheader">
+        <p id="dialogheadercontent">Dialog Header</p>
+        <div id="dialogbutton" onmouseover="this.style.backgroundColor='red'"
+        onmouseout="this.style.backgroundColor=null"
+        onclick="AppendBand(); closeDialog()">OK</div>
+      </div>
+    </div>
+
+    <div class="notifications" id="notifications">
+
+    </div>
+    
+    <script src="band-engine.js"></script>
+    <script src="stuff.js"></script>
+    <script src="core.js"></script>
+    <script src="object-spawner.js"></script>    
+    <script>
+      $(".dialog").draggable({
+        revert: false
+      });
+
+      $(".tile").draggable({
+        revert: false
+      });
+
+      setTimeout(NewbieAlert, 3000);
+
+      function moneyUpdate() {
+        var moneyCond = document.getElementById("moneylong");
+        moneyCond.innerHTML = money.toFixed(0);
+      }
+
+      setInterval(moneyUpdate, 10);
+    </script>
+  </body>
+</html>
