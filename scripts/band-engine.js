@@ -13,8 +13,8 @@ function AppendBand() {
         revert: false
     });
     
-    totalBandCount++;
     var bandID = totalBandCount;
+    totalBandCount++;    
     bandInfo[bandID] = ["", genreName.value, defaultAlbumsCount, defaultFansCount];
     bandPoints[bandID] = [0, 0];
     bandCoeffs[bandID] = [1];
@@ -100,6 +100,8 @@ function AppendBand() {
     var workflow = document.getElementById("workflow");
     workflow.appendChild(tile);
 
+    isbandCreatingFinished = true;
+
     // CreateManager(bandID);
 
     function UpdateBandStats() {
@@ -113,14 +115,29 @@ function AppendBand() {
         bandPromoDataText.innerHTML = "Promo Points: " + bandPoints[bandID][0].toFixed(1) +
                                         "<br>Tours: " + bandPoints[bandID][1];
 
-        if (bandInfo[bandID][3] >= 2 && 
+        BandBasicEvents();
+    }
+
+    setInterval(function() {
+        localTimeSpeed = timeSpeed;
+    }, 10);
+
+    UpdateBandData();
+
+    setInterval(UpdateBandStats, localTimeSpeed);
+    setInterval(UpdateBandData, localTimeSpeed);   
+
+    function BandBasicEvents() {
+        // Go Social
+        if (bandInfo[bandID][3] >= 2 &&
             bandInfo[bandID][3] < 3 &&
             !goSocialAlertShown) {
             GoSocialAlert(bandID);
             goSocialAlertShown = true;
         }
 
-        if (bandInfo[bandID][2] == 0 && bandInfo[bandID][3] > 100 && 
+        // "Don't stick around" alert
+        if (bandInfo[bandID][2] == 0 && bandInfo[bandID][3] > 100 &&
             !stillNoAlbumWarning) {
             StillNoAlbumAlert(bandID);
             coeffBuffer = bandCoeffs[bandID][0];
@@ -128,26 +145,18 @@ function AppendBand() {
             stillNoAlbumWarning = true;
         }
 
+        // Fans reduce due to no album
         if (bandInfo[bandID][2] == 0 && bandInfo[bandID][3] > 500) {
             FansDisengage(bandID);
         }
 
+        // Fan stats revival
         if (bandInfo[bandID][2] >= 1 && stillNoAlbumWarning) {
-            bandCoeffs[bandID][0] = coeffBuffer;
+            bandCoeffs[bandID][0] = coeffBuffer / 4;
             stillNoAlbumWarning = false;
             RevivalAlert(bandID);
         }
     }
-
-    setInterval(function() {
-        localTimeSpeed = timeSpeed;
-    }, 10);
-
-    setInterval(UpdateBandStats, localTimeSpeed);
-    setInterval(UpdateBandData, localTimeSpeed);
-    closeDialog();
-
-    UpdateBandData();
 }
 
 function FansDisengage(bandID) {

@@ -3,6 +3,9 @@ var bandNameLabel = document.createElement("p");
 var genreName = document.createElement("input");
 var genreNameLabel = document.createElement("p");
 
+var dialog;
+var isbandCreatingFinished;
+
 function tileButtonHandler(event) {
     if (event.type == "mouseover") {
         event.target.style.background = "black"
@@ -21,9 +24,10 @@ $(".tile").draggable({
 })
 
 function createNewbandDialog() {
+    isbandCreatingFinished = false;
     $("#dialogheadercontent").text("Create new artist");
         
-    var dialog = document.getElementById("dialog");
+    dialog = document.getElementById("dialog");
     bandNameLabel.textContent = "Artist name ";
     genreNameLabel.textContent = "Genre ";
 
@@ -40,9 +44,8 @@ function createNewbandDialog() {
     $(".dialog").css("visibility", "visible");
 }
 
-
-
 function closeDialog() {
-    isbandCreatingFinished = true;
-    $(".dialog").css("visibility", "hidden");
+    if (isbandCreatingFinished) {
+        $(dialog).css("visibility", "hidden");
+    }
 }
