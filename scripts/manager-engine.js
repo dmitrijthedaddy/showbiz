@@ -51,9 +51,9 @@ function CreateManager(bandID) {
 
     setInterval(function() {
         managerText.innerHTML = "manages " + bandInfo[bandID][0] + "<br>" +
-                                "+" + managerCoeffs[managerID][0] + " per second<br>" +
+                                "+" + managerCoeffs[managerID][0] + " Promo Points per second<br>" +
                                 "-$" + managerCoeffs[managerID][1] + " per second";
         money -= managerCoeffs[managerID][1];
-        bandPoints[bandID][0] += managerCoeffs[managerID][0];
+        bandPoints[managerInfo[managerID][1]][0] += managerCoeffs[managerID][0];
     }, 1000);
 }

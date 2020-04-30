@@ -1,10 +1,11 @@
 function AppendBand() {
-    var localTimeSpeed = timeSpeed;
-    var goSocialAlertShown = false;
+    var localTimeSpeed = timeSpeed;    
     var coeffBuffer = 1;
 
+    var promoLaunched = false;
     var stillNoAlbumWarning = false;
-    
+    var goSocialAlertShown = false;
+
     var tile = document.createElement("div");
     tile.className = "tile";
     tile.id = "tile";
@@ -42,10 +43,14 @@ function AppendBand() {
     
         var doPromoButton = document.createElement("div");
         doPromoButton.id = "tilebutton";
-        doPromoButton.innerHTML = "Do Promo";
+        doPromoButton.innerHTML = "Launch Promo";
         doPromoButton.onmouseover = tileButtonHandler;
         doPromoButton.onmouseout = tileButtonHandler;
         doPromoButton.onclick = function() {
+            if (!promoLaunched) {
+                promoLaunched = true;
+                doPromoButton.innerHTML = "Do Promo";
+            }
             if (money >= promoPrice) {
                 money -= promoPrice;
                 bandCoeffs[bandID][0] = bandCoeffs[bandID][0] + 0.0001;
@@ -95,7 +100,7 @@ function AppendBand() {
     var workflow = document.getElementById("workflow");
     workflow.appendChild(tile);
 
-    CreateManager(bandID);
+    // CreateManager(bandID);
 
     function UpdateBandStats() {
         bandInfo[bandID][3] = bandInfo[bandID][3] * bandCoeffs[bandID][0];
@@ -104,7 +109,7 @@ function AppendBand() {
     function UpdateBandData() {            
         bandGenreText.innerHTML = "Genre: " + bandInfo[bandID][1] + 
         "<br>Albums: " + bandInfo[bandID][2] + 
-        "<br>Fans: " + bandInfo[bandID][3].toFixed(0);
+        "<br>Fans: " + bandInfo[bandID][3];
         bandPromoDataText.innerHTML = "Promo Points: " + bandPoints[bandID][0].toFixed(1) +
                                         "<br>Tours: " + bandPoints[bandID][1];
 
@@ -138,9 +143,11 @@ function AppendBand() {
         localTimeSpeed = timeSpeed;
     }, 10);
 
-    setInterval(UpdateBandStats, localTimeSpeed * 1.5);
+    setInterval(UpdateBandStats, localTimeSpeed);
     setInterval(UpdateBandData, localTimeSpeed);
     closeDialog();
+
+    UpdateBandData();
 }
 
 function FansDisengage(bandID) {
