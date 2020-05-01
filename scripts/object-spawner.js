@@ -5,8 +5,11 @@ var genreNameLabel = document.createElement("div");
 var genreConstructor;
 
 var dialog;
+var displayBuffs;
 var isbandCreatingFinished;
 var prefix = "", root = "", postfix = "", finalGenre = "";
+var effectsChoose = ["", "", ""];
+var effectsDisplay = ["", ""];
 
 function tileButtonHandler(event) {
     if (event.type == "mouseover") {
@@ -32,6 +35,7 @@ function createNewbandDialog() {
     var dialog = document.createElement("div");
     dialog.className = "dialog";
     dialog.id = "dialog";
+    $(dialog).css("height", "content-fit");
     
     var dialogHeader = document.createElement("div");
     dialogHeader.className = "dialogheader";
@@ -55,7 +59,7 @@ function createNewbandDialog() {
         $(dialog).css("visibility", "hidden");
         dialog = null;
     }      
-    dialog.appendChild(dialogOKButton);
+    
     dialog.appendChild(dialogHeader);
 
 
@@ -72,13 +76,23 @@ function createNewbandDialog() {
 
     var displayFinalGenre = document.createElement("p");
     setInterval(function() {
-        displayFinalGenre.innerHTML = finalGenre
+        displayFinalGenre.innerHTML = "You chose: " + finalGenre;
     }, 10);
     dialog.appendChild(displayFinalGenre);
-    
-    body.appendChild(dialog);
 
-    $(dialog).css("visibility", "visible");
+    displayBuffs = document.createElement("p");
+    UpdateBuffs;
+    dialog.appendChild(displayBuffs);
+    setInterval(UpdateBuffs, 10);
+    dialog.appendChild(dialogOKButton);
+        
+    body.appendChild(dialog);    
+
+    $(dialog).css("visibility", "visible");    
+}
+
+function UpdateBuffs() {
+    displayBuffs.innerHTML = effectsDisplay[0] + effectsDisplay[1];
 }
 
 function prefixButtonHandler(event) {
@@ -89,7 +103,25 @@ function prefixButtonHandler(event) {
     if (event.type == "click") {
         event.target.style.background = "black";
         event.target.style.color = "white";
-        prefix = event.target.innerHTML;
+        var content = event.target.innerHTML;
+        switch (content) {
+            case "lo-fi":
+                effectsDisplay[0] = "lo-fi:<br>"+
+                                    "--  Promo<br>" +
+                                    "Album recording costs NOTHING!<br><br>";
+                break;
+            case "kalyan":
+                effectsDisplay[0] = "kalyan:<br>" +
+                                    "+++ Fans<br>" +
+                                    "Albums are less efficient<br><br>";
+                break;
+            case "post":
+                effectsDisplay[0] = "post:<br>" +
+                                    "??? unknown effects<br><br>"
+                break;
+        }       
+        prefix = content;
+        UpdateBuffs;
     }
     if (event.type == "mouseout") {
         event.target.style.color = "black";
@@ -105,7 +137,33 @@ function rootButtonHandler(event) {
     if (event.type == "click") {
         event.target.style.background = "black";
         event.target.style.color = "white";
-        root = event.target.innerHTML;
+        var content = event.target.innerHTML;
+        switch (content) {
+            case "hip-hop":
+                    effectsDisplay[1] = "hip-hop:<br>" +
+                                        "+   Fans<br>" +
+                                        "++  Tour revenue<br>" +
+                                        "--- Album recording time<br><br>";
+                case "rock":
+                    effectsDisplay[1] = "rock:<br>" +
+                                        "+   Tour revenue<br>" +
+                                        "-   Album recording time<br><br>"
+                    break;
+                case "pop":
+                    effectsDisplay[1] = "pop:<br>" +
+                                        "+++ Fans<br>" +
+                                        "+++ Tour revenue<br>" +
+                                        "you'll win the game anyway, but it'll be quite dull<br><br>";
+                    break;
+                case "jazz":
+                    effectsDisplay[1] = "jazz:<br>" +
+                                        "-   Fans<br>" +
+                                        "++  Album recording time<br><br>";
+                    break;
+        }
+        root = content;
+        
+        UpdateBuffs;
     }
     if (event.type == "mouseout") {
         event.target.style.color = "black";
@@ -122,6 +180,7 @@ function postfixButtonHandler(event) {
         event.target.style.background = "black";
         event.target.style.color = "white";
         postfix = event.target.innerHTML;
+        UpdateBuffs;
     }
     if (event.type == "mouseout") {
         event.target.style.color = "black";
@@ -186,10 +245,10 @@ function ConstructorButton(content, buttonType) {
     button.innerHTML = content;
     switch (type) {
         case "prefix":    
-            button.onclick = button.onmouseover = button.onmouseout = prefixButtonHandler;
+            button.onclick = button.onmouseover = button.onmouseout = prefixButtonHandler;                 
             break;
         case "root":
-            button.onclick = button.onmouseover = button.onmouseout = rootButtonHandler;
+            button.onclick = button.onmouseover = button.onmouseout = rootButtonHandler;            
             break;
         case "postfix":
             button.onclick = button.onmouseover = button.onmouseout = postfixButtonHandler;
@@ -198,6 +257,8 @@ function ConstructorButton(content, buttonType) {
             prefix = button.innerHTML;
             break;            
     }
+
+    UpdateBuffs;
     return button;
 }
 
