@@ -21,6 +21,8 @@
         padding: 10px;
         position: relative;
         z-index: 1;
+        display: flex;
+        height:max-content;
       }
 
       #workflow
@@ -40,15 +42,16 @@
       .notifications {
         position: absolute;
         padding: 5px;
-        width: 500px; height: 100%;
+        width: 500px;
         top: 20px;
         left: 1200px;
+        z-index: 998;
       }
 
       #notifications
 
       .alert {
-        position: absolute;
+        position: relative;
         margin: 5px;
         border: 5px groove darkgreen;
         background-color: rgb(77, 202, 77);
