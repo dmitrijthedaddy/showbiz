@@ -52,7 +52,6 @@ function AppendBand() {
             }
             if (money >= promoPrice) {
                 money -= promoPrice;
-                bandCoeffs[bandID][0] = bandCoeffs[bandID][0] + 0.0001;
                 bandPoints[bandID][0]++;
                 promoPrice *= promoPriceInc;
                 UpdateBandData();
@@ -68,9 +67,8 @@ function AppendBand() {
         recordAlbumButton.onclick = function() {
             if (money >= recordAlbumPrice) {
                 money = money - recordAlbumPrice;
-                bandCoeffs[bandID][0] += 0.0005;
                 bandInfo[bandID][2]++;
-                bandPoints[bandID][0] += 4;     
+                bandPoints[bandID][0] += 5;     
                 recordAlbumPrice *= recordAlbumPriceInc;          
                 UpdateBandData();
             }
@@ -85,7 +83,6 @@ function AppendBand() {
         goTourButton.onclick = function() {
             if (money >= tourPrice) {
                 money = money - tourPriceInc;
-                bandCoeffs[bandID][0] += 0.0016;
                 bandPoints[bandID][1]++;
                 bandPoints[bandID][0] += 16;
                 tourPrice *= tourPriceInc;
@@ -106,14 +103,15 @@ function AppendBand() {
     UpdateBandData();
 
     function UpdateBandStats() {
-        bandInfo[bandID][3] = bandInfo[bandID][3] * bandCoeffs[bandID][0];
+        bandInfo[bandID][3] += GetPromoIncr(bandID);
     }
 
     function UpdateBandData() {            
         bandGenreText.innerHTML = "Genre: " + bandInfo[bandID][1] + 
         "<br>Albums: " + bandInfo[bandID][2] + 
-        "<br>Fans: " + bandInfo[bandID][3].toFixed(5) +
-        " <span class='tilebrackets'>(+" + (bandInfo[bandID][3] * bandCoeffs[bandID][0] - bandInfo[bandID][3]).toFixed(5) +
+        "<br>Fans: " + GetFans(bandID).toFixed(5) +
+        " <span class='tilebrackets'>(+" + 
+        GetPromoIncr(bandID).toFixed(5) +
         " per second)</span>";
         bandPromoDataText.innerHTML = "Promo Points: " + bandPoints[bandID][0].toFixed(1) +
                                         "<br>Tours: " + bandPoints[bandID][1];
@@ -157,10 +155,18 @@ function AppendBand() {
 }
 
 function FansDisengage(bandID) {
-    bandCoeffs[bandID][0] = 0.999;
+    bandCoeffs[bandID][0] = 0.99;
     TheyGoAwayAlert(bandID);
 }
 
 function GetTimeSpeed() {
     return timeSpeed;
+}
+
+function GetFans(bandID) {
+    return bandInfo[bandID][3];
+}
+
+function GetPromoIncr(bandID) {
+    return bandPoints[bandID][0] / 10;
 }

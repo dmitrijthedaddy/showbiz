@@ -14,6 +14,8 @@ function HelloFromManager(bandID) {
 }
 
 function CreateManager(bandID) {
+    var managersBandID = bandID;
+
     var workflow = document.getElementById("workflow");
 
     var managerTile = document.createElement("div");
@@ -26,8 +28,8 @@ function CreateManager(bandID) {
     var managerID = totalManagerCount;
     totalManagerCount++;
     managerInfo[managerID] = [managerRandomNames[getRandomInt(managerRandomNames.length)],
-                              bandID, defaultManagerExp];
-    managerCoeffs[managerID] = [(managerInfo[managerID][2] / 10), (managerInfo[managerID][2] / 2)];
+                                bandID, defaultManagerExp];
+    managerCoeffs[managerID] = [(managerInfo[managerID][2] / 100), (managerInfo[managerID][2] / 2)];
 
     // tile style
     $(managerTile).css("color", "black");
@@ -55,5 +57,6 @@ function CreateManager(bandID) {
                                 "-$" + managerCoeffs[managerID][1] + " per second";
         money -= managerCoeffs[managerID][1];
         bandPoints[managerInfo[managerID][1]][0] += managerCoeffs[managerID][0];
+        bandCoeffs[managerInfo[managerID][1]][0] += (managerCoeffs[managerID][0] / 10);
     }, 1000);
 }
