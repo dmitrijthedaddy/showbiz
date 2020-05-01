@@ -14,7 +14,7 @@ function AppendBand() {
     
     var bandID = totalBandCount;
     totalBandCount++;    
-    bandInfo[bandID] = ["", genreName.value, defaultAlbumsCount, defaultFansCount];
+    bandInfo[bandID] = ["", finalGenre, defaultAlbumsCount, defaultFansCount];
     bandPoints[bandID] = [0, 0];
     bandCoeffs[bandID] = [1];
 
