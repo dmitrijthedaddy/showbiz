@@ -1,4 +1,4 @@
-let timeSpeed = 10; // in ms
+let timeSpeed = 1000; // in ms
 
 // ARTISTS
 let totalBandCount = 0;

@@ -1,5 +1,4 @@
 function AppendBand() {
-    var localTimeSpeed = timeSpeed;    
     var coeffBuffer = 1;
 
     var promoLaunched = false;
@@ -102,7 +101,9 @@ function AppendBand() {
 
     isbandCreatingFinished = true;
 
-    // CreateManager(bandID);
+    CreateManager(bandID);    
+
+    UpdateBandData();
 
     function UpdateBandStats() {
         bandInfo[bandID][3] = bandInfo[bandID][3] * bandCoeffs[bandID][0];
@@ -111,21 +112,17 @@ function AppendBand() {
     function UpdateBandData() {            
         bandGenreText.innerHTML = "Genre: " + bandInfo[bandID][1] + 
         "<br>Albums: " + bandInfo[bandID][2] + 
-        "<br>Fans: " + bandInfo[bandID][3];
+        "<br>Fans: " + bandInfo[bandID][3].toFixed(5) +
+        " <span class='tilebrackets'>(+" + (bandInfo[bandID][3] * bandCoeffs[bandID][0] - bandInfo[bandID][3]).toFixed(5) +
+        " per second)</span>";
         bandPromoDataText.innerHTML = "Promo Points: " + bandPoints[bandID][0].toFixed(1) +
                                         "<br>Tours: " + bandPoints[bandID][1];
 
         BandBasicEvents();
     }
 
-    setInterval(function() {
-        localTimeSpeed = timeSpeed;
-    }, 10);
-
-    UpdateBandData();
-
-    setInterval(UpdateBandStats, localTimeSpeed);
-    setInterval(UpdateBandData, localTimeSpeed);   
+    setInterval(UpdateBandStats, GetTimeSpeed());
+    setInterval(UpdateBandData, GetTimeSpeed());   
 
     function BandBasicEvents() {
         // Go Social
@@ -162,4 +159,8 @@ function AppendBand() {
 function FansDisengage(bandID) {
     bandCoeffs[bandID][0] = 0.999;
     TheyGoAwayAlert(bandID);
+}
+
+function GetTimeSpeed() {
+    return timeSpeed;
 }
