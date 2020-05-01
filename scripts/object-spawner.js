@@ -44,6 +44,31 @@ function createNewbandDialog() {
     $(".dialog").css("visibility", "visible");
 }
 
+function GenreConstructor() {
+    var genreConstructor = document.createElement("p");
+
+    var genrePrefix1 = new ConstructorButton("lo-fi");
+    var genrePrefix2 = new ConstructorButton("kalyan");
+    var genrePrefix3 = new ConstructorButton("post");
+
+    genreConstructor.append(genrePrefix1);
+    genreConstructor.append(genrePrefix2);
+    genreConstructor.append(genrePrefix3);
+
+    genreNameLabel.append(genreConstructor);
+
+}
+
+function ConstructorButton(content) {
+    this.margin = this.padding = "5px";
+    this.position = "relative";
+    this.width = this.height = "fit-content";
+    this.textAlign = "center";
+    this.border = "1px groove darkviolet";
+    this.cursor = "pointer";
+    this.innerHTML = content;
+}
+
 function closeDialog() {
     if (isbandCreatingFinished) {
         $(dialog).css("visibility", "hidden");
