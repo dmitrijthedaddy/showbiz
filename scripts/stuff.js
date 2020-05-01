@@ -1,27 +1,5 @@
 var notifications = document.getElementById("notifications");
 
-function TimeMachine() {
-    var speedDisp = document.getElementById("gamespeed")
-    switch (timeSpeed) {
-        case 500:
-            timeSpeed = 100;
-            speedDisp.innerHTML = "2x";
-            break;
-        case 100:
-            timeSpeed = 50000;
-            speedDisp.innerHTML = "0.5x";
-            break;
-        case 50000:
-            timeSpeed = 5000;
-            speedDisp.innerHTML = "0.75x";
-            break;
-        case 5000:
-            timeSpeed = 500;
-            speedDisp.innerHTML = "1x";
-            break;
-    }
-}
-
 function NewbieAlert() {
     var newbieAlert = document.createElement("div");
     newbieAlert.className = "alert";
@@ -43,7 +21,7 @@ function NewbieAlert() {
 
     setTimeout(function() {
         $(newbieAlert).css("visibility", "hidden");
-        notifications.removeChild(notifications);
+        notifications.removeChild(newbieAlert);
     }, 15000);
 }
 
