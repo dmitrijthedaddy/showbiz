@@ -144,6 +144,7 @@ function rootButtonHandler(event) {
                                         "+   Fans<br>" +
                                         "++  Tour revenue<br>" +
                                         "--- Album recording time<br><br>";
+                    break;
                 case "rock":
                     effectsDisplay[1] = "rock:<br>" +
                                         "+   Tour revenue<br>" +
