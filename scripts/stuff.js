@@ -43,6 +43,7 @@ function NewbieAlert() {
 
     setTimeout(function() {
         $(newbieAlert).css("visibility", "hidden");
+        notifications.removeChild(notifications);
     }, 15000);
 }
 
@@ -67,6 +68,7 @@ function GoSocialAlert(bandID) {
 
         setTimeout(function() {
             $(goSocialAlert).css("visibility", "hidden");
+            notifications.removeChild(goSocialAlert);
         }, 15000);    
 }
 
@@ -89,8 +91,9 @@ function StillNoAlbumAlert(bandID) {
 
     notifications.appendChild(stillNoAlbumAlert);
 
-    setTimeout(function() {
+    setTimeout(function() {        
         $(stillNoAlbumAlert).css("visibility", "hidden");
+        notifications.removeChild(stillNoAlbumAlert);
     }, 15000);
 }
 
@@ -114,6 +117,7 @@ function TheyGoAwayAlert(bandID) {
 
     setTimeout(function() {
         $(theyGoAwayAlert).css("visibility", "hidden");
+        notifications.removeChild(theyGoAwayAlert);
     }, 15000);
 }
 
@@ -136,5 +140,6 @@ function RevivalAlert(bandID) {
 
     setTimeout(function() {
         $(revivalAlert).css("visibility", "hidden");
+        notifications.removeChild(revivalAlert);
     }, 15000);
 }

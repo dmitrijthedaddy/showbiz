@@ -4,6 +4,7 @@ function AppendBand() {
     var promoLaunched = false;
     var stillNoAlbumWarning = false;
     var goSocialAlertShown = false;
+    var theyGoAwayAlertShown = false;
 
     var tile = document.createElement("div");
     tile.className = "tile";
@@ -142,7 +143,10 @@ function AppendBand() {
 
         // Fans reduce due to no album
         if (bandInfo[bandID][2] == 0 && bandInfo[bandID][3] > 500) {
-            FansDisengage(bandID);
+            if (!theyGoAwayAlertShown) {
+                FansDisengage(bandID);
+                theyGoAwayAlertShown = true;
+            }
         }
 
         // Fan stats revival
