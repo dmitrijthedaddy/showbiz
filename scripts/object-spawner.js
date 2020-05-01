@@ -6,7 +6,7 @@ var genreConstructor;
 
 var dialog;
 var isbandCreatingFinished;
-var prefix = "", root = "", postfix = "";
+var prefix = "", root = "", postfix = "", finalGenre = "";
 
 function tileButtonHandler(event) {
     if (event.type == "mouseover") {
@@ -26,17 +26,44 @@ $(".tile").draggable({
 })
 
 function createNewbandDialog() {
+    var body = document.body;
     isbandCreatingFinished = false;
-    var finalGenre;
-    $("#dialogheadercontent").text("Create new artist");
 
-    var dialog = document.getElementById("dialog");
-    var genreConstructor = new GenreConstructor(); 
+    var dialog = document.createElement("div");
+    dialog.className = "dialog";
+    dialog.id = "dialog";
+    
+    var dialogHeader = document.createElement("div");
+    dialogHeader.className = "dialogheader";
+    dialogHeader.innerHTML = "Create new artist!";
 
+    var dialogOKButton = document.createElement("p");
+    dialogOKButton.id = "dialogbutton";
+    dialogOKButton.innerHTML = "OK";
+    $(dialogOKButton).css("text-align", "center");
+    dialogOKButton.onmouseover = function(event) {
+        event.target.style.background = "black"
+        event.target.style.color = "white";
+    }
+    dialogOKButton.onmouseout = function(event) {
+        event.target.style.background = null;
+        event.target.style.color = "black";
+    }
+    dialogOKButton.onclick = function() {
+        AppendBand();
+        isbandCreatingFinished = true;
+        $(dialog).css("visibility", "hidden");
+        dialog = null;
+    }      
+    dialog.appendChild(dialogOKButton);
+    dialog.appendChild(dialogHeader);
+
+
+    var genreConstructor = new GenreConstructor();
     bandNameLabel.innerHTML = "Artist Name  "
-    dialog.appendChild(bandNameLabel);
-    bandNameLabel.appendChild(bandName);
-    dialog.appendChild(genreConstructor);
+    dialog.append(bandNameLabel);
+    bandNameLabel.append(bandName);
+    dialog.append(genreConstructor);
 
     finalGenre = prefix + " " + root + " " + postfix;
     setInterval(function() {
@@ -48,11 +75,10 @@ function createNewbandDialog() {
         displayFinalGenre.innerHTML = finalGenre
     }, 10);
     dialog.appendChild(displayFinalGenre);
-
-    $(".dialog").css("visibility", "visible");
-    isbandCreatingFinished = true;
-
     
+    body.appendChild(dialog);
+
+    $(dialog).css("visibility", "visible");
 }
 
 function prefixButtonHandler(event) {
