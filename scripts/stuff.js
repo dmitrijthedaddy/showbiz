@@ -147,6 +147,7 @@ function Lottery() {
 
     var betField = document.createElement("input");
     lotteryContent.appendChild(betField);
+    betField.value = (money / 2).toFixed(0);
 
     var dialogOKButton = document.createElement("p");
     dialogOKButton.id = "dialogbutton";
