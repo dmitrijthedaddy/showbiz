@@ -13,11 +13,15 @@ function AppendBand() {
         revert: false
     });
     
-    var bandID = totalBandCount;
-    totalBandCount++;    
+    var bandID = totalBandCount;    
     bandInfo[bandID] = ["", finalGenre, defaultAlbumsCount, defaultFansCount];
-    bandPoints[bandID] = [0, 0];
+    bandPoints[bandID] = [0, 0, promoPrice, recordAlbumPrice, tourIncome];
     bandCoeffs[bandID] = [1];
+    
+    // RESET
+    totalBandCount++;
+    recordAlbumPrice = defaultRecordAlbumPrice;
+    tourIncome = defaultTourIncome;
 
     var bandNameText = document.createElement("p");
     bandNameText.textContent = bandInfo[bandID][0] = bandName.value;
@@ -25,28 +29,33 @@ function AppendBand() {
     bandNameText.id = "tileheader";
     tile.appendChild(bandNameText);
 
-    var bandGenreText = document.createElement("p");
-    bandGenreText.innerHTML = "Genre: " + bandInfo[bandID][1] + 
-                               "<br>Albums: " + bandInfo[bandID][2] + 
-                               "<br>Fans: " + bandInfo[bandID][3];                               
-    tile.appendChild(bandGenreText);
-
+    var bandGenreText = document.createElement("p");    
     var bandPromoDataText = document.createElement("p");
-    bandPromoDataText.innerHTML = "Promo Points: " + bandPoints[bandID][0] +
-                                  "<br> Tours: " + bandPoints[bandID][1];
+
+    UpdateBandData();
+    tile.appendChild(bandGenreText);
     tile.appendChild(bandPromoDataText);
 
     // BUTTONS
-    var buttonSection = document.createElement("div");
-    buttonSection.className = "tilebuttonsection";
+    ButtonSection();
 
-    
+    var workflow = document.getElementById("workflow");
+    workflow.appendChild(tile);
+    isbandCreatingFinished = true;
+
+    setInterval(UpdateBandStats, GetTimeSpeed());
+    setInterval(UpdateBandData, GetTimeSpeed());
+    CreateManager(bandID); // to remove!!
+
+    function ButtonSection() {
+        var buttonSection = document.createElement("div");
+        buttonSection.className = "tilebuttonsection";
         var doPromoButton = document.createElement("div");
         doPromoButton.id = "tilebutton";
         doPromoButton.innerHTML = "Launch Promo";
         doPromoButton.onmouseover = tileButtonHandler;
         doPromoButton.onmouseout = tileButtonHandler;
-        doPromoButton.onclick = function() {
+        doPromoButton.onclick = function () {
             if (!promoLaunched) {
                 promoLaunched = true;
                 doPromoButton.innerHTML = "Do Promo";
@@ -57,51 +66,40 @@ function AppendBand() {
                 promoPrice *= promoPriceInc;
                 UpdateBandData();
             }
-        }
+        };
         buttonSection.append(doPromoButton);
-
         var recordAlbumButton = document.createElement("div");
         recordAlbumButton.id = "tilebutton";
         recordAlbumButton.innerHTML = "Record Album";
         recordAlbumButton.onmouseover = tileButtonHandler;
         recordAlbumButton.onmouseout = tileButtonHandler;
-        recordAlbumButton.onclick = function() {
-            if (money >= recordAlbumPrice) {
-                money = money - recordAlbumPrice;
+        recordAlbumButton.onclick = function () {
+            if (money >= bandPoints[bandID][3]) {
+                money = money - bandPoints[bandID][3];
                 bandInfo[bandID][2]++;
-                bandPoints[bandID][0] += 5;     
-                recordAlbumPrice *= recordAlbumPriceInc;          
+                bandPoints[bandID][0] += 5;
+                bandPoints[bandID][3] *= recordAlbumPriceInc;
                 UpdateBandData();
             }
-        }
+        };
         buttonSection.append(recordAlbumButton);
-
         var goTourButton = document.createElement("div");
         goTourButton.id = "tilebutton";
         goTourButton.innerHTML = "Go Tour";
         goTourButton.onmouseover = tileButtonHandler;
         goTourButton.onmouseout = tileButtonHandler;
-        goTourButton.onclick = function() {
-            if (money >= tourPrice) {
-                money = money - tourPriceInc;
+        goTourButton.onclick = function () {
+            if (money >= bandPoints[bandID][4]) {
+                money = money - bandPoints[bandID][4];
                 bandPoints[bandID][1]++;
                 bandPoints[bandID][0] += 16;
                 tourPrice *= tourPriceInc;
                 UpdateBandData();
             }
-        }
+        };
         buttonSection.append(goTourButton);
-    
-    tile.append(buttonSection);    
-
-    var workflow = document.getElementById("workflow");
-    workflow.appendChild(tile);
-
-    isbandCreatingFinished = true;
-
-    CreateManager(bandID);    
-
-    UpdateBandData();
+        tile.append(buttonSection);
+    }
 
     function UpdateBandStats() {
         bandInfo[bandID][3] += GetPromoIncr(bandID);
@@ -118,10 +116,7 @@ function AppendBand() {
                                         "<br>Tours: " + bandPoints[bandID][1];
 
         BandBasicEvents();
-    }
-
-    setInterval(UpdateBandStats, GetTimeSpeed());
-    setInterval(UpdateBandData, GetTimeSpeed());   
+    } 
 
     function BandBasicEvents() {
         // Go Social

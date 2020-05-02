@@ -106,17 +106,20 @@ function prefixButtonHandler(event) {
         var content = event.target.innerHTML;
         switch (content) {
             case "lo-fi":
-                effectsDisplay[0] = "lo-fi:<br>"+
+                recordAlbumPrice = 0;
+                effectsDisplay[0] = content + ":<br>"+
                                     "--  Promo<br>" +
                                     "Album recording costs NOTHING!<br><br>";
                 break;
             case "kalyan":
-                effectsDisplay[0] = "kalyan:<br>" +
+                recordAlbumPrice = defaultRecordAlbumPrice;
+                effectsDisplay[0] = content + ":<br>" +
                                     "+++ Fans<br>" +
                                     "Albums are less efficient<br><br>";
                 break;
             case "post":
-                effectsDisplay[0] = "post:<br>" +
+                recordAlbumPrice = defaultRecordAlbumPrice;
+                effectsDisplay[0] = content + ":<br>" +
                                     "??? unknown effects<br><br>"
                 break;
         }       
@@ -140,24 +143,28 @@ function rootButtonHandler(event) {
         var content = event.target.innerHTML;
         switch (content) {
             case "hip-hop":
-                    effectsDisplay[1] = "hip-hop:<br>" +
+                    tourIncome = 30000;
+                    effectsDisplay[1] = content + ":<br>" +
                                         "+   Fans<br>" +
                                         "++  Tour revenue<br>" +
                                         "--- Album recording time<br><br>";
                     break;
                 case "rock":
-                    effectsDisplay[1] = "rock:<br>" +
+                    tourIncome = 20000;
+                    effectsDisplay[1] = content + ":<br>" +
                                         "+   Tour revenue<br>" +
                                         "-   Album recording time<br><br>"
                     break;
                 case "pop":
-                    effectsDisplay[1] = "pop:<br>" +
+                    tourIncome = 40000;
+                    effectsDisplay[1] = content + ":<br>" +
                                         "+++ Fans<br>" +
                                         "+++ Tour revenue<br>" +
                                         "you'll win the game anyway, but it'll be quite dull<br><br>";
                     break;
                 case "jazz":
-                    effectsDisplay[1] = "jazz:<br>" +
+                    tourIncome = defaultTourIncome;
+                    effectsDisplay[1] = content + ":<br>" +
                                         "-   Fans<br>" +
                                         "++  Album recording time<br><br>";
                     break;
