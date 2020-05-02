@@ -121,3 +121,73 @@ function RevivalAlert(bandID) {
         notifications.removeChild(revivalAlert);
     }, 15000);
 }
+
+function Lottery() {
+    var summary;
+    var lotteryWindow = document.createElement("div");
+    lotteryWindow.className = "dialog";
+    lotteryWindow.id = "dialog";    
+    lotteryWindow.style.backgroundColor = "green";
+    lotteryWindow.style.textAlign = "center";
+    lotteryWindow.style.visibility = "visible";
+    lotteryWindow.style.color = "white";
+    lotteryWindow.style.boxShadow = "5px 5px black";
+    $(lotteryWindow).draggable( { revert: false } );    
+    
+    var lotteryHeader = document.createElement("div");
+    lotteryHeader.className = "dialogheader";
+    lotteryHeader.innerHTML = "Win the money";
+    lotteryHeader.style.backgroundColor = "rgb(2, 100, 2)";
+    lotteryHeader.style.color = "white";
+    lotteryWindow.appendChild(lotteryHeader);
+    
+    
+    var lotteryContent = document.createElement("p");
+    lotteryContent.innerHTML = "Make your bet ($):<br>";
+
+    var betField = document.createElement("input");
+    lotteryContent.appendChild(betField);
+
+    var dialogOKButton = document.createElement("p");
+    dialogOKButton.id = "dialogbutton";
+    dialogOKButton.innerHTML = "Play!";
+    dialogOKButton.style.textAlign = "center";
+    dialogOKButton.style.backgroundColor = "rgb(2, 100, 2)";
+    dialogOKButton.onmouseover = function(event) {
+        event.target.style.backgroundColor = "rgb(1, 77, 1)";
+    }
+    dialogOKButton.onmouseout = function(event) {
+        event.target.style.backgroundColor = "rgb(2, 100, 2)";
+    }
+    dialogOKButton.onclick = function() {
+        var result = document.createElement("p");
+        if (betField.value <= money) {
+            var playValue = betField.value;        
+            summary = getRandomInt(playValue);
+            if (getRandomInt(2) == 1) {
+                summary = -summary;
+            }            
+            result.innerHTML = Summary();
+            function Summary() {
+                if (summary >= 0) {
+                    return "You win $" + summary + ". How lucky you are!";
+                }
+                else {                    
+                    return "Your loss is -$" + Math.abs(summary) + ". Maybe next time.";
+                }
+            }
+            money += summary;
+        }
+        else {
+            result.style.backgroundColor = "red";
+            result.innerHTML = "There is not enough money in your bank account.<br>" +
+                               "TIP: bet less money!"
+        }        
+        lotteryWindow.appendChild(result);
+    }
+    lotteryWindow.appendChild(lotteryContent);
+    lotteryContent.appendChild(dialogOKButton);
+
+    var workflow = document.getElementById("workflow");
+    workflow.appendChild(lotteryWindow);    
+}
