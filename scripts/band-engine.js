@@ -52,9 +52,7 @@ function AppendBand() {
         buttonSection.className = "tilebuttonsection";
         var doPromoButton = document.createElement("div");
         doPromoButton.id = "tilebutton";
-        doPromoButton.innerHTML = "Launch Promo";
-        doPromoButton.onmouseover = tileButtonHandler;
-        doPromoButton.onmouseout = tileButtonHandler;
+        doPromoButton.innerHTML = "Launch Promo";        
         doPromoButton.onclick = function () {
             if (!promoLaunched) {
                 promoLaunched = true;
@@ -70,9 +68,7 @@ function AppendBand() {
         buttonSection.append(doPromoButton);
         var recordAlbumButton = document.createElement("div");
         recordAlbumButton.id = "tilebutton";
-        recordAlbumButton.innerHTML = "Record Album";
-        recordAlbumButton.onmouseover = tileButtonHandler;
-        recordAlbumButton.onmouseout = tileButtonHandler;
+        recordAlbumButton.innerHTML = "Record Album";        
         recordAlbumButton.onclick = function () {
             if (money >= bandPoints[bandID][3]) {
                 money = money - bandPoints[bandID][3];
@@ -86,8 +82,6 @@ function AppendBand() {
         var goTourButton = document.createElement("div");
         goTourButton.id = "tilebutton";
         goTourButton.innerHTML = "Go Tour";
-        goTourButton.onmouseover = tileButtonHandler;
-        goTourButton.onmouseout = tileButtonHandler;
         goTourButton.onclick = function () {
             if (money >= bandPoints[bandID][4]) {
                 money = money - bandPoints[bandID][4];
@@ -98,6 +92,8 @@ function AppendBand() {
             }
         };
         buttonSection.append(goTourButton);
+        doPromoButton.onmouseover = doPromoButton.onmouseout = recordAlbumButton.onmouseover = 
+        recordAlbumButton.onmouseout = goTourButton.onmouseover = goTourButton.onmouseout = tileButtonHandler;
         tile.append(buttonSection);
     }
 
