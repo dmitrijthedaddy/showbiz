@@ -9,9 +9,119 @@ let managerRandomNames = ["Daniil Dobryakov",
 
 // HelloFromUsIncomingCall();
 
-function CreateManager(bandID) {
-    var managersBandID = bandID;
+function ManagerEmployment() {
+    var manName, experience;
+    var manEmpDialog = document.createElement("div");
+    manEmpDialog.className = "manageremploymentdialog";
+    $(manEmpDialog).draggable({
+        revert: false
+    });
 
+    var manEmpHeader = document.createElement("div");
+    manEmpHeader.className = "dialogheader";
+    manEmpHeader.style.backgroundColor = "rgb(133, 102, 0)";
+    manEmpHeader.style.color = "white";
+    manEmpHeader.innerHTML = "EMO Client Center";
+
+    var manEmpContent = document.createElement("div");
+    var textChoose = document.createElement("p");
+    textChoose.innerHTML = "Choose one of your artists to let us match some candidates:<br>";
+    manEmpContent.appendChild(textChoose);
+
+    var manEmpChooseArtistButtonSection = document.createElement("div");
+    manEmpChooseArtistButtonSection.style.padding = "5px";
+    manEmpChooseArtistButtonSection.style.display = "flex";
+
+    ShowAllGroupButtons();
+
+    manEmpContent.appendChild(manEmpChooseArtistButtonSection);
+
+    function ManEmpChooseArtistButton(bandID) {
+        var button = document.createElement("div");
+        button.style.border = "1px solid black";
+        button.style.cursor = "pointer";
+        button.style.margin = button.style.padding = "5px";
+        button.onmouseover = button.onmouseout = buttonHandler;
+        button.onclick = function() {
+            manEmpDialog.removeChild(manEmpContent);
+            manEmpDialog.removeChild(manEmpCloseButton);
+            
+            MatchResult();
+            var employButton = new ButtonAcceptDecline("accept", "Employ");
+            employButton.onclick = function() {
+                CreateManager(manName, bandID, experience);
+                document.body.removeChild(manEmpDialog);
+            }
+            var declineButton = new ButtonAcceptDecline("decline", "Decline offer");
+            declineButton.onclick = function() {
+                document.body.removeChild(manEmpDialog);
+            }
+            manEmpDialog.appendChild(employButton);
+            manEmpDialog.appendChild(declineButton);
+        }
+        
+        function buttonHandler(event) {
+            if (event.type == "mouseover") {
+                event.target.style.background = "black";
+                event.target.style.color = "white";
+            }
+            if (event.type == "mouseout") {
+                event.target.style.background = null;
+                event.target.style.color = "black";
+            }
+        }
+        FillInnerHTML();
+        setInterval(FillInnerHTML, 1000);
+
+        function FillInnerHTML() {
+            button.innerHTML = bandInfo[bandID][0] + "<br>" + GetFans(bandID).toFixed(0) + FansText();
+        }
+
+        function MatchResult() {
+            experience = getRandomArbitrary(1, 6).toFixed(2);
+            manName = managerRandomNames[getRandomInt(managerRandomNames.length)];
+            
+            var resultsHeader = document.createElement("p");
+            resultsHeader.innerHTML = "Here are some results of matching a perfect employee for you.";
+
+            var resultsContent = document.createElement("p");
+            resultsContent.innerHTML = "Name: " + manName + 
+                                       "<br>Experience: " + experience + 
+                                       "<br>Wage: $" + (experience / 2).toFixed(1) + " per sec";
+            manEmpDialog.appendChild(resultsHeader);
+            manEmpDialog.appendChild(resultsContent);
+        }
+
+        function FansText() {
+            if (GetFans(bandID).toFixed(0) % 10 == 1) {
+                return " fan";
+            }
+            else {
+                return " fans";
+            }
+        }
+        return button;
+    }
+
+    var manEmpCloseButton = new ButtonAcceptDecline("decline", "Close");
+    manEmpCloseButton.style.width = "fit-content";
+    manEmpCloseButton.onclick = function() {
+        document.body.removeChild(manEmpDialog);
+    }
+
+    manEmpDialog.appendChild(manEmpHeader);
+    manEmpDialog.appendChild(manEmpContent);
+    manEmpDialog.appendChild(manEmpCloseButton);
+    document.body.appendChild(manEmpDialog);
+
+    function ShowAllGroupButtons() {
+        for (var i = 0; i < totalBandCount; i++) {
+            manEmpChooseArtistButtonSection.appendChild(new ManEmpChooseArtistButton(i));
+        }
+    }   
+}
+
+function CreateManager(name, bandID, experience) {
     var workflow = document.getElementById("workflow");
 
     var managerTile = document.createElement("div");
@@ -23,8 +133,7 @@ function CreateManager(bandID) {
 
     var managerID = totalManagerCount;
     totalManagerCount++;
-    managerInfo[managerID] = [managerRandomNames[getRandomInt(managerRandomNames.length)],
-                                bandID, defaultManagerExp];
+    managerInfo[managerID] = [name, bandID, experience];
     managerCoeffs[managerID] = [(managerInfo[managerID][2] / 100), (managerInfo[managerID][2] / 2)];
 
     // tile style
@@ -38,23 +147,23 @@ function CreateManager(bandID) {
     managerName.innerHTML = managerInfo[managerID][0];
 
     var managerText = document.createElement("p");
-    managerText.innerHTML = "manages " + bandInfo[bandID][0] + "<br>" +
-                            "+" + managerCoeffs[managerID][0] + " per second<br>" +
-                            "-$" + managerCoeffs[managerID][1] + " per second";
-
+    OutputManagerData();
     managerTile.appendChild(managerName);
     managerTile.appendChild(managerText);
 
     workflow.appendChild(managerTile);
 
     setInterval(function() {
-        managerText.innerHTML = "manages " + bandInfo[bandID][0] + "<br>" +
-                                "+" + managerCoeffs[managerID][0] + " Promo Points per second<br>" +
-                                "-$" + managerCoeffs[managerID][1] + " per second";
         money -= managerCoeffs[managerID][1];
         bandPoints[managerInfo[managerID][1]][0] += managerCoeffs[managerID][0];
         bandCoeffs[managerInfo[managerID][1]][0] += (managerCoeffs[managerID][0] / 10);
     }, 1000);
+
+    function OutputManagerData() {
+        managerText.innerHTML = "manages " + bandInfo[bandID][0] + "<br>" +
+                                "+" + managerCoeffs[managerID][0].toFixed(2) + " Promo Points per second<br>" +
+                                "-$" + managerCoeffs[managerID][1].toFixed(2) + " per second";
+    }
 }
 
 function ButtonAcceptDecline(type, content) {
