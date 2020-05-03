@@ -20,6 +20,10 @@
           onmouseout="this.style.backgroundColor=null"          
           onclick="Lottery()">Money: $<span id="moneylong"></span>       
         </p>
+        <p id="employmanagerbutton" 
+          onmouseover="this.style.backgroundColor='red'"
+          onmouseout="this.style.backgroundColor=null">Employ a manager</span>       
+        </p>
     </div>
     
     <div class="workflow" id="workflow">
@@ -38,6 +42,7 @@
     <script src="scripts/core.js"></script>
     <script src="scripts/object-spawner.js"></script>
     <script src="scripts/manager-engine.js"></script>
+    <script src="scripts/events.js"></script>
     <script>
       $(".dialog").draggable({
         revert: false

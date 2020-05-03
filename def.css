@@ -107,14 +107,18 @@ body, html {
   }
 
   /* toolbar section */
-  #createbandbutton, #moneyscreenbutton, #changespeedbutton {
+  #createbandbutton, #moneyscreenbutton, #employmanagerbutton {
     padding: 5px;
     margin: 5px;
-    width: 100px;
+    width: fit-content;
     height: fit-content;
     text-align: center;
     border: 1px groove rgb(43, 110, 235);
     cursor: pointer;
+  }
+
+  #employmanagerbutton {
+    visibility: hidden;
   }
 
   /* dialog section */
