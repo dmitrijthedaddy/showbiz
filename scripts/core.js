@@ -28,3 +28,7 @@ let defaultManagerExp = 1;
 function getRandomInt(max) {
     return Math.floor(Math.random() * Math.floor(max));
 }
+
+function getRandomArbitrary(min, max) {
+    return Math.random() * (max - min) + min;
+  }
