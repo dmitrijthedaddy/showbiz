@@ -4,14 +4,10 @@ let managerRandomNames = ["Daniil Dobryakov",
                           "Hoolee Nada",
                           "Mel Adze",
                           "Jeech Bebe",
-                          "John Fridge",
+                          "Igor Fridge",
                           "Alex Johnson"];
 
-function HelloFromManager(bandID) {
-    HelloFromManagerAlert();
-    bandCoeffs[bandID][0] += 0.0002;
-    bandPoints[bandID][0] += 2;
-}
+// HelloFromUsIncomingCall();
 
 function CreateManager(bandID) {
     var managersBandID = bandID;
@@ -59,4 +55,41 @@ function CreateManager(bandID) {
         bandPoints[managerInfo[managerID][1]][0] += managerCoeffs[managerID][0];
         bandCoeffs[managerInfo[managerID][1]][0] += (managerCoeffs[managerID][0] / 10);
     }, 1000);
+}
+
+function ButtonAcceptDecline(type, content) {
+    var button = document.createElement("div");
+    button.style.margin = button.style.padding = "5px";
+    button.style.position = "relative";
+    button.style.textAlign = "center";
+    button.style.cursor = "pointer";
+    var defaultColor = "black";
+
+    switch(type) {
+        case "accept":
+            button.style.border = "1px solid darkgreen";
+            button.innerHTML = content;
+            button.onmouseover = function() {
+                button.style.backgroundColor = "green";
+                button.style.color = "white";
+            }
+            button.onmouseout = function() {
+                button.style.backgroundColor = null;
+                button.style.color = defaultColor;
+            }
+            break;
+        case "decline":
+            button.innerHTML = content;
+            button.style.border = "1px solid darkred";
+            button.onmouseover = function() {
+                button.style.backgroundColor = "red";
+                button.style.color = "white";
+            }
+            button.onmouseout = function() {
+                button.style.backgroundColor = null;
+                button.style.color = defaultColor;
+            }
+            break;
+    }
+    return button;
 }

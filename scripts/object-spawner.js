@@ -270,6 +270,93 @@ function ConstructorButton(content, buttonType) {
     return button;
 }
 
+function HelloFromUsIncomingCall() {
+    var helloFromUsIncomingCall = document.createElement("div");
+    helloFromUsIncomingCall.className = "alert";
+    helloFromUsIncomingCall.style.backgroundColor = "yellow";
+
+    var alertHeader = document.createElement("p");
+    alertHeader.id = "alertheader";
+    alertHeader.innerHTML = "1 new e-mail";
+    var alertContent = document.createElement("p");
+    alertContent.id = "alertcontent";
+    alertContent.innerHTML = "from Unknown";
+
+    var buttonSection = document.createElement("div");
+    buttonSection.style.display = "flex";
+
+    var accept = new ButtonAcceptDecline("accept", "Open");
+    var decline = new ButtonAcceptDecline("decline", "Move to Spam");
+
+    accept.onclick = function() {
+        notifications.removeChild(helloFromUsIncomingCall);
+        document.getElementById("workflow").appendChild(MailWindow("HelloFromUs"));        
+    }
+    decline.onclick = function() {
+        notifications.removeChild(helloFromUsIncomingCall);
+    }
+
+    buttonSection.appendChild(accept);
+    buttonSection.appendChild(decline);
+
+    helloFromUsIncomingCall.appendChild(alertHeader);
+    helloFromUsIncomingCall.appendChild(alertContent);
+    helloFromUsIncomingCall.appendChild(buttonSection);
+
+    notifications.appendChild(helloFromUsIncomingCall);
+}
+
+
+function MailWindow(event) {
+    var mailWindow = document.createElement("div");
+    document.getElementById("workflow").appendChild(mailWindow);
+    mailWindow.className = "dialog";
+    mailWindow.style.padding = "5px";
+    mailWindow.style.visibility = "visible";
+    mailWindow.style.width = "500px";
+    mailWindow.style.top = "200px";
+    mailWindow.style.left = "500px";
+
+    var mailHeader = document.createElement("div");
+    mailHeader.className = "dialogheader";
+    mailWindow.appendChild(mailHeader);
+
+    var closeMailWindow = new ButtonAcceptDecline("decline", "Close letter");    
+    
+    switch (event) {
+        case "HelloFromUs":
+            mailHeader.innerHTML = "Mail message from Unknown";
+            mailWindow.appendChild(new MailContent("themostsecrethuman@intheworld.wow",
+                                                 helloFromUsText[0]));
+            closeMailWindow.onclick = function() {
+                document.getElementById("workflow").removeChild(mailWindow);
+                document.getElementById("employmanagerbutton").style.visibility = "visible";
+                bandPoints[helloFromUsTargetGroupID][0] += 2;
+            }            
+            break;
+        default:
+            mailHeader.innerHTML = "Init mail";
+            break;
+    }  
+    mailWindow.appendChild(closeMailWindow);
+}
+
+function MailContent(sender, content) {
+    var dialog = document.createElement("div");
+
+    var senderData = document.createElement("p");
+    senderData.innerHTML = "from: " + sender;
+    senderData.style.fontWeight = "bold";
+
+    var mailContent = document.createElement("p");
+    mailContent.innerHTML = content;
+
+    dialog.appendChild(senderData);
+    dialog.appendChild(mailContent);
+
+    return dialog;    
+}
+
 function closeDialog() {
     if (isbandCreatingFinished) {
         $(dialog).css("visibility", "hidden");
