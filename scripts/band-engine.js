@@ -154,6 +154,7 @@ function AppendBand() {
         if (bandInfo[bandID][3] >= helloFromUsFanLaunch && !helloFromUsHappened) {
             helloFromUsHappened = true;
             helloFromUsTargetID = bandID;
+            HelloFromUs();
         }
     }
 }
