@@ -45,7 +45,7 @@ function AppendBand() {
 
     setInterval(UpdateBandStats, GetTimeSpeed());
     setInterval(UpdateBandData, GetTimeSpeed());
-    CreateManager(bandID); // to remove!!
+    //CreateManager(bandID); // to remove!!
 
     function ButtonSection() {
         var buttonSection = document.createElement("div");
@@ -73,7 +73,7 @@ function AppendBand() {
             if (money >= bandPoints[bandID][3]) {
                 money = money - bandPoints[bandID][3];
                 bandInfo[bandID][2]++;
-                bandPoints[bandID][0] += 5;
+                bandPoints[bandID][0] += 20;
                 bandPoints[bandID][3] *= recordAlbumPriceInc;
                 UpdateBandData();
             }
@@ -86,7 +86,7 @@ function AppendBand() {
             if (money >= bandPoints[bandID][4]) {
                 money = money - bandPoints[bandID][4];
                 bandPoints[bandID][1]++;
-                bandPoints[bandID][0] += 16;
+                bandPoints[bandID][0] += 400;
                 tourPrice *= tourPriceInc;
                 UpdateBandData();
             }
@@ -98,15 +98,15 @@ function AppendBand() {
     }
 
     function UpdateBandStats() {
-        bandInfo[bandID][3] += GetPromoIncr(bandID);
+        bandInfo[bandID][3] += bandPoints[bandID][0] / 10;
     }
 
     function UpdateBandData() {            
         bandGenreText.innerHTML = "Genre: " + bandInfo[bandID][1] + 
         "<br>Albums: " + bandInfo[bandID][2] + 
-        "<br>Fans: " + GetFans(bandID).toFixed(5) +
-        " <span class='tilebrackets'>(+" + 
-        GetPromoIncr(bandID).toFixed(5) +
+        "<br>Fans: " + GetFans(bandID).toFixed(0) +
+        " <span class='tilebrackets'>(" + 
+        GetPromoIncr(bandID) +
         " per second)</span>";
         bandPromoDataText.innerHTML = "Promo Points: " + bandPoints[bandID][0].toFixed(1) +
                                         "<br>Tours: " + bandPoints[bandID][1];
@@ -134,24 +134,36 @@ function AppendBand() {
 
         // Fans reduce due to no album
         if (bandInfo[bandID][2] == 0 && bandInfo[bandID][3] > 500) {
+            revival = false;
             if (!theyGoAwayAlertShown) {
-                FansDisengage(bandID);
+                TheyGoAwayAlert(bandID);                
                 theyGoAwayAlertShown = true;
             }
+            setInterval(FansDisengage(bandID), 1000);
         }
 
         // Fan stats revival
         if (bandInfo[bandID][2] >= 1 && stillNoAlbumWarning) {
             bandCoeffs[bandID][0] = coeffBuffer / 4;
             stillNoAlbumWarning = false;
+            revival = true;
             RevivalAlert(bandID);
+        }
+
+        // Hello From Us
+        if (bandInfo[bandID][3] >= helloFromUsFanLaunch && !helloFromUsHappened) {
+            helloFromUsHappened = true;
+            helloFromUsTargetID = bandID;
         }
     }
 }
 
+let revival = true;
+
 function FansDisengage(bandID) {
-    bandCoeffs[bandID][0] = 0.99;
-    TheyGoAwayAlert(bandID);
+    if (!revival) {
+        bandPoints[bandID][0] -= 0.5;
+    }
 }
 
 function GetTimeSpeed() {
@@ -163,5 +175,10 @@ function GetFans(bandID) {
 }
 
 function GetPromoIncr(bandID) {
-    return bandPoints[bandID][0] / 10;
+    if (bandPoints[bandID][0] / 10 >= 0) {
+        return "+" + (bandPoints[bandID][0] / 10).toFixed(1);
+    }
+    else {
+        return (bandPoints[bandID][0] / 10).toFixed(1);
+    }
 }
