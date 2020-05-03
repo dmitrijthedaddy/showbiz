@@ -149,17 +149,12 @@ function Lottery() {
     lotteryContent.appendChild(betField);
     betField.value = (money / 2).toFixed(0);
 
-    var dialogOKButton = document.createElement("p");
-    dialogOKButton.id = "dialogbutton";
+    var buttonSection = document.createElement("p");
+    buttonSection.style.display = "flex";  
+    buttonSection.style.textAlign = "center";  
+    
+    var dialogOKButton = new LotteryButton();
     dialogOKButton.innerHTML = "Play!";
-    dialogOKButton.style.textAlign = "center";
-    dialogOKButton.style.backgroundColor = "rgb(2, 100, 2)";
-    dialogOKButton.onmouseover = function(event) {
-        event.target.style.backgroundColor = "rgb(1, 77, 1)";
-    }
-    dialogOKButton.onmouseout = function(event) {
-        event.target.style.backgroundColor = "rgb(2, 100, 2)";
-    }
     dialogOKButton.onclick = function() {
         var result = document.createElement("p");
         if (betField.value <= money) {
@@ -186,9 +181,38 @@ function Lottery() {
         }        
         lotteryWindow.appendChild(result);
     }
-    lotteryWindow.appendChild(lotteryContent);
-    lotteryContent.appendChild(dialogOKButton);
 
-    var workflow = document.getElementById("workflow");
-    workflow.appendChild(lotteryWindow);    
+    var dialogCloseButton = new LotteryButton();
+    dialogCloseButton.innerHTML = "Close";
+    dialogCloseButton.onclick = function() {
+        document.getElementById("workflow").removeChild(lotteryWindow);
+    }
+
+
+    function LotteryButton() {
+        var button = document.createElement("p");
+        button.id - "dialogbutton";
+        button.style.textAlign = "center";
+        button.style.backgroundColor = "rgb(2, 100, 2)";
+        button.style.cursor = "pointer";
+        button.style.margin = button.style.padding = "5px";
+        button.style.border = "1px solid black";
+        button.onmouseover = function(event) {
+            event.target.style.backgroundColor = "rgb(1, 77, 1)";
+        }
+        button.onmouseout = function(event) {
+            event.target.style.backgroundColor = "rgb(2, 100, 2)";
+        }
+
+        return button;
+    }
+
+    lotteryContent.appendChild(dialogOKButton);
+    lotteryContent.appendChild(dialogCloseButton);
+    //lotteryContent.appendChild(buttonSection);
+
+    lotteryWindow.appendChild(lotteryContent);
+    
+
+    document.getElementById("workflow").appendChild(lotteryWindow);    
 }
