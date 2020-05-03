@@ -6,7 +6,11 @@
     <style>@import url("def.css");</style>
     <script src="lib/jquery-3.4.1.min.js"></script>
     <script src="lib/jquery-ui.min.js"></script>
-    
+    <script src="scripts/band-engine.js"></script>    
+    <script src="scripts/core.js"></script>
+    <script src="scripts/object-spawner.js"></script>
+    <script src="scripts/manager-engine.js"></script>
+    <script src="scripts/events.js"></script>
   </head>
   <body>
     <div class="toolbar">    
@@ -24,42 +28,19 @@
           onmouseover="this.style.backgroundColor='red'"
           onmouseout="this.style.backgroundColor=null">Employ a manager</span>       
         </p>
-    </div>
-    
-    <div class="workflow" id="workflow">
-
-    </div>
-
-    <div class="dialog" id="dialog">
-    </div>
-
-    <div class="notifications" id="notifications">
-
-    </div>
-    
-    <script src="scripts/band-engine.js"></script>
+    </div>    
+    <div class="workflow" id="workflow"></div>
+    <div class="notifications" id="notifications"></div>
     <script src="scripts/stuff.js"></script>
-    <script src="scripts/core.js"></script>
-    <script src="scripts/object-spawner.js"></script>
-    <script src="scripts/manager-engine.js"></script>
-    <script src="scripts/events.js"></script>
     <script>
-      $(".dialog").draggable({
-        revert: false
-      });
-
-      $(".tile").draggable({
-        revert: false
-      });
-
       setTimeout(NewbieAlert, 3000);
 
       function moneyUpdate() {
         var moneyCond = document.getElementById("moneylong");
         moneyCond.innerHTML = money.toFixed(0);
       }
-
-      setInterval(moneyUpdate, 10);
+      moneyUpdate();
+      setInterval(moneyUpdate, 1000);
     </script>
   </body>
 </html>
