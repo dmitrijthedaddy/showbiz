@@ -41,24 +41,37 @@ function createNewbandDialog() {
     dialogHeader.className = "dialogheader";
     dialogHeader.innerHTML = "Create new artist!";
 
-    var dialogOKButton = document.createElement("p");
-    dialogOKButton.id = "dialogbutton";
-    dialogOKButton.innerHTML = "OK";
-    $(dialogOKButton).css("text-align", "center");
-    dialogOKButton.onmouseover = function(event) {
-        event.target.style.background = "black"
-        event.target.style.color = "white";
-    }
-    dialogOKButton.onmouseout = function(event) {
-        event.target.style.background = null;
-        event.target.style.color = "black";
-    }
+    var dialogOKButton = new CreateBandDialogButton();
+    dialogOKButton.innerHTML = "Create!";
     dialogOKButton.onclick = function() {
         AppendBand();
         isbandCreatingFinished = true;
-        $(dialog).css("visibility", "hidden");
+        dialog.style.visibility = "hidden";
+        body.removeChild(dialog);
         dialog = null;
-    }      
+    }
+    var closeButton = new CreateBandDialogButton();
+    closeButton.innerHTML = "Close";
+    closeButton.onclick = function() {
+        body.removeChild(dialog);
+        dialog = null;
+    }
+
+    function CreateBandDialogButton() {
+        var button = document.createElement("div");
+        button.id = "dialogbutton";
+        button.style.textAlign = "center";
+        button.style.margin = button.style.padding = "5px";
+        button.onmouseover = function(event) {
+            event.target.style.background = "black"
+            event.target.style.color = "white";
+        }
+        button.onmouseout = function(event) {
+            event.target.style.background = null;
+            event.target.style.color = "black";
+        }
+        return button;
+    }
     
     dialog.appendChild(dialogHeader);
 
@@ -84,11 +97,19 @@ function createNewbandDialog() {
     UpdateBuffs;
     dialog.appendChild(displayBuffs);
     setInterval(UpdateBuffs, 10);
-    dialog.appendChild(dialogOKButton);
+    
+    var buttonSection = document.createElement("p");
+    buttonSection.style.display = "flex";
+    buttonSection.appendChild(dialogOKButton);    
+    buttonSection.appendChild(closeButton);
+    dialog.appendChild(buttonSection);
         
-    body.appendChild(dialog);    
-
-    $(dialog).css("visibility", "visible");    
+    body.appendChild(dialog);
+    prefix = "";
+    root = "";
+    postfix = "";
+    effectsDisplay = ["", ""];
+    dialog.style.visibility = "visible";    
 }
 
 function UpdateBuffs() {
@@ -200,7 +221,7 @@ function GenreConstructor() {
     var genreConstructor = document.createElement("div");
 
     var genrePrefixes = document.createElement("div");
-    $(genrePrefixes).css("display", "flex");
+    genrePrefixes.style.display = "flex";
 
     var genrePrefix1 = new ConstructorButton("lo-fi", "prefix");
     var genrePrefix2 = new ConstructorButton("kalyan", "prefix");
@@ -211,7 +232,7 @@ function GenreConstructor() {
     genrePrefixes.append(genrePrefix3);
 
     var genreRoots = document.createElement("div");
-    $(genreRoots).css("display", "flex");
+    genreRoots.style.display = "flex";
 
     var genreRoot1 = new ConstructorButton("hip-hop", "root");
     var genreRoot2 = new ConstructorButton("rock", "root");
@@ -224,7 +245,7 @@ function GenreConstructor() {
     genreRoots.append(genreRoot4);
 
     var genrePostfixes = document.createElement("div");
-    $(genrePostfixes).css("display", "flex");
+    genrePostfixes.style.display = "flex";
 
     var genrePostfix1 = new ConstructorButton("revival", "postfix");
     var genrePostfix2 = new ConstructorButton("wave", "postfix");
