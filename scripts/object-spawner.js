@@ -352,7 +352,7 @@ function MailWindow(event) {
             closeMailWindow.onclick = function() {
                 document.getElementById("workflow").removeChild(mailWindow);
                 document.getElementById("employmanagerbutton").style.visibility = "visible";
-                bandPoints[helloFromUsTargetGroupID][0] += 2;
+                bandPoints[helloFromUsTargetID][0] += 2;
             }            
             break;
         default:
