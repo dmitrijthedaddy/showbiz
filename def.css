@@ -7,7 +7,7 @@ body, html {
 /* basic elements */
   .toolbar {
     padding: 10px;
-    width: 100%; height: fit-content;
+    height: fit-content;
     background-color: cornflowerblue;
     display: flex;
   }
@@ -16,7 +16,8 @@ body, html {
     position: relative;
     z-index: 1;
     display: flex;
-    height:max-content;
+    width: max-content;
+    height: max-content;
   }
 
   #workflow
@@ -129,7 +130,7 @@ body, html {
   }
 
   #employmanagerbutton {
-    /*visibility: hidden;*/
+    visibility: hidden;
   }
 
   /* dialog section */
