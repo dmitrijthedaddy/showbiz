@@ -78,6 +78,7 @@ function StillNoAlbumAlert(bandID) {
 function TheyGoAwayAlert(bandID) {
     var theyGoAwayAlert = document.createElement("div");
     theyGoAwayAlert.className = "alert";
+    lackOfMoneyAlert.style.backgroundColor = "palevioletred";
 
     var alertHeader = document.createElement("p");
     alertHeader.innerHTML = "Awww man they're walking away...";
@@ -119,6 +120,44 @@ function RevivalAlert(bandID) {
     setTimeout(function() {
         $(revivalAlert).css("visibility", "hidden");
         notifications.removeChild(revivalAlert);
+    }, 15000);
+}
+
+function LackOfMoneyAlert() {
+    var lackOfMoneyAlert = document.createElement("div");
+    lackOfMoneyAlert.className = "alert";
+    lackOfMoneyAlert.style.backgroundColor = "palevioletred";
+
+    var alertHeader = document.createElement("p");
+    alertHeader.innerHTML = "Running out of money?";
+    alertHeader.id = "alertheader";
+    lackOfMoneyAlert.appendChild(alertHeader);
+
+    var alertContent = document.createElement("p");
+    alertContent.innerHTML = "Money isn't a neverending thing. If you're experiencing a " +
+                             "lack of it, you can try your fortune and win some by clicking \"Money\" " +
+                             "button in toolbar.";
+    alertContent.id = "alertcontent"
+    lackOfMoneyAlert.appendChild(alertContent);
+
+    var moneyscreenbutton = document.createElement("div")
+    moneyscreenbutton.id = "moneyscreenbutton";
+    moneyscreenbutton.innerHTML = "Money: $" + money.toFixed(0);
+    moneyscreenbutton.onclick = function() {        
+        notifications.removeChild(lackOfMoneyAlert);
+        Lottery();
+    }
+    moneyscreenbutton.onmouseover = function() {
+        moneyscreenbutton.style.backgroundColor = "red";
+    }
+    moneyscreenbutton.onmouseout = function() {
+        moneyscreenbutton.style.backgroundColor = null;
+    }
+    lackOfMoneyAlert.appendChild(moneyscreenbutton);
+
+    notifications.appendChild(lackOfMoneyAlert);
+    setTimeout(function() {        
+        notifications.removeChild(lackOfMoneyAlert);
     }, 15000);
 }
 

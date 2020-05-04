@@ -7,6 +7,7 @@ var genreConstructor;
 var dialog;
 var displayBuffs;
 var isbandCreatingFinished;
+var lackOfMoneyAlertShown = false;
 var prefix = "", root = "", postfix = "", finalGenre = "";
 var effectsChoose = ["", "", ""];
 var effectsDisplay = ["", ""];
