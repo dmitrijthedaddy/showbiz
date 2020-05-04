@@ -64,7 +64,14 @@ function AppendBand() {
                 promoPrice *= promoPriceInc;
                 UpdateBandData();
             }
-        };
+            else {
+                if (!lackOfMoneyAlertShown) {
+                    LackOfMoneyAlert();
+                    lackOfMoneyAlertShown = true;
+                }
+            }
+            moneyUpdate();
+        }
         buttonSection.append(doPromoButton);
         var recordAlbumButton = document.createElement("div");
         recordAlbumButton.id = "tilebutton";
@@ -77,7 +84,14 @@ function AppendBand() {
                 bandPoints[bandID][3] *= recordAlbumPriceInc;
                 UpdateBandData();
             }
-        };
+            else {
+                if (!lackOfMoneyAlertShown) {
+                    LackOfMoneyAlert();
+                    lackOfMoneyAlertShown = true;
+                }
+            }
+            moneyUpdate();
+        }
         buttonSection.append(recordAlbumButton);
         var goTourButton = document.createElement("div");
         goTourButton.id = "tilebutton";
@@ -90,7 +104,14 @@ function AppendBand() {
                 tourPrice *= tourPriceInc;
                 UpdateBandData();
             }
-        };
+            else {
+                if (!lackOfMoneyAlertShown) {
+                    LackOfMoneyAlert();
+                    lackOfMoneyAlertShown = true;
+                }
+            }
+            moneyUpdate();
+        }
         buttonSection.append(goTourButton);
         doPromoButton.onmouseover = doPromoButton.onmouseout = recordAlbumButton.onmouseover = 
         recordAlbumButton.onmouseout = goTourButton.onmouseover = goTourButton.onmouseout = tileButtonHandler;
