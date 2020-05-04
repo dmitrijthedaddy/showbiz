@@ -2,7 +2,7 @@
 
 // Hello From Us
     let helloFromUsHappened = false;
-    let helloFromUsFanLaunch = getRandomArbitrary(1000, 1050);
+    let helloFromUsFanLaunch = getRandomArbitrary(600, 1000);
     let helloFromUsTargetID = 0;
     let helloFromUsText = "";
 
