@@ -29,6 +29,8 @@ $(".tile").draggable({
     revert: false
 })
 
+var isNewBandDialogOpened = false;
+
 function createNewbandDialog() {
     var body = document.body;
     isbandCreatingFinished = false;
@@ -50,12 +52,14 @@ function createNewbandDialog() {
         dialog.style.visibility = "hidden";
         body.removeChild(dialog);
         dialog = null;
+        isNewBandDialogOpened = false;
     }
     var closeButton = new CreateBandDialogButton();
     closeButton.innerHTML = "Close";
     closeButton.onclick = function() {
         body.removeChild(dialog);
         dialog = null;
+        isNewBandDialogOpened = false;
     }
 
     function CreateBandDialogButton() {
@@ -104,13 +108,16 @@ function createNewbandDialog() {
     buttonSection.appendChild(dialogOKButton);    
     buttonSection.appendChild(closeButton);
     dialog.appendChild(buttonSection);
-        
-    body.appendChild(dialog);
-    prefix = "";
-    root = "";
-    postfix = "";
-    effectsDisplay = ["", ""];
-    dialog.style.visibility = "visible";    
+
+    if (!isNewBandDialogOpened) {
+        body.appendChild(dialog);
+        prefix = "";
+        root = "";
+        postfix = "";
+        effectsDisplay = ["", ""];
+        dialog.style.visibility = "visible";
+        isNewBandDialogOpened = true;
+    }
 }
 
 function UpdateBuffs() {

@@ -161,6 +161,8 @@ function LackOfMoneyAlert() {
     }, 15000);
 }
 
+var lotteryWindowOpened = false;
+
 function Lottery() {
     var summary;
     var lotteryWindow = document.createElement("div");
@@ -226,6 +228,7 @@ function Lottery() {
     dialogCloseButton.innerHTML = "Close";
     dialogCloseButton.onclick = function() {
         document.getElementById("workflow").removeChild(lotteryWindow);
+        lotteryWindowOpened = false;
     }
 
 
@@ -250,9 +253,11 @@ function Lottery() {
     lotteryContent.appendChild(dialogOKButton);
     lotteryContent.appendChild(dialogCloseButton);
     //lotteryContent.appendChild(buttonSection);
-
+    
     lotteryWindow.appendChild(lotteryContent);
     
-
-    document.getElementById("workflow").appendChild(lotteryWindow);    
+    if (!lotteryWindowOpened) {
+        document.getElementById("workflow").appendChild(lotteryWindow);
+        lotteryWindowOpened = true;
+    }    
 }
