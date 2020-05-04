@@ -217,7 +217,8 @@ function Lottery() {
             result.style.backgroundColor = "red";
             result.innerHTML = "There is not enough money in your bank account.<br>" +
                                "TIP: bet less money!"
-        }        
+        }
+        moneyUpdate();    
         lotteryWindow.appendChild(result);
     }
 

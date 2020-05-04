@@ -13,10 +13,11 @@ body, html {
   }
   .workflow {
     padding: 10px;
+    width: 100%;
     position: relative;
     z-index: 1;
     display: flex;
-    width: max-content;
+    flex-wrap: wrap;
     height: max-content;
   }
 
