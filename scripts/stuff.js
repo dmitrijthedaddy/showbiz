@@ -167,7 +167,9 @@ function Lottery() {
     var summary;
     var lotteryWindow = document.createElement("div");
     lotteryWindow.className = "dialog";
-    lotteryWindow.id = "dialog";    
+    lotteryWindow.id = "lottery";
+    lotteryWindow.style.top = "100px";
+    lotteryWindow.style.left = "500px";
     lotteryWindow.style.backgroundColor = "green";
     lotteryWindow.style.textAlign = "center";
     lotteryWindow.style.visibility = "visible";
@@ -227,9 +229,14 @@ function Lottery() {
     var dialogCloseButton = new LotteryButton();
     dialogCloseButton.innerHTML = "Close";
     dialogCloseButton.onclick = function() {
-        document.getElementById("workflow").removeChild(lotteryWindow);
+        document.body.removeChild(lotteryWindow);
         lotteryWindowOpened = false;
     }
+
+    var casinoImage = document.createElement("img");
+    casinoImage.src = "image.png";
+    casinoImage.style.width = "200px";
+    lotteryWindow.appendChild(casinoImage);
 
 
     function LotteryButton() {
@@ -257,7 +264,7 @@ function Lottery() {
     lotteryWindow.appendChild(lotteryContent);
     
     if (!lotteryWindowOpened) {
-        document.getElementById("workflow").appendChild(lotteryWindow);
+        document.body.appendChild(lotteryWindow);
         lotteryWindowOpened = true;
     }    
 }

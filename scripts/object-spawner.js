@@ -21,6 +21,17 @@ function tileButtonHandler(event) {
     }
 }
 
+function tileButtonHandlerToBlack(event) {
+    if (event.type == "mouseover") {
+        event.target.style.background = "black"
+        event.target.style.color = "white";
+    }
+    if (event.type == "mouseout") {
+        event.target.style.background = null;
+        event.target.style.color = "black";
+    }
+}
+
 $(".dialog").draggable({
     revert: false
 });

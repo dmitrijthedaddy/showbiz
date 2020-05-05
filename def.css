@@ -41,7 +41,7 @@ body, html {
     width: 500px;
     top: 20px;
     left: 1200px;
-    z-index: 998;
+    z-index: 1000;
   }
 
   #notifications
@@ -95,13 +95,13 @@ body, html {
 
   .dialog {
     position: absolute;
+    padding: 5px;
     width: 400px;
     top: 300px; left: 700px;
     border: 3px groove rgb(109, 79, 109);
     background-color: plum;
     visibility: hidden;
-    box-shadow: 5px 5px darkviolet ;
-    z-index: 999;
+    box-shadow: 5px 5px darkviolet;
   }
 
   .manageremploymentdialog {
@@ -112,7 +112,18 @@ body, html {
     border: 3px groove rgb(133, 102, 0);
     background-color: yellow;
     box-shadow: 5px 5px black;
-    z-index: 999;
+  }
+
+  .epochsdialog {
+    position: absolute;
+    width: 400px;
+    height: fit-content;
+    padding: 5px;
+    /* top: 150px; left: 300px; */
+    border: 3px groove rgb(109, 79, 109);
+    background-color: plum;
+    box-shadow: 5px 5px black;
+    z-index: 1001;
   }
 
   #dialog {
@@ -150,4 +161,8 @@ body, html {
     width: fit-content;
     border: 1px groove rgb(109, 79, 109);
     background-color: rgb(214, 119, 214);
+  }
+
+  #lottery {
+    z-index: 1002;
   }

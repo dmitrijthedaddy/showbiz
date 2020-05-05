@@ -1,4 +1,8 @@
 let timeSpeed = 1000; // in ms
+let totalReleasesCount = 0;
+let releases = []; // [epochID, Title, Type]
+let totalEpochsCount = 0;
+let epochs = []; // [bandID, Name, Income, Status]
 
 // ARTISTS
 let totalBandCount = 0;
