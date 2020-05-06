@@ -11,8 +11,8 @@ function NewbieAlert() {
 
     var newbieAlertContent = document.createElement("p");
     newbieAlertContent.id = "alertcontent";
-    newbieAlertContent.innerHTML = "It's time to create a new artist and do some" +
-                                   "management. You start with $" + money +
+    newbieAlertContent.innerHTML = "It's time to create a new artist and do some " +
+                                   "management. You start with $" + money.toFixed(0) +
                                    " in your pocket, spend it wisely and remember: " +
                                    "your label is where stars grow!:)";
     newbieAlert.appendChild(newbieAlertContent);
@@ -78,7 +78,7 @@ function StillNoAlbumAlert(bandID) {
 function TheyGoAwayAlert(bandID) {
     var theyGoAwayAlert = document.createElement("div");
     theyGoAwayAlert.className = "alert";
-    lackOfMoneyAlert.style.backgroundColor = "palevioletred";
+    theyGoAwayAlert.style.backgroundColor = "palevioletred";
 
     var alertHeader = document.createElement("p");
     alertHeader.innerHTML = "Awww man they're walking away...";

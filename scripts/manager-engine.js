@@ -130,6 +130,7 @@ function CreateManager(name, bandID, experience) {
     $(managerTile).draggable({
         revert: false
     });
+    managerTile.ondrag = CurrentWindowOnTop;
 
     var managerID = totalManagerCount;
     totalManagerCount++;

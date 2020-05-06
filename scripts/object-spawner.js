@@ -12,6 +12,14 @@ var prefix = "", root = "", postfix = "", finalGenre = "";
 var effectsChoose = ["", "", ""];
 var effectsDisplay = ["", ""];
 
+function CurrentWindowOnTop(event) {
+    let allDivs = document.getElementsByTagName("div");
+    for (var i = 0; i < allDivs.length; i++) {
+        allDivs[i].style.zIndex = 0;
+    }
+    event.target.style.zIndex = 1;
+}
+
 function tileButtonHandler(event) {
     if (event.type == "mouseover") {
         event.target.style.background = "black"
@@ -351,6 +359,7 @@ function MailWindow(event) {
     var mailWindow = document.createElement("div");
     document.getElementById("workflow").appendChild(mailWindow);
     mailWindow.className = "dialog";
+    mailWindow.style.zIndex = "2";
     mailWindow.style.padding = "5px";
     mailWindow.style.visibility = "visible";
     mailWindow.style.width = "500px";

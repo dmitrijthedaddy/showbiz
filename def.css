@@ -24,7 +24,7 @@ body, html {
   #workflow
 
   .tile {
-    position: absolute;
+    position: relative;
     margin: 10px;
     padding: 10px;
     color: azure;
@@ -32,7 +32,7 @@ body, html {
     border: 2px groove purple;
     background-color: rgb(145, 34, 145);
     box-shadow: 5px 5px darkblue;
-    z-index: 0;
+    /* z-index: 1000;*/
   }
 
   .notifications {
@@ -72,9 +72,9 @@ body, html {
   /* tile section */
   .tilebuttonsection {
     position: absolute;
+    width: 100px;
     top: 90px;
     left: 200px;
-    z-index: 1;
   }
   
   .tilebrackets {
@@ -102,6 +102,7 @@ body, html {
     background-color: plum;
     visibility: hidden;
     box-shadow: 5px 5px darkviolet;
+    z-index: 2;
   }
 
   .manageremploymentdialog {
@@ -112,10 +113,11 @@ body, html {
     border: 3px groove rgb(133, 102, 0);
     background-color: yellow;
     box-shadow: 5px 5px black;
+    z-index: 2;
   }
 
   .epochsdialog {
-    position: absolute;
+    position: relative;
     width: 400px;
     height: fit-content;
     padding: 5px;
@@ -123,7 +125,7 @@ body, html {
     border: 3px groove rgb(109, 79, 109);
     background-color: plum;
     box-shadow: 5px 5px black;
-    z-index: 1001;
+    /* z-index: 999;*/
   }
 
   #dialog {

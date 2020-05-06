@@ -11,7 +11,7 @@ let bandPoints = []; // [Promo Points, Tours, Promo Price, recordAlbumPrice, tou
 let bandCoeffs = []; // [Fan+]
 
 let defaultAlbumsCount = 0;
-let defaultFansCount = 1;
+let defaultFansCount = 600;
 let money = 10000;
 let defaultRecordAlbumPrice = 1000
 let defaultTourIncome = 10000;

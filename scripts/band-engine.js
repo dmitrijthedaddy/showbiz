@@ -12,8 +12,10 @@ function AppendBand() {
     $(tile).draggable({
         revert: false
     });
+    tile.ondrag = CurrentWindowOnTop;
     
-    var bandID = totalBandCount;    
+    var bandID = totalBandCount;  
+    var incomeNow = 0;  
     bandInfo[bandID] = ["", finalGenre, defaultAlbumsCount, defaultFansCount];
     bandPoints[bandID] = [0, 0, promoPrice, recordAlbumPrice, tourIncome, 0];
     bandCoeffs[bandID] = [1];
@@ -107,8 +109,19 @@ function AppendBand() {
         tile.append(buttonSection);
     }
 
+    
+
     function UpdateBandStats() {
         bandInfo[bandID][3] += bandPoints[bandID][0] / 10;
+        if (bandInfo[bandID][2] >= 1) {
+            incomeNow = IncomeRandomizer();
+            money += incomeNow;
+        }
+
+        function IncomeRandomizer() {
+            var incomeRandom = GetFans(bandID).toFixed(0) * getRandomArbitrary(0.00001, 0.001);
+            return incomeRandom;
+        }
     }
 
     function UpdateBandData() {            
@@ -119,10 +132,8 @@ function AppendBand() {
         GetPromoIncr(bandID) +
         " per second)</span>";
         bandPromoDataText.innerHTML = "Promo Points: " + bandPoints[bandID][0].toFixed(1) +
-                                        "<br>Tours: " + bandPoints[bandID][1];
-        if (bandInfo[bandID][2] >= 1) {
-            bandStreamsText.innerHTML
-        }                                        
+                                        "<br>Tours: " + bandPoints[bandID][1] +
+                                        "<br><br>Income per sec: $" + incomeNow.toFixed(2);
 
         BandBasicEvents();
     }     
@@ -204,6 +215,7 @@ function EpochsWindow(bandID) {
     });
     epochsWindow.className = "epochsdialog";
     epochsWindow.style.visibility = "visible";
+    epochsWindow.ondrag = CurrentWindowOnTop;
 
     var epochsHeader = document.createElement("div");
     epochsHeader.className = "dialogheader";
@@ -275,6 +287,7 @@ function EpochsWindow(bandID) {
         $(createEpochWindow).draggable({
             revert: false
         });
+        createEpochWindow.ondrag = CurrentWindowOnTop;
         
         var epochNameText = document.createElement("p");
         epochNameText.innerHTML = "Epoch Name: ";
@@ -307,6 +320,7 @@ function EpochsWindow(bandID) {
         $(showEpochWindow).draggable({
             revert: false
         });
+        showEpochWindow.ondrag = CurrentWindowOnTop;
 
         var showEpochHeader = document.createElement("div");
         showEpochHeader.className = "dialogheader";
@@ -406,6 +420,10 @@ function EpochsWindow(bandID) {
             var typeBuffer = "";
             var newReleaseWindow = document.createElement("div");
             newReleaseWindow.className = "epochsdialog";
+            $(newReleaseWindow).draggable({
+                revert: false
+            });
+            newReleaseWindow.ondrag = CurrentWindowOnTop;
             
             var newReleaseHeader = document.createElement("div");
             newReleaseHeader.className = "dialogheader";
