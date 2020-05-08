@@ -1,22 +1,10 @@
 var notifications = document.getElementById("notifications");
 
 function NewbieAlert() {
-    var newbieAlert = document.createElement("div");
-    newbieAlert.className = "alert";
-
-    var newbieAlertHeader = document.createElement("p");
-    newbieAlertHeader.innerHTML = "Musical industry awaits!";
-    newbieAlertHeader.id = "alertheader";
-    newbieAlert.appendChild(newbieAlertHeader);
-
-    var newbieAlertContent = document.createElement("p");
-    newbieAlertContent.id = "alertcontent";
-    newbieAlertContent.innerHTML = "It's time to create a new artist and do some " +
-                                   "management. You start with $" + money.toFixed(0) +
-                                   " in your pocket, spend it wisely and remember: " +
-                                   "your label is where stars grow!:)";
-    newbieAlert.appendChild(newbieAlertContent);
-
+    var newbieAlert = new Alert("Musical industry awaits!", "It's time to create a new artist and do some " +
+                                                            "management. You start with $" + money.toFixed(0) +
+                                                            " in your pocket, spend it wisely and remember: " +
+                                                            "your label is where stars grow!:)");
     notifications.appendChild(newbieAlert);
 
     setTimeout(function() {
@@ -25,48 +13,22 @@ function NewbieAlert() {
     }, 15000);
 }
 
-function GoSocialAlert(bandID) {
-    
-        var goSocialAlert = document.createElement("div");
-        goSocialAlert.className = "alert";
+function GoSocialAlert(bandID) {    
+    var goSocialAlert = new Alert("Go social", "Your artist " + bandInfo[bandID][0] + " now has more than 1 fan. " +
+                                               "That means that not only their boss listen to them " +
+                                               "and they start to gain more attention. Work, b@*%h!");
+    notifications.appendChild(goSocialAlert);
 
-        var alertHeader = document.createElement("p");
-        alertHeader.innerHTML = "Go social";
-        alertHeader.id = "alertheader";
-        goSocialAlert.appendChild(alertHeader);
-
-        var alertContent = document.createElement("p");
-        alertContent.innerHTML = "Your artist " + bandInfo[bandID][0] + " now has more than 1 fan. " +
-                                 "That means that not only their boss listen to them " +
-                                 "and they start to gain more attention. Work, b@*%h!"
-        alertContent.id = "alertcontent";
-        goSocialAlert.appendChild(alertContent);
-
-        notifications.appendChild(goSocialAlert);
-
-        setTimeout(function() {
-            $(goSocialAlert).css("visibility", "hidden");
-            notifications.removeChild(goSocialAlert);
-        }, 15000);    
+    setTimeout(function() {
+        $(goSocialAlert).css("visibility", "hidden");
+        notifications.removeChild(goSocialAlert);
+    }, 15000);    
 }
 
-function StillNoAlbumAlert(bandID) {
-    
-    var stillNoAlbumAlert = document.createElement("div");
-    stillNoAlbumAlert.className = "alert";
-
-    var alertHeader = document.createElement("p");
-    alertHeader.innerHTML = "Don't stick around!";
-    alertHeader.id = "alertheader";
-    stillNoAlbumAlert.appendChild(alertHeader);
-
-    var alertContent = document.createElement("p");
-    alertContent.innerHTML = "Fans of " + bandInfo[bandID][0] + " are " +
-                             "waiting for new releases! Don't lose their sight " +
-                             "and go recording a new album for your guys.";
-    alertContent.id = "alertcontent";
-    stillNoAlbumAlert.appendChild(alertContent);
-
+function StillNoAlbumAlert(bandID) {    
+    var stillNoAlbumAlert = new Alert("Don't stick around!", "Fans of " + bandInfo[bandID][0] + " are " +
+                                                             "waiting for new releases! Don't lose their sight " +
+                                                             "and go recording a new album for your guys.");
     notifications.appendChild(stillNoAlbumAlert);
 
     setTimeout(function() {        
@@ -76,22 +38,10 @@ function StillNoAlbumAlert(bandID) {
 }
 
 function TheyGoAwayAlert(bandID) {
-    var theyGoAwayAlert = document.createElement("div");
-    theyGoAwayAlert.className = "alert";
+    var theyGoAwayAlert = new Alert("Awww man they're walking away...", "Fans of " + bandInfo[bandID][0] + " are " +
+                                                                        "losing interest to them. It is recommended " +
+                                                                        "to drop new release to save their community!");
     theyGoAwayAlert.style.backgroundColor = "palevioletred";
-
-    var alertHeader = document.createElement("p");
-    alertHeader.innerHTML = "Awww man they're walking away...";
-    alertHeader.id = "alertheader";
-    theyGoAwayAlert.appendChild(alertHeader);
-
-    var alertContent = document.createElement("p");
-    alertContent.innerHTML = "Fans of " + bandInfo[bandID][0] + " are " +
-                             "losing interest to them. It is recommended " +
-                             "to drop new album to save their community!";
-    alertContent.id = "alertcontent";
-    theyGoAwayAlert.appendChild(alertContent);
-
     notifications.appendChild(theyGoAwayAlert);
 
     setTimeout(function() {
@@ -101,20 +51,8 @@ function TheyGoAwayAlert(bandID) {
 }
 
 function RevivalAlert(bandID) {
-    var revivalAlert = document.createElement("div");
-    revivalAlert.className = "alert";
-
-    var alertHeader = document.createElement("p");
-    alertHeader.innerHTML = "Revival";
-    alertHeader.id = "alertheader";
-    revivalAlert.appendChild(alertHeader);
-
-    var alertContent = document.createElement("p");
-    alertContent.innerHTML = "You turned back " + bandInfo[bandID][0] + "'s fans " +
-                             "curiosity. Don't do bad things more!";
-    alertContent.id = "alertcontent";
-    revivalAlert.appendChild(alertContent);
-
+    var revivalAlert = new Alert("Revival", "You turned back " + bandInfo[bandID][0] + "'s fans " +
+                                            "curiosity. Don't do bad things more!");
     notifications.appendChild(revivalAlert);
 
     setTimeout(function() {
@@ -124,21 +62,10 @@ function RevivalAlert(bandID) {
 }
 
 function LackOfMoneyAlert() {
-    var lackOfMoneyAlert = document.createElement("div");
-    lackOfMoneyAlert.className = "alert";
+    var lackOfMoneyAlert = new Alert("Running out of money?", "Money isn't a neverending thing. If you're experiencing a " +
+                                                              "lack of it, you can try your fortune and win some by clicking \"Money\" " +
+                                                              "button in toolbar.");
     lackOfMoneyAlert.style.backgroundColor = "palevioletred";
-
-    var alertHeader = document.createElement("p");
-    alertHeader.innerHTML = "Running out of money?";
-    alertHeader.id = "alertheader";
-    lackOfMoneyAlert.appendChild(alertHeader);
-
-    var alertContent = document.createElement("p");
-    alertContent.innerHTML = "Money isn't a neverending thing. If you're experiencing a " +
-                             "lack of it, you can try your fortune and win some by clicking \"Money\" " +
-                             "button in toolbar.";
-    alertContent.id = "alertcontent"
-    lackOfMoneyAlert.appendChild(alertContent);
 
     var moneyscreenbutton = document.createElement("div")
     moneyscreenbutton.id = "moneyscreenbutton";
@@ -160,6 +87,31 @@ function LackOfMoneyAlert() {
         notifications.removeChild(lackOfMoneyAlert);
     }, 15000);
 }
+
+function Alert(header, content) {
+    var alert = document.createElement("div");
+    alert.className = "alert";
+
+    var alertHeader = document.createElement("p");
+    alertHeader.innerHTML = header;
+    alertHeader.id = "alertheader";
+    alert.appendChild(alertHeader);
+
+    var alertContent = document.createElement("p");
+    alertContent.innerHTML = content;
+    alertContent.id = "alertcontent";
+    alert.appendChild(alertContent);
+
+    alert.onmouseover = function() {
+        alert.style.opacity = "30%";
+    }
+    alert.onmouseout = function() {
+        alert.style.opacity = "100%";
+    }
+
+    return alert;
+}
+
 
 var lotteryWindowOpened = false;
 
