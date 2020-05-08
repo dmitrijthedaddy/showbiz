@@ -418,8 +418,11 @@ function EpochsWindow(bandID) {
         function NewRelease() {
             var releaseID = totalReleasesCount;
             var typeBuffer = "";
+            var releaseCostsBuffer = 0;
+            var ppIncBuffer = 0;
             var newReleaseWindow = document.createElement("div");
             newReleaseWindow.className = "epochsdialog";
+            newReleaseWindow.style.zIndex = 1;
             $(newReleaseWindow).draggable({
                 revert: false
             });
@@ -442,6 +445,8 @@ function EpochsWindow(bandID) {
             var releaseTypeText = document.createElement("p");
             UpdateReleaseType();
             newReleaseContent.appendChild(releaseTypeText);
+
+            var createButton = new ButtonAcceptDecline("accept", "Record! ($" + releaseCostsBuffer + ")");
             
             var releaseTypeButtonSection = document.createElement("div");
             releaseTypeButtonSection.style.display = "flex";
@@ -450,12 +455,18 @@ function EpochsWindow(bandID) {
             typeSingle.onmouseover = typeSingle.onmouseout = tileButtonHandlerToBlack;
             typeSingle.onclick = function() {
                 typeBuffer = "single";
+                releaseCostsBuffer = (bandPoints[bandID][3] / 4).toFixed(0);
+                ppIncBuffer = 20;
+                createButton.innerHTML = "Record! ($" + releaseCostsBuffer + ")";
                 UpdateReleaseType();
             }
             var typeAlbum = new ReleaseTypeTag("album");
             typeAlbum.onmouseover = typeAlbum.onmouseout = tileButtonHandlerToBlack;
             typeAlbum.onclick = function() {
                 typeBuffer = "album";
+                releaseCostsBuffer = bandPoints[bandID][3];
+                ppIncBuffer = 80;
+                createButton.innerHTML = "Record! ($" + releaseCostsBuffer + ")";
                 UpdateReleaseType();
             }
             releaseTypeButtonSection.appendChild(typeSingle);
@@ -464,27 +475,30 @@ function EpochsWindow(bandID) {
 
             var createOrCloseSection = document.createElement("div");
             createOrCloseSection.style.display = "flex";
-            var createButton = new ButtonAcceptDecline("accept", "Record! ($" + bandPoints[bandID][3] + ")");
+            
             createButton.style.width = "fit-content";
             createButton.onclick = function() {
-                if (money >= bandPoints[bandID][3]) {
-                    money = money - bandPoints[bandID][3];
-                    releases[releaseID] = [epochID, releaseName.value, typeBuffer];
-                    document.getElementById("workflow").removeChild(newReleaseWindow);
-                    showEpochReleasesSection.appendChild(new ReleaseButton(releaseID));
-                    bandPoints[bandID][3] *= recordAlbumPriceInc;
-                    bandPoints[bandID][0] += 20;
-                    bandInfo[bandID][2]++;
-                    totalReleasesCount++;
-                }
-                else {
-                    if (!lackOfMoneyAlertShown) {
-                        LackOfMoneyAlert();
-                        lackOfMoneyAlertShown = true;
+                if (typeBuffer != "") {
+                    if (money >= releaseCostsBuffer) {
+                        money = money - releaseCostsBuffer;
+                        releases[releaseID] = [epochID, releaseName.value, typeBuffer];
+                        document.getElementById("workflow").removeChild(newReleaseWindow);
+                        showEpochReleasesSection.appendChild(new ReleaseButton(releaseID));
+                        bandPoints[bandID][3] *= recordAlbumPriceInc;
+                        bandPoints[bandID][0] += ppIncBuffer;
+                        bandInfo[bandID][2]++;
+                        totalReleasesCount++;
                     }
+                    else {
+                        if (!lackOfMoneyAlertShown) {
+                            LackOfMoneyAlert();
+                            lackOfMoneyAlertShown = true;
+                        }
+                    }
+                    moneyUpdate();
                 }
-                moneyUpdate();
             }
+
             var closeButton = new ButtonAcceptDecline("decline", "Close");
             closeButton.style.width = "fit-content";
             closeButton.onclick = function() {
