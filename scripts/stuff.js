@@ -220,3 +220,7 @@ function Lottery() {
         lotteryWindowOpened = true;
     }    
 }
+
+function Brackets(text) {
+    return "&lt;" + text + "&gt;";
+}

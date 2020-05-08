@@ -23,13 +23,43 @@
         var helloFromUsIncomingCall = new NewEmailAlert("Unknown", AcceptMailAction);
         notifications.appendChild(helloFromUsIncomingCall);
     
-        function AcceptMailAction() {
+        function AcceptMailAction() {            
             notifications.removeChild(helloFromUsIncomingCall);
-            document.getElementById("workflow").appendChild(MailWindow("HelloFromUs"));
+            var mailWindow = new MailWindow("Unknown " + Brackets("representative@emo.promo"), 
+                                        helloFromUsText[0],
+                                        CloseMailAction);
+
+            document.getElementById("workflow").appendChild(mailWindow);
+
+            function CloseMailAction() {
+                document.getElementById("workflow").removeChild(mailWindow);
+                document.getElementById("employmanagerbutton").style.visibility = "visible";
+                bandPoints[helloFromUsTargetID][0] += 2;
+            }
         }
+
+        
     }
 
     function HelloFromUs() { // main event function
         HelloFromUsMessageConstruct();
-        HelloFromUsIncomingCall();    
+        HelloFromUsIncomingCall();
     }
+
+/*
+    switch (event) {
+        case "HelloFromUs":
+            mailHeader.innerHTML = "Mail message";
+            mailWindow.appendChild(new MailContent("themostsecrethuman@intheworld.wow",
+                                                 helloFromUsText[0]));
+            closeMailWindow.onclick = function() {
+                document.getElementById("workflow").removeChild(mailWindow);
+                document.getElementById("employmanagerbutton").style.visibility = "visible";
+                bandPoints[helloFromUsTargetID][0] += 2;
+            }            
+            break;
+        default:
+            mailHeader.innerHTML = "Init mail";
+            break;
+    } 
+    */

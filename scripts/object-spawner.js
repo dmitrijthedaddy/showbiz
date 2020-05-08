@@ -318,8 +318,6 @@ function ConstructorButton(content, buttonType) {
     return button;
 }
 
-
-
 function NewEmailAlert(sender, AcceptMailAction) {
     var alert = document.createElement("div");
     alert.className = "alert";
@@ -330,7 +328,7 @@ function NewEmailAlert(sender, AcceptMailAction) {
     alertHeader.innerHTML = "1 new e-mail";
     var alertContent = document.createElement("p");
     alertContent.id = "alertcontent";
-    alertContent.innerHTML = "from" + sender;
+    alertContent.innerHTML = "from " + sender;
 
     var buttonSection = document.createElement("div");
     buttonSection.style.display = "flex";
@@ -352,10 +350,8 @@ function NewEmailAlert(sender, AcceptMailAction) {
     return alert;
 }
 
-
-function MailWindow(event) {
+function MailWindow(sender, content, CloseMailAction) {
     var mailWindow = document.createElement("div");
-    document.getElementById("workflow").appendChild(mailWindow);
     mailWindow.className = "dialog";
     mailWindow.style.zIndex = "2";
     mailWindow.style.padding = "5px";
@@ -364,45 +360,40 @@ function MailWindow(event) {
     mailWindow.style.top = "200px";
     mailWindow.style.left = "500px";
 
+    $(mailWindow).draggable({
+        revert: false
+    });
+
     var mailHeader = document.createElement("div");
     mailHeader.className = "dialogheader";
     mailWindow.appendChild(mailHeader);
+    mailHeader.innerHTML = "Mail message";
+    mailWindow.appendChild(new MailContent(sender, content));
 
-    var closeMailWindow = new ButtonAcceptDecline("decline", "Close letter");    
-    
-    switch (event) {
-        case "HelloFromUs":
-            mailHeader.innerHTML = "Mail message from Unknown";
-            mailWindow.appendChild(new MailContent("themostsecrethuman@intheworld.wow",
-                                                 helloFromUsText[0]));
-            closeMailWindow.onclick = function() {
-                document.getElementById("workflow").removeChild(mailWindow);
-                document.getElementById("employmanagerbutton").style.visibility = "visible";
-                bandPoints[helloFromUsTargetID][0] += 2;
-            }            
-            break;
-        default:
-            mailHeader.innerHTML = "Init mail";
-            break;
-    }  
+    var closeMailWindow = new ButtonAcceptDecline("decline", "Close letter");
+    closeMailWindow.onclick = CloseMailAction;
     mailWindow.appendChild(closeMailWindow);
+
+    return mailWindow;
+
+    function MailContent(sender, content) {
+        var dialog = document.createElement("div");
+    
+        var senderData = document.createElement("p");
+        senderData.innerHTML = "from: " + sender;
+        senderData.style.fontWeight = "bold";
+    
+        var mailContent = document.createElement("p");
+        mailContent.innerHTML = content;
+    
+        dialog.appendChild(senderData);
+        dialog.appendChild(mailContent);
+    
+        return dialog;    
+    }
 }
 
-function MailContent(sender, content) {
-    var dialog = document.createElement("div");
 
-    var senderData = document.createElement("p");
-    senderData.innerHTML = "from: " + sender;
-    senderData.style.fontWeight = "bold";
-
-    var mailContent = document.createElement("p");
-    mailContent.innerHTML = content;
-
-    dialog.appendChild(senderData);
-    dialog.appendChild(mailContent);
-
-    return dialog;    
-}
 
 function closeDialog() {
     if (isbandCreatingFinished) {
