@@ -19,7 +19,17 @@
                         "'s stats as you close my letter.<br><br>I hope that you'll choose EMO!<br>Bye"];
     }
 
-    function HelloFromUs() {
+    function HelloFromUsIncomingCall() {
+        var helloFromUsIncomingCall = new NewEmailAlert("Unknown", AcceptMailAction);
+        notifications.appendChild(helloFromUsIncomingCall);
+    
+        function AcceptMailAction() {
+            notifications.removeChild(helloFromUsIncomingCall);
+            document.getElementById("workflow").appendChild(MailWindow("HelloFromUs"));
+        }
+    }
+
+    function HelloFromUs() { // main event function
         HelloFromUsMessageConstruct();
         HelloFromUsIncomingCall();    
     }

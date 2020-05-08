@@ -318,40 +318,38 @@ function ConstructorButton(content, buttonType) {
     return button;
 }
 
-function HelloFromUsIncomingCall() {
-    var helloFromUsIncomingCall = document.createElement("div");
-    helloFromUsIncomingCall.className = "alert";
-    helloFromUsIncomingCall.style.backgroundColor = "yellow";
+
+
+function NewEmailAlert(sender, AcceptMailAction) {
+    var alert = document.createElement("div");
+    alert.className = "alert";
+    alert.style.backgroundColor = "yellow";
 
     var alertHeader = document.createElement("p");
     alertHeader.id = "alertheader";
     alertHeader.innerHTML = "1 new e-mail";
     var alertContent = document.createElement("p");
     alertContent.id = "alertcontent";
-    alertContent.innerHTML = "from Unknown";
+    alertContent.innerHTML = "from" + sender;
 
     var buttonSection = document.createElement("div");
     buttonSection.style.display = "flex";
-
     var accept = new ButtonAcceptDecline("accept", "Open");
     var decline = new ButtonAcceptDecline("decline", "Move to Spam");
 
-    accept.onclick = function() {
-        notifications.removeChild(helloFromUsIncomingCall);
-        document.getElementById("workflow").appendChild(MailWindow("HelloFromUs"));        
-    }
+    // BUTTONS
+    accept.onclick = AcceptMailAction;
     decline.onclick = function() {
-        notifications.removeChild(helloFromUsIncomingCall);
+        notifications.removeChild(alert);
     }
-
     buttonSection.appendChild(accept);
     buttonSection.appendChild(decline);
 
-    helloFromUsIncomingCall.appendChild(alertHeader);
-    helloFromUsIncomingCall.appendChild(alertContent);
-    helloFromUsIncomingCall.appendChild(buttonSection);
+    alert.appendChild(alertHeader);
+    alert.appendChild(alertContent);
+    alert.appendChild(buttonSection);
 
-    notifications.appendChild(helloFromUsIncomingCall);
+    return alert;
 }
 
 
