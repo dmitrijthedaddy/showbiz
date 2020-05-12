@@ -16,7 +16,7 @@ function AppendBand() {
     
     var bandID = totalBandCount;  
     var incomeNow = 0;  
-    bandInfo[bandID] = ["", finalGenre, defaultAlbumsCount, defaultFansCount];
+    bandInfo[bandID] = ["", finalGenre, defaultAlbumsCount, defaultFansCount, 0];
     bandPoints[bandID] = [0, 0, promoPrice, recordAlbumPrice, tourIncome, 0];
     bandCoeffs[bandID] = [1];
     
@@ -303,6 +303,7 @@ function EpochsWindow(bandID) {
             epochs[epochNumber] = [bandID, epochName.value, 0, "active"];
             document.getElementById("workflow").removeChild(createEpochWindow);
             epochsButtonSection.appendChild(new EpochButton(epochNumber));
+            bandInfo[bandID][4] = epochNumber;
         }
         var closeButton = new ButtonAcceptDecline("decline", "Close");
         closeButton.onclick = function() {
@@ -446,7 +447,7 @@ function EpochsWindow(bandID) {
             UpdateReleaseType();
             newReleaseContent.appendChild(releaseTypeText);
 
-            var createButton = new ButtonAcceptDecline("accept", "Record! ($" + releaseCostsBuffer + ")");
+            var createButton = new ButtonAcceptDecline("accept", "Record! ($" + releaseCostsBuffer.toFixed(0) + ")");
             
             var releaseTypeButtonSection = document.createElement("div");
             releaseTypeButtonSection.style.display = "flex";
@@ -496,6 +497,7 @@ function EpochsWindow(bandID) {
                         }
                     }
                     moneyUpdate();
+                    HappyFan();
                 }
             }
 

@@ -1,5 +1,52 @@
 // EVENTS
 
+// Happy Fan
+    let happyFanHappened = false;
+    let happyFanTargetID = 0;
+    let happyFanText = "";
+    let happyFanRandomNames = ["Abraham", "Methodius", "Jesus", "Stanislaus", "Oibek", 
+                               "Gleb", "Asalique", "Theo", "Nursultan", "Jared", "Glen",
+                               "Vyacheslav", "Carlos"];
+
+    function HappyFanMessageConstruct() {
+        let happyFanReleaseID = HappyFanGetReleaseID();
+        happyFanText = ["Hi " + bandInfo[happyFanTargetID][0] + "! I'm probably your biggest fan from Default City.<br><br>" +
+                        "I have checked out your release <b>\"" + releases[happyFanReleaseID][1] + "\"</b> " +
+                        "recently and it's really roof-bearing! Need to say that I haven't heard such a vibing <b>" + bandInfo[happyFanTargetID][1] +
+                        "</b> until I found your music... Hope that you'll make a tour soon and visit my town.<br><br>" +
+                        "Keep on making good music,<br>" +
+                        happyFanRandomNames[getRandomInt(happyFanRandomNames.length)]];
+    }
+
+    function HappyFan() {
+        setTimeout(function() {
+            HappyFanMessageConstruct();
+            var happyFanAlert = new NewEmailAlert("Fan", AcceptMailAction);
+            notifications.appendChild(happyFanAlert);
+
+            function AcceptMailAction() {
+                notifications.removeChild(happyFanAlert);
+                var mailWindow = new MailWindow("Fan " + Brackets("thebiggestfan@weehaw.com"),
+                                                happyFanText[0],
+                                                CloseMailAction);
+                document.getElementById("workflow").appendChild(mailWindow);
+                
+                function CloseMailAction() {
+                    document.getElementById("workflow").removeChild(mailWindow);
+                }
+            }
+        }, getRandomArbitrary(10000, 100000));
+    }
+
+    function HappyFanGetReleaseID() {
+        for (var i = 0; i < releases.length; i++)
+        {
+            if (releases[i][0] == bandInfo[happyFanTargetID][4]) {
+                return i;
+            }
+        }
+    }
+
 // Hello From Us
     let helloFromUsHappened = false;
     let helloFromUsFanLaunch = getRandomArbitrary(600, 1000);

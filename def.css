@@ -124,7 +124,7 @@ body, html {
     border: 3px groove rgb(109, 79, 109);
     background-color: plum;
     box-shadow: 5px 5px black;
-    z-index: 0;
+    z-index: 1;
   }
 
   #dialog {

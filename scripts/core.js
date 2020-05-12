@@ -6,8 +6,8 @@ let epochs = []; // [bandID, Name, Income, Status]
 
 // ARTISTS
 let totalBandCount = 0;
-let bandInfo = [];
-let bandPoints = []; // [Promo Points, Tours, Promo Price, recordAlbumPrice, tourPrice]
+let bandInfo = [];   // [Name(0), Genre(1), Albums(2), Fans(3), currentEpoch(4)]
+let bandPoints = []; // [Promo Points(0), Tours(1), Promo Price(2), recordAlbumPrice(3), tourPrice(4)]
 let bandCoeffs = []; // [Fan+]
 
 let defaultAlbumsCount = 0;
