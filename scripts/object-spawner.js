@@ -149,7 +149,7 @@ function UpdateBuffs() {
 
 function prefixButtonHandler(event) {
     if (event.type == "mouseover") {
-        event.target.style.background = "black"
+        event.target.style.background = "rgb(0, 144, 205)";
         event.target.style.color = "white";
     }
     if (event.type == "click") {
@@ -190,7 +190,7 @@ function prefixButtonHandler(event) {
 
 function rootButtonHandler(event) {
     if (event.type == "mouseover") {
-        event.target.style.background = "black"
+        event.target.style.background = "rgb(205, 0, 205)"
         event.target.style.color = "white";
     }
     if (event.type == "click") {
@@ -241,7 +241,7 @@ function rootButtonHandler(event) {
 
 function postfixButtonHandler(event) {
     if (event.type == "mouseover") {
-        event.target.style.background = "black"
+        event.target.style.background = "rgb(205, 0, 64)"
         event.target.style.color = "white";
     }
     if (event.type == "click") {
@@ -304,21 +304,23 @@ function GenreConstructor() {
 function ConstructorButton(content, buttonType) {
     var type = buttonType;
     var button = document.createElement("div");
-    $(button).css( {padding: "5px", margin: "5px"} );
-    $(button).css("position", "relative");
+    button.style.padding = button.style.margin = "5px";
+    button.style.position = "relative";
     $(button).css( {width: "fit-content", height: "fit-content"} );
     $(button).css("text-align", "center");
-    $(button).css("border", "1px groove darkviolet");
     $(button).css("cursor", "pointer");
     button.innerHTML = content;
     switch (type) {
-        case "prefix":    
+        case "prefix":
+            button.style.border = "1px solid rgb(0, 0, 205)";
             button.onclick = button.onmouseover = button.onmouseout = prefixButtonHandler;                 
             break;
         case "root":
+            button.style.border = "1px solid rgb(127, 0, 205)";
             button.onclick = button.onmouseover = button.onmouseout = rootButtonHandler;            
             break;
         case "postfix":
+            button.style.border = "1px solid rgb(205, 0, 0)";
             button.onclick = button.onmouseover = button.onmouseout = postfixButtonHandler;
             break;
         default:

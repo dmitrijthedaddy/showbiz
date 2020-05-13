@@ -23,6 +23,7 @@
             HappyFanMessageConstruct();
             var happyFanAlert = new NewEmailAlert("Fan", AcceptMailAction);
             notifications.appendChild(happyFanAlert);
+            happyFanHappened = true;
 
             function AcceptMailAction() {
                 notifications.removeChild(happyFanAlert);
@@ -92,21 +93,3 @@
         HelloFromUsMessageConstruct();
         HelloFromUsIncomingCall();
     }
-
-/*
-    switch (event) {
-        case "HelloFromUs":
-            mailHeader.innerHTML = "Mail message";
-            mailWindow.appendChild(new MailContent("themostsecrethuman@intheworld.wow",
-                                                 helloFromUsText[0]));
-            closeMailWindow.onclick = function() {
-                document.getElementById("workflow").removeChild(mailWindow);
-                document.getElementById("employmanagerbutton").style.visibility = "visible";
-                bandPoints[helloFromUsTargetID][0] += 2;
-            }            
-            break;
-        default:
-            mailHeader.innerHTML = "Init mail";
-            break;
-    } 
-    */
