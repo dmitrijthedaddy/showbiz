@@ -1,4 +1,7 @@
+var ppDivideCoefficientBuffer = defaultPPDivideCoefficient;
+
 function AppendBand() {
+    var ppDivideCoefficient = ppDivideCoefficientBuffer;
     var coeffBuffer = 1;
 
     var promoLaunched = false;
@@ -112,7 +115,7 @@ function AppendBand() {
     
 
     function UpdateBandStats() {
-        bandInfo[bandID][3] += bandPoints[bandID][0] / 10;
+        bandInfo[bandID][3] += bandPoints[bandID][0] / ppDivideCoefficient;
         if (bandInfo[bandID][2] >= 1) {
             incomeNow = IncomeRandomizer();
             money += incomeNow;
@@ -129,7 +132,7 @@ function AppendBand() {
         "<br>Albums: " + bandInfo[bandID][2] + 
         "<br>Fans: " + GetFans(bandID).toFixed(0) +
         " <span class='tilebrackets'>(" + 
-        GetPromoIncr(bandID) +
+        GetPromoIncr() +
         " per second)</span>";
         bandPromoDataText.innerHTML = "Promo Points: " + bandPoints[bandID][0].toFixed(1) +
                                         "<br>Tours: " + bandPoints[bandID][1] +
@@ -181,6 +184,15 @@ function AppendBand() {
             HelloFromUs();
         }
     }
+
+    function GetPromoIncr() {
+        if (bandPoints[bandID][0] / 10 >= 0) {
+            return "+" + (bandPoints[bandID][0] / ppDivideCoefficient).toFixed(1);
+        }
+        else {
+            return (bandPoints[bandID][0] / ppDivideCoefficient).toFixed(1);
+        }
+    }
 }
 
 let revival = true;
@@ -199,14 +211,7 @@ function GetFans(bandID) {
     return bandInfo[bandID][3];
 }
 
-function GetPromoIncr(bandID) {
-    if (bandPoints[bandID][0] / 10 >= 0) {
-        return "+" + (bandPoints[bandID][0] / 10).toFixed(1);
-    }
-    else {
-        return (bandPoints[bandID][0] / 10).toFixed(1);
-    }
-}
+
 
 function EpochsWindow(bandID) {
     var epochsWindow = document.createElement("div");

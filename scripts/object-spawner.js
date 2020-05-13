@@ -49,8 +49,11 @@ $(".tile").draggable({
 })
 
 var isNewBandDialogOpened = false;
+var constructorSubstractors = [0, 0, 0];
 
 function createNewbandDialog() {
+    ppDivideCoefficientBuffer = 10;
+    console.log("Current DivideCoefficientBuffer = " + ppDivideCoefficientBuffer);
     var body = document.body;
     isbandCreatingFinished = false;
 
@@ -141,6 +144,7 @@ function createNewbandDialog() {
 
 function UpdateBuffs() {
     displayBuffs.innerHTML = effectsDisplay[0] + effectsDisplay[1];
+    ppDivideCoefficientBuffer = 10 + constructorSubstractors[0] + constructorSubstractors[1] + constructorSubstractors[2];
 }
 
 function prefixButtonHandler(event) {
@@ -155,24 +159,28 @@ function prefixButtonHandler(event) {
         switch (content) {
             case "lo-fi":
                 recordAlbumPrice = 0;
+                constructorSubstractors[0] = 0;
                 effectsDisplay[0] = content + ":<br>"+
                                     "--  Promo<br>" +
                                     "Album recording costs NOTHING!<br><br>";
                 break;
             case "kalyan":
-                recordAlbumPrice = defaultRecordAlbumPrice;
+                recordAlbumPrice = defaultRecordAlbumPrice * 2;
+                constructorSubstractors[0] = -3;
                 effectsDisplay[0] = content + ":<br>" +
                                     "+++ Fans<br>" +
                                     "Albums are less efficient<br><br>";
                 break;
             case "post":
                 recordAlbumPrice = defaultRecordAlbumPrice;
+                constructorSubstractors[0] = getRandomArbitrary(0, 2) * getRandomArbitrary(-1, 2).toFixed(0);
                 effectsDisplay[0] = content + ":<br>" +
                                     "??? unknown effects<br><br>"
                 break;
         }       
         prefix = content;
-        UpdateBuffs;
+        UpdateBuffs();
+        console.log("Current DivideCoefficientBuffer = " + ppDivideCoefficientBuffer);
     }
     if (event.type == "mouseout") {
         event.target.style.color = "black";
@@ -192,6 +200,7 @@ function rootButtonHandler(event) {
         switch (content) {
             case "hip-hop":
                     tourIncome = 30000;
+                    constructorSubstractors[1] = -1;
                     effectsDisplay[1] = content + ":<br>" +
                                         "+   Fans<br>" +
                                         "++  Tour revenue<br>" +
@@ -205,6 +214,7 @@ function rootButtonHandler(event) {
                     break;
                 case "pop":
                     tourIncome = 40000;
+                    constructorSubstractors[1] = -3;
                     effectsDisplay[1] = content + ":<br>" +
                                         "+++ Fans<br>" +
                                         "+++ Tour revenue<br>" +
@@ -212,6 +222,7 @@ function rootButtonHandler(event) {
                     break;
                 case "jazz":
                     tourIncome = defaultTourIncome;
+                    constructorSubstractors[1] = 1;
                     effectsDisplay[1] = content + ":<br>" +
                                         "-   Fans<br>" +
                                         "++  Album recording time<br><br>";
@@ -219,7 +230,8 @@ function rootButtonHandler(event) {
         }
         root = content;
         
-        UpdateBuffs;
+        UpdateBuffs();
+        console.log("Current DivideCoefficientBuffer = " + ppDivideCoefficientBuffer);
     }
     if (event.type == "mouseout") {
         event.target.style.color = "black";

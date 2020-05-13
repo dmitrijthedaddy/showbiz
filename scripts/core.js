@@ -10,6 +10,7 @@ let bandInfo = [];   // [Name(0), Genre(1), Albums(2), Fans(3), currentEpoch(4)]
 let bandPoints = []; // [Promo Points(0), Tours(1), Promo Price(2), recordAlbumPrice(3), tourPrice(4)]
 let bandCoeffs = []; // [Fan+]
 
+let defaultPPDivideCoefficient = 10;
 let defaultAlbumsCount = 0;
 let defaultFansCount = 0;
 let money = 10000;
