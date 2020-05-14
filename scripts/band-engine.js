@@ -447,7 +447,7 @@ function EpochsWindow(bandID) {
                 revert: false
             });
             newReleaseWindow.ondrag = CurrentWindowOnTop;
-            
+
             var newReleaseHeader = document.createElement("div");
             newReleaseHeader.className = "dialogheader";
             newReleaseHeader.style.backgroundColor = "black";
@@ -570,6 +570,12 @@ function EpochsWindow(bandID) {
             }
             changeDistributorWebsites.appendChild(websites);
             changeDistributorWindow.appendChild(changeDistributorWebsites);
+
+            var closeButton = new ButtonAcceptDecline("decline", "Close");
+            closeButton.onclick = function() {
+                document.getElementById("workflow").removeChild(changeDistributorWindow);
+            }
+            changeDistributorWindow.appendChild(closeButton);
 
             document.getElementById("workflow").appendChild(changeDistributorWindow);
         }
