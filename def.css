@@ -1,7 +1,6 @@
 body, html {
   font-family: monospace;
-  margin: 0;
-  padding: 0;
+  margin: 0; padding: 0;
   background-color: rgb(131, 167, 235);
 }
 
@@ -14,94 +13,56 @@ body, html {
   }
   .workflow {
     padding: 10px;
-    width: 100%;
+    width: 100%; height: max-content;
     position: relative;
+    display: flex; flex-wrap: wrap;
     z-index: 1;
-    display: flex;
-    flex-wrap: wrap;
-    height: max-content;
-    color: medi;
   }
 
   #workflow
 
   .tile {
     position: relative;
-    margin: 10px;
-    padding: 10px;
+    margin: 10px; padding: 10px;
     color: azure;
     width: 300px; height: 200px;
-    border: 2px groove purple;
-    background-color: rgb(145, 34, 145);
+    border: 2px groove purple; background-color: rgb(145, 34, 145);
     box-shadow: 5px 5px darkblue;
-    /* z-index: 1000;*/
   }
 
   .notifications {
     position: absolute;
     padding: 5px;
     width: 500px;
-    top: 20px;
-    left: 1200px;
+    top: 20px; left: 1200px;
     z-index: 1000;
   }
-
   #notifications
 
   .alert {
     position: relative;
     margin: 5px;
-    border: 5px groove darkgreen;
-    background-color: rgb(77, 202, 77);
-
+    border: 5px groove darkgreen; background-color: rgb(77, 202, 77);
     box-shadow: 5px 5px midnightblue;
   }
 
-  #alertheader {
-    font-size: x-large;
-    font-weight: bolder;
-    color: black;
-  }
-  
-  #alertcontent {
-    color: black;
-  }
+  #alertheader { font-size: x-large; font-weight: bolder; }
+  #alertheader, #alertcontent { padding: 5px; color: black; }
 
-  #alertheader, #alertcontent {
-    padding: 5px;
-  }
-
-  /* tile section */
-  .tilebuttonsection {
-    position: absolute;
-    width: 100px;
-    top: 90px;
-    left: 200px;
-  }
-  
-  .tilebrackets {
-    color: grey;
-  }
-
+/* tile section */
+  .tilebuttonsection { position: absolute; width: 100px; top: 90px; left: 200px; }  
+  .tilebrackets { color: grey; }
   #tile
+  #tileheader { font-size: x-large; }
+  #tilebutton { padding: 5px; border: 1px groove rgb(43, 110, 235); cursor: pointer; }
 
-  #tileheader {
-    font-size: x-large;
-  }
-
-  #tilebutton {
-    padding: 5px;
-    border: 1px groove rgb(43, 110, 235);
-    cursor: pointer;        
-  }
-
+/* dialog section */
   .dialog {
     position: absolute;
     padding: 5px;
     width: 400px;
     top: 300px; left: 700px;
-    border: 3px groove rgb(109, 79, 109);
-    background-color: plum;
+    border: 3px groove rgb(109, 79, 109); background-color: plum;
     visibility: hidden;
     box-shadow: 5px 5px darkviolet;
     z-index: 2;
@@ -120,52 +81,28 @@ body, html {
 
   .epochsdialog {
     position: relative;
-    width: 400px;
-    height: fit-content;
+    width: 400px; height: fit-content;
     padding: 5px;
-    border: 3px groove rgb(109, 79, 109);
-    background-color: plum;
+    border: 3px groove rgb(109, 79, 109); background-color: plum;
     box-shadow: 5px 5px black;
-    z-index: 1;
   }
 
-  #dialog {
-    
-  }
+  #dialog
+  #dialogheadercontent { margin: 0; padding: 0; font-weight: bold; }
+  .dialogheader { height: 20px; background-color: rgb(214, 119, 214); text-align: center; }
 
-  /* toolbar section */
-  #createbandbutton, #moneyscreenbutton, #employmanagerbutton {
-    padding: 5px;
-    margin: 5px;
-    width: fit-content;
-    height: fit-content;
+/* toolbar section */
+  #createbandbutton, #moneyscreenbutton, #employmanagerbutton { 
+    padding: 5px; margin: 5px; 
+    width: fit-content; height: fit-content;
     text-align: center;
     border: 1px groove rgb(43, 110, 235);
     cursor: pointer;
   }
+  #employmanagerbutton { visibility: hidden; }
 
-  #employmanagerbutton {
-    visibility: hidden;
-  }
-
-  /* dialog section */
-  .dialogheader {
-    height: 20px;
-    background-color: rgb(214, 119, 214);
-    text-align: center;
-  }
-
-  #dialogheadercontent {
-    margin: 0; padding: 0;
-    font-weight: bold;
-  }
-
-  #dialogbutton {
-    width: fit-content;
-    border: 1px groove rgb(109, 79, 109);
-    background-color: rgb(214, 119, 214);
-  }
-
-  #lottery {
-    z-index: 1002;
-  }
+/* stuff */
+  #lottery { z-index: 1002; }
+  #website { color: dodgerblue; font-weight: bolder; }
+  #dialogbutton { width: fit-content; border: 1px groove rgb(109, 79, 109); background-color: rgb(214, 119, 214); }
+  #changedistributorbutton { background-color: mediumblue; color: white; }
