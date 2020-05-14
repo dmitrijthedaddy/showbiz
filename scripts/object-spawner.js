@@ -407,8 +407,6 @@ function MailWindow(sender, content, CloseMailAction) {
     }
 }
 
-
-
 function closeDialog() {
     if (isbandCreatingFinished) {
         $(dialog).css("visibility", "hidden");

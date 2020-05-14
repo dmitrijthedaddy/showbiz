@@ -2,7 +2,7 @@ let timeSpeed = 1000; // in ms
 let totalReleasesCount = 0;
 let releases = []; // [epochID, Title, Type]
 let totalEpochsCount = 0;
-let epochs = []; // [bandID, Name, Income, Status]
+let epochs = []; // [bandID, Name, Income, Status, Aggregator]
 
 // ARTISTS
 let totalBandCount = 0;
@@ -27,6 +27,17 @@ let managerInfo = []; // [Name, BandID, Exp]
 let managerCoeffs = []; // [PP+, money-]
 
 let defaultManagerExp = 1;
+
+
+// DISTRIBUTORS & PLATFORMS
+let distrosAvailable = 4;
+let distroNames   = ["TWOspins", "SoundKernel", "DistroGrandpa", "Faith"];
+let platformNames = ["Tomato Tunes", "BING-BANG", "Commatose", 
+                     "Thesaurus", "MyPipe", "Weehaw Party"];
+let distroWebsiteLines = ["<br>TWOspins - <span id='website'>twospins.com</span>",
+                          "<br>SoundKernel - no information",
+                          "<br>DistroGrandpa - <span id='website'>distrograndpa.cc</span>",
+                          "<br>Faith - <span id='website'>faith-distribution.net</span>"];
 
 
 // OTHER STUFF

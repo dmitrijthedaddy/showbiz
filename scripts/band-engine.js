@@ -16,7 +16,6 @@ function AppendBand() {
         revert: false
     });
     tile.ondrag = CurrentWindowOnTop;
-    
     var bandID = totalBandCount;  
     var incomeNow = 0;  
     bandInfo[bandID] = ["", finalGenre, defaultAlbumsCount, defaultFansCount, 0];
@@ -305,7 +304,7 @@ function EpochsWindow(bandID) {
         var createButton = new ButtonAcceptDecline("accept", "Create!");
         createButton.onclick = function() {
             console.log("Epoch number = " + epochNumber + "\n" + bandID + " " + epochName.value + " ")
-            epochs[epochNumber] = [bandID, epochName.value, 0, "active"];
+            epochs[epochNumber] = [bandID, epochName.value, 0, "active", "(none)"];
             document.getElementById("workflow").removeChild(createEpochWindow);
             epochsButtonSection.appendChild(new EpochButton(epochNumber));
             bandInfo[bandID][4] = epochNumber;
@@ -338,7 +337,22 @@ function EpochsWindow(bandID) {
         
         var showEpochInfoText = document.createElement("p");
         showEpochContent.innerHTML = "<br>Belongs to: " + bandInfo[epochs[epochID][0]][0] +
-                                     "<br>Global ID: #" + epochID;
+                                     "<br>Global ID: #" + epochID +
+                                     "<br>Current distribution service: " + epochs[epochID][4] + " ";
+
+        var changeDistributorButton = document.createElement("span");
+        changeDistributorButton.id = "changedistributorbutton";
+        changeDistributorButton.innerHTML = "Change";
+        changeDistributorButton.onmouseover = function() {
+            changeDistributorButton.style.backgroundColor = "black";
+        }
+        changeDistributorButton.onmouseout = function() {
+            changeDistributorButton.style.backgroundColor = "mediumblue";
+        }
+        changeDistributorButton.onclick = ChangeDistributor;
+        showEpochContent.append(changeDistributorButton)
+
+
         var showEpochReleases = document.createElement("div");
         var showEpochReleasesHeader = document.createElement("p");
         showEpochReleasesHeader.innerHTML = "Releases in this epoch:";
@@ -524,5 +538,53 @@ function EpochsWindow(bandID) {
                 releaseTypeText.innerHTML = "Format: " + typeBuffer;
             }            
         }
+
+        function ChangeDistributor() {
+            var changeDistributorWindow = document.createElement("div");
+            changeDistributorWindow.className = "epochsdialog";
+            changeDistributorWindow.style.width = "300px";            
+            changeDistributorWindow.ondrag = CurrentWindowOnTop;
+            changeDistributorWindow.onmouseover = $(changeDistributorWindow).draggable({ revert: false });
+
+            var changeDistributorHeader = document.createElement("div");
+            changeDistributorHeader.className = "dialogheader";
+            changeDistributorHeader.style.backgroundColor = "black";
+            changeDistributorHeader.style.color = "white";
+            changeDistributorHeader.innerHTML = "Change Distributor for " + epochs[epochID][1];
+            changeDistributorWindow.appendChild(changeDistributorHeader);
+
+            var changeDistributorContent = document.createElement("div");
+            changeDistributorContent.style.display = "flex";
+            changeDistributorContent.style.flexWrap = "wrap";
+            for (var i = 0; i < distrosAvailable; i++) {
+                changeDistributorContent.appendChild(new DistributorButton(i));
+            }
+
+            changeDistributorWindow.appendChild(changeDistributorContent);
+
+            var changeDistributorWebsites = document.createElement("div");
+            var websites = document.createElement("p");
+            websites.innerHTML = "Visit distributors' websites: ";
+            for (var i = 0; i < distrosAvailable; i++) {
+                websites.innerHTML += distroWebsiteLines[i];
+            }
+            changeDistributorWebsites.appendChild(websites);
+            changeDistributorWindow.appendChild(changeDistributorWebsites);
+
+            document.getElementById("workflow").appendChild(changeDistributorWindow);
+        }
     }
+}
+
+function DistributorButton(distroID) {
+    var button = document.createElement("div");
+    button.style.margin = button.style.padding = "5px";
+    button.style.cursor = "pointer";
+    button.style.width = "fit-content";
+    button.style.border = "1px solid black";
+
+    button.innerHTML = distroNames[distroID];
+    button.onmouseout = button.onmouseover = tileButtonHandlerToBlack;
+    
+    return button;    
 }
