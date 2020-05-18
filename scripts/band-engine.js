@@ -11,46 +11,37 @@ function AppendBand() {
 
     var tile = document.createElement("div");
     tile.className = "tile";
-    tile.id = "tile";
-    $(tile).draggable({
-        revert: false
-    });
     tile.ondrag = CurrentWindowOnTop;
+
+    var tileHeader = document.createElement("p");
+    var tileArtistBrief = document.createElement("p");
+    var tileArtistPromoData = document.createElement("p");
+    tileHeader.id = "tileheader";
+
+    var tileElements = [tileHeader, tileArtistBrief, tileArtistPromoData];
+    tileElements.forEach(element => tile.appendChild(element));
+    
     var bandID = totalBandCount;  
     var incomeNow = 0;  
     bandInfo[bandID] = ["", finalGenre, defaultAlbumsCount, defaultFansCount, 0];
     bandPoints[bandID] = [0, 0, promoPrice, recordAlbumPrice, tourIncome, 0];
     bandCoeffs[bandID] = [1];
-    
+
     // RESET
     totalBandCount++;
     recordAlbumPrice = defaultRecordAlbumPrice;
     tourIncome = defaultTourIncome;
-
-    var bandNameText = document.createElement("p");
-    bandNameText.textContent = bandInfo[bandID][0] = bandName.value;
-    
-    bandNameText.id = "tileheader";
-    tile.appendChild(bandNameText);
-
-    var bandGenreText = document.createElement("p");    
-    var bandPromoDataText = document.createElement("p");
-    var bandStreamsText = document.createElement("p");
-
+    tileHeader.innerHTML = bandInfo[bandID][0] = bandName.value;
     UpdateBandData();
-    tile.appendChild(bandGenreText);
-    tile.appendChild(bandPromoDataText);
 
     // BUTTONS
     ButtonSection();
 
-    var workflow = document.getElementById("workflow");
-    workflow.appendChild(tile);
+    document.getElementById("workflow").appendChild(tile);
     isbandCreatingFinished = true;
 
     setInterval(UpdateBandStats, GetTimeSpeed());
     setInterval(UpdateBandData, GetTimeSpeed());
-    //CreateManager(bandID); // to remove!!
 
     function ButtonSection() {
         var buttonSection = document.createElement("div");
@@ -108,7 +99,7 @@ function AppendBand() {
         buttonSection.append(goTourButton);
         doPromoButton.onmouseover = doPromoButton.onmouseout = recordAlbumButton.onmouseover = 
         recordAlbumButton.onmouseout = goTourButton.onmouseover = goTourButton.onmouseout = tileButtonHandler;
-        tile.append(buttonSection);
+        tile.appendChild(buttonSection);
     }
 
     
@@ -127,13 +118,13 @@ function AppendBand() {
     }
 
     function UpdateBandData() {            
-        bandGenreText.innerHTML = "Genre: " + bandInfo[bandID][1] + 
+        tileArtistBrief.innerHTML = "Genre: " + bandInfo[bandID][1] + 
         "<br>Albums: " + bandInfo[bandID][2] + 
         "<br>Fans: " + GetFans(bandID).toFixed(0) +
         " <span class='tilebrackets'>(" + 
         GetPromoIncr() +
         " per second)</span>";
-        bandPromoDataText.innerHTML = "Promo Points: " + bandPoints[bandID][0].toFixed(1) +
+        tileArtistPromoData.innerHTML = "Promo Points: " + bandPoints[bandID][0].toFixed(1) +
                                         "<br>Tours: " + bandPoints[bandID][1] +
                                         "<br><br>Income per sec: $" + incomeNow.toFixed(2);
 
