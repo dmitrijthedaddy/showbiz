@@ -7,7 +7,16 @@ let managerRandomNames = ["Daniil Dobryakov",
                           "Igor Fridge",
                           "Alex Johnson"];
 
-// HelloFromUsIncomingCall();
+function buttonHandler(event) {
+    if (event.type == "mouseover") {
+        event.target.style.background = "black";
+        event.target.style.color = "white";
+    }
+    if (event.type == "mouseout") {
+        event.target.style.background = null;
+        event.target.style.color = "black";
+    }
+}
 
 function ManagerEmployment() {
     var manName, experience;
@@ -26,7 +35,6 @@ function ManagerEmployment() {
     var manEmpContent = document.createElement("div");
     var textChoose = document.createElement("p");
     textChoose.innerHTML = "Choose one of your artists to let us match some candidates:<br>";
-    manEmpContent.appendChild(textChoose);
 
     var manEmpChooseArtistButtonSection = document.createElement("div");
     manEmpChooseArtistButtonSection.style.padding = "5px";
@@ -34,6 +42,7 @@ function ManagerEmployment() {
 
     ShowAllGroupButtons();
 
+    manEmpContent.appendChild(textChoose);
     manEmpContent.appendChild(manEmpChooseArtistButtonSection);
 
     function ManEmpChooseArtistButton(bandID) {
@@ -60,16 +69,6 @@ function ManagerEmployment() {
             manEmpDialog.appendChild(declineButton);
         }
         
-        function buttonHandler(event) {
-            if (event.type == "mouseover") {
-                event.target.style.background = "black";
-                event.target.style.color = "white";
-            }
-            if (event.type == "mouseout") {
-                event.target.style.background = null;
-                event.target.style.color = "black";
-            }
-        }
         FillInnerHTML();
         setInterval(FillInnerHTML, 1000);
 
@@ -109,9 +108,8 @@ function ManagerEmployment() {
         document.body.removeChild(manEmpDialog);
     }
 
-    manEmpDialog.appendChild(manEmpHeader);
-    manEmpDialog.appendChild(manEmpContent);
-    manEmpDialog.appendChild(manEmpCloseButton);
+    var managerEmploymentDialogElements = [manEmpHeader, manEmpContent, manEmpCloseButton];
+    managerEmploymentDialogElements.forEach(element => manEmpDialog.appendChild(element));    
     document.body.appendChild(manEmpDialog);
 
     function ShowAllGroupButtons() {
@@ -126,7 +124,6 @@ function CreateManager(name, bandID, experience) {
 
     var managerTile = document.createElement("div");
     managerTile.className = "tile";
-    managerTile.id = "tile";
     $(managerTile).draggable({
         revert: false
     });
@@ -138,10 +135,10 @@ function CreateManager(name, bandID, experience) {
     managerCoeffs[managerID] = [(managerInfo[managerID][2] / 100), (managerInfo[managerID][2] / 2)];
 
     // tile style
-    $(managerTile).css("color", "black");
-    $(managerTile).css("background-color", "yellow");
-    $(managerTile).css("border", "2px groove rgb(133, 102, 0)");
-    $(managerTile).css("box-shadow", "5px 5px black");
+    $(managerTile).css( {"color": "black", 
+                         "background-color": "yellow", 
+                         "border": "2px groove rgb(133, 102, 0)", 
+                         "box-shadow": "5px 5px black"} );
 
     var managerName = document.createElement("p");
     managerName.id = "tileheader";
