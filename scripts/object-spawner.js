@@ -20,15 +20,6 @@ function CurrentWindowOnTop(event) {
     event.target.style.zIndex = 1;
 }
 
-function tileButtonHandler(event) {
-    if (event.type == "mouseover") {
-        event.target.style.background = "black"
-    }
-    if (event.type == "mouseout") {
-        event.target.style.background = null;
-    }
-}
-
 function tileButtonHandlerToBlack(event) {
     if (event.type == "mouseover") {
         event.target.style.background = "black"
@@ -365,28 +356,18 @@ function NewEmailAlert(sender, AcceptMailAction) {
 }
 
 function MailWindow(sender, content, CloseMailAction) {
-    var mailWindow = document.createElement("div");
-    mailWindow.className = "dialog";
-    mailWindow.style.zIndex = "2";
-    mailWindow.style.padding = "5px";
-    mailWindow.style.visibility = "visible";
-    mailWindow.style.width = "500px";
-    mailWindow.style.top = "200px";
-    mailWindow.style.left = "500px";
-
-    $(mailWindow).draggable({
-        revert: false
-    });
+    var mailWindow = new DraggableElement();
+    mailWindow.className = "mailwindow";
 
     var mailHeader = document.createElement("div");
-    mailHeader.className = "dialogheader";
-    mailWindow.appendChild(mailHeader);
-    mailHeader.innerHTML = "Mail message";
-    mailWindow.appendChild(new MailContent(sender, content));
+    mailHeader.className = "mailheader";    
+    mailHeader.innerHTML = "Mail message";    
 
     var closeMailWindow = new ButtonAcceptDecline("decline", "Close letter");
     closeMailWindow.onclick = CloseMailAction;
-    mailWindow.appendChild(closeMailWindow);
+
+    var mailWindowElements = [mailHeader, new MailContent(sender, content), closeMailWindow];
+    mailWindowElements.forEach(element => mailWindow.appendChild(element));
 
     return mailWindow;
 

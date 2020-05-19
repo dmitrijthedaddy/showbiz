@@ -8,9 +8,11 @@ function AppendBand() {
     var stillNoAlbumWarning = false;
     var goSocialAlertShown = false;
     var theyGoAwayAlertShown = false;
+    var revival = true;
 
-    var tile = document.createElement("div");
-    tile.className = "tile";
+    var tile = new DraggableElement();
+    tile.draggable = true;
+    tile.className = "artist_tile";
     tile.ondrag = CurrentWindowOnTop;
 
     var tileHeader = document.createElement("p");
@@ -43,66 +45,67 @@ function AppendBand() {
     setInterval(UpdateBandStats, GetTimeSpeed());
     setInterval(UpdateBandData, GetTimeSpeed());
 
+    HelloFromUs();
+
     function ButtonSection() {
         var buttonSection = document.createElement("div");
         buttonSection.className = "tilebuttonsection";
-        var doPromoButton = document.createElement("div");
-        doPromoButton.id = "tilebutton";
-        doPromoButton.innerHTML = "Launch Promo";        
-        doPromoButton.onclick = function () {
-            if (!promoLaunched) {
-                promoLaunched = true;
-                doPromoButton.innerHTML = "Do Promo";
-            }
-            if (money >= promoPrice) {
-                money -= promoPrice;
-                bandPoints[bandID][0]++;
-                promoPrice *= promoPriceInc;
-                UpdateBandData();
-            }
-            else {
-                if (!lackOfMoneyAlertShown) {
-                    LackOfMoneyAlert();
-                    lackOfMoneyAlertShown = true;
-                }
-            }
-            moneyUpdate();
-        }
-        buttonSection.append(doPromoButton);
-        var recordAlbumButton = document.createElement("div");
-        recordAlbumButton.id = "tilebutton";
-        recordAlbumButton.innerHTML = "Epochs";
-        recordAlbumButton.onclick = function () { 
-            EpochsWindow(bandID);
-            UpdateBandData();
-        }
-        buttonSection.append(recordAlbumButton);
-        var goTourButton = document.createElement("div");
-        goTourButton.id = "tilebutton";
-        goTourButton.innerHTML = "Go Tour";
-        goTourButton.onclick = function () {
-            if (money >= bandPoints[bandID][4]) {
-                money = money - bandPoints[bandID][4];
-                bandPoints[bandID][1]++;
-                bandPoints[bandID][0] += 400;
-                tourPrice *= tourPriceInc;
-                UpdateBandData();
-            }
-            else {
-                if (!lackOfMoneyAlertShown) {
-                    LackOfMoneyAlert();
-                    lackOfMoneyAlertShown = true;
-                }
-            }
-            moneyUpdate();
-        }
-        buttonSection.append(goTourButton);
-        doPromoButton.onmouseover = doPromoButton.onmouseout = recordAlbumButton.onmouseover = 
-        recordAlbumButton.onmouseout = goTourButton.onmouseover = goTourButton.onmouseout = tileButtonHandler;
+
+        var doPromoButton = ArtistTileButton("doPromo");
+        var epochsButton = ArtistTileButton("epochs");        
+        var statsButton = ArtistTileButton("stats");
+        var tileButtonSectionElements = [doPromoButton, epochsButton, statsButton];
+        tileButtonSectionElements.forEach(element => buttonSection.appendChild(element));
         tile.appendChild(buttonSection);
     }
 
-    
+    function ArtistTileButton(type) {
+        var button = document.createElement("div");
+        button.id = "artist_tile_button";
+        button.onmouseover = button.onmouseout = tileButtonHandlerToBlack;
+
+        switch (type) {
+            case "doPromo":
+                button.innerHTML = "Launch Promo";
+                button.onclick = function() {
+                    if (!promoLaunched) {
+                        promoLaunched = true;
+                        button.innerHTML = "Do Promo";
+                    }
+                    if (money >= promoPrice) {
+                        money -= promoPrice;
+                        bandPoints[bandID][0]++;
+                        promoPrice *= promoPriceInc;
+                        UpdateBandData();
+                    }
+                    else {
+                        if (!lackOfMoneyAlertShown) {
+                            LackOfMoneyAlert();
+                            lackOfMoneyAlertShown = true;
+                        }
+                    }
+                    moneyUpdate();
+                }
+                break;
+            case "epochs":
+                button.innerHTML = "Epochs";
+                button.onclick = function() {
+                    EpochsWindow(bandID);
+                    UpdateBandData();
+                }
+                break;
+            case "stats":
+                button.innerHTML = "Stats";
+                // временно
+                button.onclick = function() {
+                    console.log("in progress, sorry!");
+                }
+                button.onmouseover = button.onmouseout = null;
+                break;
+        }
+        
+        return button;
+    }
 
     function UpdateBandStats() {
         bandInfo[bandID][3] += bandPoints[bandID][0] / ppDivideCoefficient;
@@ -183,13 +186,11 @@ function AppendBand() {
             return (bandPoints[bandID][0] / ppDivideCoefficient).toFixed(1);
         }
     }
-}
 
-let revival = true;
-
-function FansDisengage(bandID) {
-    if (!revival) {
-        bandPoints[bandID][0] -= 0.5;
+    function FansDisengage(bandID) {
+        if (!revival) {
+            bandPoints[bandID][0] -= 0.5;
+        }
     }
 }
 
@@ -201,13 +202,8 @@ function GetFans(bandID) {
     return bandInfo[bandID][3];
 }
 
-
-
 function EpochsWindow(bandID) {
-    var epochsWindow = document.createElement("div");
-    $(epochsWindow).draggable({
-        revert: false
-    });
+    var epochsWindow = new DraggableElement();
     epochsWindow.className = "epochsdialog";
     epochsWindow.style.visibility = "visible";
     epochsWindow.ondrag = CurrentWindowOnTop;
@@ -224,7 +220,6 @@ function EpochsWindow(bandID) {
     epochsButtonSection.style.display = "flex";
     epochsButtonSection.style.flexWrap = "wrap";
     var newEpochButton = new ButtonAcceptDecline("accept", "New Epoch");
-    newEpochButton.style.width = "fit-content";
     newEpochButton.onclick = function() {
         CreateEpochWindow();
     }
@@ -238,10 +233,9 @@ function EpochsWindow(bandID) {
 
     epochsContent.appendChild(newEpochButton);
     epochsContent.appendChild(epochsButtonSection);
-    epochsWindow.appendChild(epochsHeader);
-    epochsWindow.appendChild(epochsContent);
-    epochsWindow.appendChild(closeEpochsWindowButton);
 
+    var epochsWindowElements = [epochsHeader, epochsContent, closeEpochsWindowButton];
+    epochsWindowElements.forEach(element => epochsWindow.appendChild(element));
     document.getElementById("workflow").appendChild(epochsWindow);
 
     function EpochButton(epochID) {

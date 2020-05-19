@@ -123,7 +123,7 @@ function CreateManager(name, bandID, experience) {
     var workflow = document.getElementById("workflow");
 
     var managerTile = document.createElement("div");
-    managerTile.className = "tile";
+    managerTile.className = "manager_tile";
     $(managerTile).draggable({
         revert: false
     });
@@ -166,10 +166,7 @@ function CreateManager(name, bandID, experience) {
 
 function ButtonAcceptDecline(type, content) {
     var button = document.createElement("div");
-    button.style.margin = button.style.padding = "5px";
-    button.style.position = "relative";
-    button.style.textAlign = "center";
-    button.style.cursor = "pointer";
+    button.id = "acceptdeclinebutton"
     var defaultColor = "black";
 
     switch(type) {

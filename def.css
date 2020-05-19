@@ -12,8 +12,7 @@ body, html {
     display: flex;
   }
 
-  #workflow
-  .workflow {
+  #workflow {
     padding: 10px;
     width: 100%; height: max-content;
     position: relative;
@@ -21,18 +20,19 @@ body, html {
     z-index: 1;
   }
 
-  #tile
-  .tile {
+  .artist_tile, .manager_tile {
     position: relative;
     margin: 10px; padding: 10px;
-    color: azure;
-    width: 300px; height: 200px;
-    border: 2px groove purple; background-color: rgb(145, 34, 145);
-    box-shadow: 5px 5px darkblue;
+    box-shadow: 5px 5px black;
+    width: 300px; 
+    height: fit-content;
+    color: black;   
   }
 
-  #notifications
-  .notifications {
+  .artist_tile  { border: 2px solid purple; background-color: plum; }
+  .manager_tile { border: 2px solid rgb(133, 102, 0); background-color: yellow; }
+   
+  .notifications, #notifications {
     position: absolute;
     padding: 5px;
     width: 500px;
@@ -52,10 +52,13 @@ body, html {
   #alertheader, #alertcontent { padding: 5px; color: black; }
 
 /* tile section */
-  .tilebuttonsection { position: absolute; width: 100px; top: 90px; left: 200px; }  
+  .tilebuttonsection { position: relative; padding: 5px; display: flex; flex-wrap: wrap;}  
   .tilebrackets { color: grey; }
   #tileheader { font-size: x-large; }
-  #tilebutton { padding: 5px; border: 1px groove rgb(43, 110, 235); cursor: pointer; }
+  
+  #artist_tile_button { margin: 5px; padding: 5px; width: fit-content; border: 1px groove black; cursor: pointer; }
+  #artist_tile_button  { background-color: rgb(221, 131, 221); }
+  #manager_tile_button { background-color: rgb(133, 102, 0);}  
 
 /* dialog section */
   .dialog {
@@ -86,11 +89,24 @@ body, html {
     padding: 5px;
     border: 3px groove rgb(109, 79, 109); background-color: plum;
     box-shadow: 5px 5px black;
+    z-index: 2;
+  }
+
+  .mailwindow {
+    position: absolute; visibility: visible;
+    width: 500px; top: 200px; left: 500px;
+    padding: 5px;
+    z-index: 3;
+    box-shadow: 5px 5px black;
+    border: 3px groove black;
+    background-color: rgb(97, 144, 231);
   }
 
   #dialog
   #dialogheadercontent { margin: 0; padding: 0; font-weight: bold; }
-  .dialogheader { height: 20px; background-color: rgb(214, 119, 214); text-align: center; }
+  .dialogheader, .mailheader { height: 20px; text-align: center; }
+  .dialogheader { background-color: rgb(214, 119, 214); }
+  .mailheader { background-color: rgb(43, 110, 235); }
 
 /* toolbar section */
   #createbandbutton, #moneyscreenbutton, #employmanagerbutton { 
@@ -107,3 +123,4 @@ body, html {
   #website { color: dodgerblue; font-weight: bolder; }
   #dialogbutton { width: fit-content; border: 1px groove rgb(109, 79, 109); background-color: rgb(214, 119, 214); }
   #changedistributorbutton { background-color: mediumblue; color: white; }
+  #acceptdeclinebutton { position: relative; margin: 5px; padding: 5px; width: fit-content; cursor: pointer; }

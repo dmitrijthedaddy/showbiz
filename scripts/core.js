@@ -47,4 +47,19 @@ function getRandomInt(max) {
 
 function getRandomArbitrary(min, max) {
     return Math.random() * (max - min) + min;
-  }
+}
+
+function DraggableElement() {
+    var ball = document.createElement("div");
+    
+    ball.onmousemove = function() {
+        $(ball).draggable({
+            revert: false,
+            stop: function(event, ui) {
+                event.target.style.position = "relative";
+            }
+        });
+    }   
+
+    return ball;
+}
