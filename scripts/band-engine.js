@@ -45,8 +45,6 @@ function AppendBand() {
     setInterval(UpdateBandStats, GetTimeSpeed());
     setInterval(UpdateBandData, GetTimeSpeed());
 
-    HelloFromUs();
-
     function ButtonSection() {
         var buttonSection = document.createElement("div");
         buttonSection.className = "tilebuttonsection";
