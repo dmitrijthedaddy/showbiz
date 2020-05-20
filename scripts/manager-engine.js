@@ -124,11 +124,8 @@ function ManagerEmployment() {
 function CreateManager(name, bandID, experience) {
     var workflow = document.getElementById("workflow");
 
-    var managerTile = document.createElement("div");
+    var managerTile = new DraggableElement();
     managerTile.className = "manager_tile";
-    $(managerTile).draggable({
-        revert: false
-    });
     managerTile.ondrag = CurrentWindowOnTop;
 
     var managerID = totalManagerCount;
@@ -136,20 +133,15 @@ function CreateManager(name, bandID, experience) {
     managerInfo[managerID] = [name, bandID, experience];
     managerCoeffs[managerID] = [(managerInfo[managerID][2] / 100), (managerInfo[managerID][2] / 2)];
 
-    // tile style
-    $(managerTile).css( {"color": "black", 
-                         "background-color": "yellow", 
-                         "border": "2px groove rgb(133, 102, 0)", 
-                         "box-shadow": "5px 5px black"} );
-
     var managerName = document.createElement("p");
     managerName.id = "tileheader";
     managerName.innerHTML = managerInfo[managerID][0];
 
     var managerText = document.createElement("p");
     OutputManagerData();
-    managerTile.appendChild(managerName);
-    managerTile.appendChild(managerText);
+
+    var managerTileElements = [managerName, managerText, ManagerButtonSection()];
+    managerTileElements.forEach(element => managerTile.appendChild(element));
 
     workflow.appendChild(managerTile);
 
@@ -159,11 +151,72 @@ function CreateManager(name, bandID, experience) {
         bandCoeffs[managerInfo[managerID][1]][0] += (managerCoeffs[managerID][0] / 10);
     }, 1000);
 
+    function ManagerButtonSection() {
+        var section = document.createElement("div");
+        section.className = "tilebuttonsection";
+
+        var promoCampaign = ManagerButton("promoCampaign");
+        var boostSkills = ManagerButton("boostSkills");
+        var fire = ManagerButton("fire");
+
+        var buttons = [promoCampaign, boostSkills, fire];
+        buttons.forEach(element => section.appendChild(element));
+
+        return section;
+    }
+
+    function ManagerButton(type) {
+        var button = document.createElement("div");
+        button.id = "manager_tile_button";
+
+        switch (type) {
+            case "promoCampaign":
+                button.innerHTML = "Promo Campaign";
+                button.onclick = function() {
+                    ManagerPromoCampaign(bandID);
+                }
+                break;
+            case "boostSkills":
+                button.innerHTML = "Boost Skills";
+                button.onclick = ManagerBoostSkills(managerID);
+                break;
+            case "fire":
+                button.innerHTML = "Fire";
+                button.onclick = ManagerFire(managerID);
+                break;
+        }
+
+        return button;
+    }
+
     function OutputManagerData() {
         managerText.innerHTML = "manages " + bandInfo[bandID][0] + "<br>" +
                                 "+" + managerCoeffs[managerID][0].toFixed(2) + " Promo Points per second<br>" +
                                 "-$" + managerCoeffs[managerID][1].toFixed(2) + " per second";
     }
+}
+
+function ManagerPromoCampaign(bandID) {
+    console.log("== Promo campaign ==")
+    var promoStatus = 0;
+    var timer = setInterval(function() {
+        console.log("Doing promo for " + bandInfo[bandID][0] + ": " + promoStatus + "%");
+        promoStatus += 5;                   
+    }, 1000);
+    setTimeout(function() {
+        clearInterval(timer);
+        var result = getRandomArbitrary(20, 50);
+        console.log("Result of the latest promo campaign: +" + result.toFixed(1) + " Promo Points");
+        bandPoints[bandID][0] += result;
+    }, 21000)   
+}
+
+function ManagerBoostSkills(managerID) {
+    console.log("Boosting skills is in progress, sorry!");
+}
+
+function ManagerFire(managerID) {
+    console.log("Firing is in progress, sorry!");
 }
 
 function ButtonAcceptDecline(type, content) {

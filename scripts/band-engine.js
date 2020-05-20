@@ -25,7 +25,7 @@ function AppendBand() {
     
     var bandID = totalBandCount;  
     var incomeNow = 0;  
-    bandInfo[bandID] = ["", finalGenre, defaultAlbumsCount, defaultFansCount, 0];
+    bandInfo[bandID] = [bandName.value, finalGenre, defaultAlbumsCount, defaultFansCount, 0];
     bandPoints[bandID] = [0, 0, promoPrice, recordAlbumPrice, tourIncome, 0];
     bandCoeffs[bandID] = [1];
 
@@ -33,7 +33,7 @@ function AppendBand() {
     totalBandCount++;
     recordAlbumPrice = defaultRecordAlbumPrice;
     tourIncome = defaultTourIncome;
-    tileHeader.innerHTML = bandInfo[bandID][0] = bandName.value;
+    tileHeader.innerHTML = bandInfo[bandID][0];
     UpdateBandData();
 
     // BUTTONS
