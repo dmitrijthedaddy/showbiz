@@ -268,7 +268,7 @@ function EpochsWindow(bandID) {
     }
 
     function CreateEpochWindow() {
-        var createEpochWindow = document.createElement("div");
+        var createEpochWindow = new DraggableElement();
         createEpochWindow.className = "epochsdialog";
         createEpochWindow.style.width = "200px";
         $(createEpochWindow).draggable({
@@ -302,12 +302,9 @@ function EpochsWindow(bandID) {
     }
 
     function ShowEpoch(epochID) {
-        var showEpochWindow = document.createElement("div");
+        var showEpochWindow = new DraggableElement();
         showEpochWindow.className = "epochsdialog";
         showEpochWindow.style.width = "600px";
-        $(showEpochWindow).draggable({
-            revert: false
-        });
         showEpochWindow.ondrag = CurrentWindowOnTop;
 
         var showEpochHeader = document.createElement("div");
@@ -350,7 +347,6 @@ function EpochsWindow(bandID) {
 
         var newReleaseButton = new ButtonAcceptDecline("accept", "New Release");
         newReleaseButton.style.position = "absolute";
-        newReleaseButton.style.width = "fit-content";
         newReleaseButton.style.top = "50px";
         newReleaseButton.style.right = "10px";
         newReleaseButton.onclick = function() {
@@ -363,10 +359,8 @@ function EpochsWindow(bandID) {
         }
         closeButton.style.width = "fit-content";
 
-        showEpochWindow.appendChild(showEpochHeader);
-        showEpochWindow.appendChild(showEpochContent);
-        showEpochWindow.appendChild(newReleaseButton);
-        showEpochWindow.appendChild(closeButton);
+        var showEpochElements = [showEpochHeader, showEpochContent, newReleaseButton, closeButton];
+        showEpochElements.forEach(element => showEpochWindow.appendChild(element));
 
         document.getElementById("workflow").appendChild(showEpochWindow);
 
