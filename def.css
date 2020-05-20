@@ -72,9 +72,9 @@ body, html {
     z-index: 2;
   }
 
-  .manageremploymentdialog {
+  .managerdialog {
     position: absolute;
-    width: 600px;
+    width: fit-content; height: fit-content;
     padding: 5px;
     top: 150px; left: 300px;
     border: 3px groove rgb(133, 102, 0);
@@ -124,3 +124,8 @@ body, html {
   #dialogbutton { width: fit-content; border: 1px groove rgb(109, 79, 109); background-color: rgb(214, 119, 214); }
   #changedistributorbutton { background-color: mediumblue; color: white; }
   #acceptdeclinebutton { position: relative; margin: 5px; padding: 5px; width: fit-content; cursor: pointer; }
+
+  #slowcampaign, #mediumcampaign, #fastcampaign { font-weight: bolder; }
+  #slowcampaign { color: red; };
+  #mediumcampaign { color: mediumblue; }
+  #fastcampaign { color: green; }

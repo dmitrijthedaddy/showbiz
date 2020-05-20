@@ -358,6 +358,7 @@ function NewEmailAlert(sender, AcceptMailAction) {
 function MailWindow(sender, content, CloseMailAction) {
     var mailWindow = new DraggableElement();
     mailWindow.className = "mailwindow";
+    mailWindow.style.zIndex = "10";
 
     var mailHeader = document.createElement("div");
     mailHeader.className = "mailheader";    
