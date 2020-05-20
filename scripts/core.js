@@ -59,7 +59,7 @@ function DraggableElement() {
                 event.target.style.position = "relative";
             }
         });
-    }   
+    }
 
     return ball;
 }

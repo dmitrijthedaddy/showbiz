@@ -5,7 +5,9 @@ let managerRandomNames = ["Daniil Dobryakov",
                           "Mel Adze",
                           "Jeech Bebe",
                           "Igor Fridge",
-                          "Alex Johnson"];
+                          "Alex Johnson",
+                          "Dan Lagutenko",
+                          "Artem Avetisyan"];
 
 function buttonHandler(event) {
     if (event.type == "mouseover") {
