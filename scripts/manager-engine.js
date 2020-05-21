@@ -197,6 +197,11 @@ function CreateManager(name, bandID, experience) {
 function ManagerPromoCampaign(bandID, managerID) {
     console.log("== Promo campaign ==");
 
+    var campaignPrice = (managerInfo[managerID][2] * 1000).toFixed(0);
+    var campaignEfficiency = 0;
+    var campaignSharpness = 0;
+    var campaignSpeed = 0;
+
     var minimumBound = managerInfo[managerID][2] * 10 * 0.2;
     var maximumBound = managerInfo[managerID][2] * 10 * 1.5;
     var campaignTime = 5 / managerInfo[managerID][2] * 20000;
@@ -205,15 +210,15 @@ function ManagerPromoCampaign(bandID, managerID) {
     managerPromoCampaignWindow.className = "managerdialog";
 
     var managerPromoHeader = document.createElement("div");
-    managerPromoHeader.className = "dialogheader"
-    managerPromoHeader.style.backgroundColor = "rgb(133, 102, 0)";
+    managerPromoHeader.className = "managerheader";
     managerPromoHeader.innerHTML = "Promo Campaign for " + bandInfo[bandID][0] + ", by " + managerInfo[managerID][0];
 
-    var managerPromoInfo = document.createElement("p");
-    managerPromoInfo.innerHTML = managerInfo[managerID][0] + " can guarantee you a result between " + 
-                                 "<b>" + minimumBound.toFixed(1) + "</b> and " + 
-                                 "<b>" + maximumBound.toFixed(2) + "</b> Promo Points.<br>" +
-                                 "This campaign's preparation speed will be " + CampaignSpeed(); + ".";
+    var managerPromoCampaignSetupHeader = document.createElement("p");
+    managerPromoCampaignSetupHeader.innerHTML = "Campaign setup:";
+
+    var managerPromoCampaignSetup = new CampaignSetupTable();
+    var managerPromoFinalSummary = document.createElement("p");
+    UpdateFinalSummary();
 
     var managerPromoLog = document.createElement("p");
     managerPromoLog.style.width = "100%";
@@ -224,13 +229,16 @@ function ManagerPromoCampaign(bandID, managerID) {
     var buttonSection = document.createElement("div");
     buttonSection.className = "tilebuttonsection";
 
-    var startButton = new ButtonAcceptDecline("accept", "Start!");
+    var startButton = new ButtonAcceptDecline("accept", "Start! ($" + campaignPrice + ")");
     startButton.onclick = function() {
-        PromoProcess();
+        if (money >= campaignPrice) {
+            PromoProcess();
+        }
     }
     buttonSection.appendChild(startButton);
 
-    var managerPromoElements = [managerPromoHeader, managerPromoInfo, managerPromoLog, buttonSection];
+    var managerPromoElements = [managerPromoHeader, managerPromoCampaignSetupHeader, managerPromoCampaignSetup, 
+                                managerPromoFinalSummary, managerPromoLog, buttonSection];
     managerPromoElements.forEach(element => managerPromoCampaignWindow.appendChild(element));
 
     document.getElementById("workflow").appendChild(managerPromoCampaignWindow);
@@ -268,6 +276,134 @@ function ManagerPromoCampaign(bandID, managerID) {
         else {
             return "<span id='fastcampaign'>fast</span>"
         }
+    }
+
+    function CampaignSetupTable() {
+        var campaignSetupTable = document.createElement("table");
+
+        var efficiencyRow = document.createElement("tr");
+        
+        var eRHeader = document.createElement("td");
+        eRHeader.innerHTML = "Efficiency"
+        efficiencyRow.append(eRHeader);        
+        var decreaseEfficiency = new DecreaseIncreaseButton("decrease", "efficiency");
+        var efficiencyDisplay = document.createElement("td");
+        efficiencyDisplay.innerHTML = campaignEfficiency;
+        var increaseEfficiency = new DecreaseIncreaseButton("increase", "efficiency");
+
+        var efficiencyRowColumns = [eRHeader, decreaseEfficiency, efficiencyDisplay, increaseEfficiency];
+        efficiencyRowColumns.forEach(element => efficiencyRow.append(element));
+
+
+        var sharpnessRow = document.createElement("tr");
+
+        var sRHeader = document.createElement("td");
+        sRHeader.innerHTML = "Sharpness";
+        sharpnessRow.append(sRHeader);
+        var decreaseSharpness = new DecreaseIncreaseButton("decrease", "sharpness");
+        var sharpnessDisplay = document.createElement("td");
+        sharpnessDisplay.innerHTML = campaignSharpness;
+        var increaseSharpness = new DecreaseIncreaseButton("increase", "sharpness");
+
+        var sharpnessRowColumns = [sRHeader, decreaseSharpness, sharpnessDisplay, increaseSharpness];
+        sharpnessRowColumns.forEach(element => sharpnessRow.append(element));
+
+        campaignSetupTable.append(efficiencyRow);
+        campaignSetupTable.append(sharpnessRow);
+
+        return campaignSetupTable;
+
+        function DecreaseIncreaseButton(type, parameter) {
+            var button = document.createElement("div");
+            button.id = "manager_tile_button";
+
+            switch (type) {
+                case "increase":
+                    button.innerHTML = "+";
+                    break;
+                case "decrease":
+                    button.innerHTML = "-";
+                    break;
+            }
+
+            button.onclick = function() {
+                switch (type) {
+                    case "increase":
+                            switch (parameter) {
+                                case "efficiency":
+                                    if (campaignEfficiency < 3) {
+                                        minimumBound += managerInfo[managerID][2] * 1.1;
+                                        maximumBound += managerInfo[managerID][2] * 1.1;
+                                        campaignEfficiency++;
+
+                                        campaignPrice *= 1.1;
+
+                                        efficiencyDisplay.innerHTML = campaignEfficiency;
+                                    }
+                                    break;
+                                case "sharpness":
+                                    if (campaignSharpness < 3) {
+                                        minimumBound += managerInfo[managerID][2] * 1.1;
+                                        maximumBound -= managerInfo[managerID][2] * 1.1;
+                                        campaignSharpness++;
+
+                                        campaignPrice *= 1.15;
+
+                                        sharpnessDisplay.innerHTML = campaignSharpness;
+                                    }
+                                    break;
+                            }
+                        break;
+                    case "decrease":
+                            switch (parameter) {
+                                case "efficiency":
+                                    if (campaignEfficiency > -3) {
+                                        minimumBound -= managerInfo[managerID][2] * 1.1;
+                                        maximumBound -= managerInfo[managerID][2] * 1.1;
+                                        campaignEfficiency--;
+
+                                        campaignPrice *= 0.9;
+
+                                        efficiencyDisplay.innerHTML = campaignEfficiency;
+                                    }
+                                    break;
+                                    case "sharpness":
+                                        if (campaignSharpness > -3) {
+                                            minimumBound -= managerInfo[managerID][2] * 1.1;
+                                            maximumBound += managerInfo[managerID][2] * 1.1;
+                                            campaignSharpness--;
+
+                                            campaignPrice *= 0.95;
+    
+                                            sharpnessDisplay.innerHTML = campaignSharpness;
+                                        }
+                                        break;                                                                        
+                            }
+                        if (minimumBound <= 0) {
+                            minimumBound = 0;       
+                        }
+
+                        if (maximumBound <= 0) {
+                            minimumBound = 0;
+                        }
+                        break;
+                }
+
+                UpdateFinalSummary();
+                startButton.innerHTML = "Start! ($" + campaignPrice.toFixed(0) + ")";
+            }
+
+            return button;
+        }
+
+        
+    }
+
+    function UpdateFinalSummary() {
+        managerPromoFinalSummary.innerHTML =  "Result guaranteed: " + 
+        "between <b>" + minimumBound.toFixed(1) + "</b> and " + 
+        "<b>" + maximumBound.toFixed(2) + "</b> Promo Points.<br>" +
+        "Campaign speed: " + CampaignSpeed() + ".";
     }
 }
 
