@@ -22,11 +22,8 @@ function buttonHandler(event) {
 
 function ManagerEmployment() {
     var manName, experience;
-    var manEmpDialog = document.createElement("div");
+    var manEmpDialog = new DraggableElement();
     manEmpDialog.className = "managerdialog";
-    $(manEmpDialog).draggable({
-        revert: false
-    });
 
     var manEmpHeader = document.createElement("div");
     manEmpHeader.className = "dialogheader";
@@ -126,7 +123,6 @@ function CreateManager(name, bandID, experience) {
 
     var managerTile = new DraggableElement();
     managerTile.className = "manager_tile";
-    managerTile.ondrag = CurrentWindowOnTop;
 
     var managerID = totalManagerCount;
     totalManagerCount++;
@@ -207,7 +203,6 @@ function ManagerPromoCampaign(bandID, managerID) {
 
     var managerPromoCampaignWindow = new DraggableElement();
     managerPromoCampaignWindow.className = "managerdialog";
-    managerPromoCampaignWindow.style.zIndex = "6";
 
     var managerPromoHeader = document.createElement("div");
     managerPromoHeader.className = "dialogheader"

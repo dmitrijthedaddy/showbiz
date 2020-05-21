@@ -13,7 +13,6 @@ function AppendBand() {
     var tile = new DraggableElement();
     tile.draggable = true;
     tile.className = "artist_tile";
-    tile.ondrag = CurrentWindowOnTop;
 
     var tileHeader = document.createElement("p");
     var tileArtistBrief = document.createElement("p");
@@ -204,7 +203,6 @@ function EpochsWindow(bandID) {
     var epochsWindow = new DraggableElement();
     epochsWindow.className = "epochsdialog";
     epochsWindow.style.visibility = "visible";
-    epochsWindow.ondrag = CurrentWindowOnTop;
 
     var epochsHeader = document.createElement("div");
     epochsHeader.className = "dialogheader";
@@ -270,11 +268,7 @@ function EpochsWindow(bandID) {
     function CreateEpochWindow() {
         var createEpochWindow = new DraggableElement();
         createEpochWindow.className = "epochsdialog";
-        createEpochWindow.style.width = "200px";
-        $(createEpochWindow).draggable({
-            revert: false
-        });
-        createEpochWindow.ondrag = CurrentWindowOnTop;
+        createEpochWindow.style.width = "fit-content";
         
         var epochNameText = document.createElement("p");
         epochNameText.innerHTML = "Epoch Name: ";
@@ -286,7 +280,6 @@ function EpochsWindow(bandID) {
         totalEpochsCount++;
         var createButton = new ButtonAcceptDecline("accept", "Create!");
         createButton.onclick = function() {
-            console.log("Epoch number = " + epochNumber + "\n" + bandID + " " + epochName.value + " ")
             epochs[epochNumber] = [bandID, epochName.value, 0, "active", "(none)"];
             document.getElementById("workflow").removeChild(createEpochWindow);
             epochsButtonSection.appendChild(new EpochButton(epochNumber));
@@ -305,7 +298,6 @@ function EpochsWindow(bandID) {
         var showEpochWindow = new DraggableElement();
         showEpochWindow.className = "epochsdialog";
         showEpochWindow.style.width = "600px";
-        showEpochWindow.ondrag = CurrentWindowOnTop;
 
         var showEpochHeader = document.createElement("div");
         showEpochHeader.className = "dialogheader";
@@ -417,13 +409,9 @@ function EpochsWindow(bandID) {
             var typeBuffer = "";
             var releaseCostsBuffer = 0;
             var ppIncBuffer = 0;
-            var newReleaseWindow = document.createElement("div");
+            var newReleaseWindow = new DraggableElement();
             newReleaseWindow.className = "epochsdialog";
             newReleaseWindow.style.zIndex = 1;
-            $(newReleaseWindow).draggable({
-                revert: false
-            });
-            newReleaseWindow.ondrag = CurrentWindowOnTop;
 
             var newReleaseHeader = document.createElement("div");
             newReleaseHeader.className = "dialogheader";
@@ -517,11 +505,9 @@ function EpochsWindow(bandID) {
         }
 
         function ChangeDistributor() {
-            var changeDistributorWindow = document.createElement("div");
+            var changeDistributorWindow = new DraggableElement();
             changeDistributorWindow.className = "epochsdialog";
-            changeDistributorWindow.style.width = "300px";            
-            changeDistributorWindow.ondrag = CurrentWindowOnTop;
-            changeDistributorWindow.onmouseover = $(changeDistributorWindow).draggable({ revert: false });
+            changeDistributorWindow.style.width = "300px";
 
             var changeDistributorHeader = document.createElement("div");
             changeDistributorHeader.className = "dialogheader";

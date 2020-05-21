@@ -14,10 +14,7 @@ var effectsDisplay = ["", ""];
 
 function CurrentWindowOnTop(event) {
     let allDivs = document.getElementsByTagName("div");
-    for (var i = 0; i < allDivs.length; i++) {
-        allDivs[i].style.zIndex = 0;
-    }
-    event.target.style.zIndex = 1;
+    event.target.style.zIndex = "" + ++maxZIndex;
 }
 
 function tileButtonHandlerToBlack(event) {
@@ -30,14 +27,6 @@ function tileButtonHandlerToBlack(event) {
         event.target.style.color = "black";
     }
 }
-
-$(".dialog").draggable({
-    revert: false
-});
-
-$(".tile").draggable({
-    revert: false
-})
 
 var isNewBandDialogOpened = false;
 var constructorSubstractors = [0, 0, 0];
@@ -358,7 +347,6 @@ function NewEmailAlert(sender, AcceptMailAction) {
 function MailWindow(sender, content, CloseMailAction) {
     var mailWindow = new DraggableElement();
     mailWindow.className = "mailwindow";
-    mailWindow.style.zIndex = "10";
 
     var mailHeader = document.createElement("div");
     mailHeader.className = "mailheader";    

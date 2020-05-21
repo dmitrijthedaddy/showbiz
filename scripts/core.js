@@ -41,6 +41,7 @@ let distroWebsiteLines = ["<br>TWOspins - <span id='website'>twospins.com</span>
 
 
 // OTHER STUFF
+let maxZIndex = 2;
 function getRandomInt(max) {
     return Math.floor(Math.random() * Math.floor(max));
 }
@@ -51,10 +52,16 @@ function getRandomArbitrary(min, max) {
 
 function DraggableElement() {
     var ball = document.createElement("div");
-    
+    ball.style.zIndex = "" + maxZIndex;
+    maxZIndex++;
     ball.onmousemove = function() {
         $(ball).draggable({
             revert: false,
+            start: function() {
+                if (ball.style.zIndex != maxZIndex) {
+                    ball.style.zIndex = "" + ++maxZIndex;
+                }
+            },
             stop: function(event, ui) {
                 event.target.style.position = "relative";
             }
