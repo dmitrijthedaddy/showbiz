@@ -8,6 +8,7 @@ let managerRandomNames = ["Daniil Dobryakov",
                           "Alex Johnson",
                           "Dan Lagutenko",
                           "Artem Avetisyan"];
+let happyNewManagerAlertShown = false;
 
 function buttonHandler(event) {
     if (event.type == "mouseover") {
@@ -140,6 +141,10 @@ function CreateManager(name, bandID, experience) {
     managerTileElements.forEach(element => managerTile.appendChild(element));
 
     workflow.appendChild(managerTile);
+    if (!happyNewManagerAlertShown) {
+        HappyNewManagerAlert();
+        happyNewManagerAlertShown = true;
+    }
 
     setInterval(function() {
         money -= managerCoeffs[managerID][1];
@@ -232,6 +237,7 @@ function ManagerPromoCampaign(bandID, managerID) {
     var startButton = new ButtonAcceptDecline("accept", "Start! ($" + campaignPrice + ")");
     startButton.onclick = function() {
         if (money >= campaignPrice) {
+            money -= campaignPrice;
             PromoProcess();
         }
     }

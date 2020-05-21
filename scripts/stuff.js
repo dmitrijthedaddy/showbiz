@@ -88,6 +88,25 @@ function LackOfMoneyAlert() {
     }, 15000);
 }
 
+function HappyNewManagerAlert() {
+    var happyNewManagerAlert = new Alert("Happy New Manager!",
+                                         "Congratulations! You have just employed your first manager. " +
+                                         "Now you can free yourself from doing promotion: this cool guy will do everything.<br>" +
+                                         "Their skills do wonderful things: <ul>" + 
+                                         "<li>the group they are managing gains Promo Points automatically;</li>" +
+                                         "<li>you can order a <span style=\"background-color: rgb(255, 255, 184);\">Promo Campaign</span> " + 
+                                         "to shift promotion responsibilities completely on their shoulders;</li>" +
+                                         "<li>campaign settings can be controlled by you! (of course, money is a key for all doors)</li></ul>" +
+                                         "As you may know, nobody's perfect, so if your manager isn't skillful at all, you can  him to study and " +
+                                         "<span style=\"background-color: rgb(255, 255, 184);\">Boost Skills</span>. It's a high chance that it'll benefit for you and them.<br><br>" +
+                                         "Happy business!");
+
+    notifications.appendChild(happyNewManagerAlert);
+    setTimeout(function() {        
+        notifications.removeChild(happyNewManagerAlert);
+    }, 15000);
+}
+
 function Alert(header, content) {
     var alert = document.createElement("div");
     alert.className = "alert";
