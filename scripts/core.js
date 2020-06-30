@@ -63,9 +63,13 @@ function DraggableElement() {
                 }
             },
             stop: function(event, ui) {
-                event.target.style.position = "relative";
+                event.target.style.position = "absolute";
             }
-        });
+        }).css("position", "absolute");
+    }
+
+    ball.onmouseup = function() {
+        ball.style.position = "absolute";
     }
 
     return ball;
