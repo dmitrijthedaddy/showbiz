@@ -124,25 +124,28 @@ function ManagerEmployment() {
 function CreateManager(name, bandID, experience) {
     var workflow = document.getElementById("workflow");
 
-    var managerTile = new DraggableElement();
-    managerTile.className = "manager_tile";
+    var managerTile = {
+        tile: new DraggableElement(),
+        name: document.createElement("p"),
+        text: document.createElement("p"),
+        buttonSection: ManagerButtonSection()
+    }
 
     var managerID = totalManagerCount;
     totalManagerCount++;
     managerInfo[managerID] = [name, bandID, experience];
     managerCoeffs[managerID] = [(managerInfo[managerID][2] / 100), (managerInfo[managerID][2] / 2)];
 
-    var managerName = document.createElement("p");
-    managerName.id = "tileheader";
-    managerName.innerHTML = managerInfo[managerID][0];
+    managerTile.tile.className = "manager_tile";
+    managerTile.name.id = "tileheader";
+    managerTile.name.innerHTML = managerInfo[managerID][0];
 
-    var managerText = document.createElement("p");
     OutputManagerData();
 
-    var managerTileElements = [managerName, managerText, ManagerButtonSection()];
-    managerTileElements.forEach(element => managerTile.appendChild(element));
+    var managerTileElements = [managerTile.name, managerTile.text, managerTile.buttonSection];
+    managerTileElements.forEach(element => managerTile.tile.appendChild(element));
 
-    workflow.appendChild(managerTile);
+    workflow.appendChild(managerTile.tile);
     if (!happyNewManagerAlertShown) {
         HappyNewManagerAlert();
         happyNewManagerAlertShown = true;
@@ -199,9 +202,9 @@ function CreateManager(name, bandID, experience) {
     }
 
     function OutputManagerData() {
-        managerText.innerHTML = "manages " + bandInfo[bandID][0] + "<br>" +
-                                "+" + managerCoeffs[managerID][0].toFixed(2) + " Promo Points per second<br>" +
-                                "-$" + managerCoeffs[managerID][1].toFixed(2) + " per second";
+        managerTile.text.innerHTML = "manages " + bandInfo[bandID][0] + "<br>" +
+                                     "+" + managerCoeffs[managerID][0].toFixed(2) + " Promo Points per second<br>" +
+                                     "-$" + managerCoeffs[managerID][1].toFixed(2) + " per second";
     }
 }
 
