@@ -179,11 +179,15 @@ function CreateManager(name, bandID, experience) {
                 break;
             case "boostSkills":
                 button.innerHTML = "Boost Skills";
-                button.onclick = ManagerBoostSkills(managerID);
+                button.onclick = function() { 
+                    ManagerBoostSkills(managerID);
+                }
                 break;
             case "fire":
                 button.innerHTML = "Fire";
-                button.onclick = ManagerFire(managerID);
+                button.onclick = function() {
+                    ManagerFire(managerID);
+                }
                 break;
         }
 
@@ -205,7 +209,6 @@ function ManagerPromoCampaign(bandID, managerID) {
     var campaignPrice = (managerInfo[managerID][2] * 1000).toFixed(0);
     var campaignEfficiency = 0;
     var campaignSharpness = 0;
-    var campaignSpeed = 0;
 
     var minimumBound = managerInfo[managerID][2] * 10 * 0.2;
     var maximumBound = managerInfo[managerID][2] * 10 * 1.5;
@@ -415,6 +418,36 @@ function ManagerPromoCampaign(bandID, managerID) {
 
 function ManagerBoostSkills(managerID) {
     console.log("Boosting skills is in progress, sorry!");
+    var managerBoostSkills = {
+        window: new DraggableElement(),
+        header: document.createElement("div"),
+        text: document.createElement("p"),
+        courseButtons: [document.createElement("div"), document.createElement("div"), document.createElement("div")]
+    }
+
+    managerBoostSkills.window = new DraggableElement();
+    managerBoostSkills.window.className = "managerdialog";
+
+    managerBoostSkills.header = document.createElement("div");
+    managerBoostSkills.header.className = "managerheader";
+    managerBoostSkills.header.innerHTML = "Boost skills menu [" + managerInfo[managerID][0]; + "]";
+    
+    managerBoostSkills.text = document.createElement("p");
+    managerBoostSkills.text.innerHTML = "Choose one from available courses:";
+
+    for (var i = 0; i < 3; i++) {
+        managerBoostSkills.courseButtons[i].innerHTML = "Random course";
+        managerBoostSkills.courseButtons[i].id = "manager_tile_button";
+        managerBoostSkills.courseButtons[i].style.width = "fit-content";
+        managerBoostSkills.courseButtons[i].onmouseover = managerBoostSkills.courseButtons[i].onmouseout = tileButtonHandlerToBlack;
+    }
+
+    managerBoostSkills.window.append(managerBoostSkills.header);
+    managerBoostSkills.window.append(managerBoostSkills.text);
+
+    managerBoostSkills.courseButtons.forEach(element => managerBoostSkills.window.append(element));
+
+    document.getElementById("workflow").appendChild(managerBoostSkills.window);
 }
 
 function ManagerFire(managerID) {
