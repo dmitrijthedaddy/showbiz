@@ -214,25 +214,26 @@ function ManagerPromoCampaign(bandID, managerID) {
     var maximumBound = managerInfo[managerID][2] * 10 * 1.5;
     var campaignTime = 5 / managerInfo[managerID][2] * 20000;
 
-    var managerPromoCampaignWindow = new DraggableElement();
-    managerPromoCampaignWindow.className = "managerdialog";
+    var managerPromo = {
+        window: new DraggableElement(),
+        header: document.createElement("div"),
+        setupHeader: document.createElement("p"),
+        campaignSetup: new CampaignSetupTable(),
+        summary: document.createElement("p"),
+        log: document.createElement("p")
+    }
+    
+    managerPromo.window.className = "managerdialog";
 
-    var managerPromoHeader = document.createElement("div");
-    managerPromoHeader.className = "managerheader";
-    managerPromoHeader.innerHTML = "Promo Campaign for " + bandInfo[bandID][0] + ", by " + managerInfo[managerID][0];
+    managerPromo.header.className = "managerheader";
+    managerPromo.header.innerHTML = "Promo Campaign for " + bandInfo[bandID][0] + ", by " + managerInfo[managerID][0];
 
-    var managerPromoCampaignSetupHeader = document.createElement("p");
-    managerPromoCampaignSetupHeader.innerHTML = "Campaign setup:";
+    managerPromo.setupHeader.innerHTML = "Campaign setup:";
+    managerPromo.campaignSetup = new CampaignSetupTable();
+    UpdateSummary();
 
-    var managerPromoCampaignSetup = new CampaignSetupTable();
-    var managerPromoFinalSummary = document.createElement("p");
-    UpdateFinalSummary();
-
-    var managerPromoLog = document.createElement("p");
-    managerPromoLog.style.width = "100%";
-    managerPromoLog.style.border = "1px solid black";
-    managerPromoLog.style.textAlign = "center";
-    managerPromoLog.innerHTML = "Waiting for start...";
+    managerPromo.log.id = "campaignlog"
+    managerPromo.log.innerHTML = "Waiting for start...";
     
     var buttonSection = document.createElement("div");
     buttonSection.className = "tilebuttonsection";
@@ -246,24 +247,24 @@ function ManagerPromoCampaign(bandID, managerID) {
     }
     buttonSection.appendChild(startButton);
 
-    var managerPromoElements = [managerPromoHeader, managerPromoCampaignSetupHeader, managerPromoCampaignSetup, 
-                                managerPromoFinalSummary, managerPromoLog, buttonSection];
-    managerPromoElements.forEach(element => managerPromoCampaignWindow.appendChild(element));
+    var managerPromoElements = [managerPromo.header, managerPromo.setupHeader, managerPromo.campaignSetup, 
+                                managerPromo.summary, managerPromo.log, buttonSection];
+    managerPromoElements.forEach(element => managerPromo.window.appendChild(element));
 
-    document.getElementById("workflow").appendChild(managerPromoCampaignWindow);
+    document.getElementById("workflow").appendChild(managerPromo.window);
 
     function PromoProcess() {
         var timeElapsed = 0;
         var timer = setInterval(function() {
             //console.log("Doing promo for " + bandInfo[bandID][0] + ": " + timeElapsed + "%, campaign time = " + campaignTime);
-            managerPromoLog.innerHTML = "Doing promo for " + bandInfo[bandID][0] + ": " + (timeElapsed / campaignTime * 100).toFixed(0) + "%";
+            managerPromo.log.innerHTML = "Doing promo for " + bandInfo[bandID][0] + ": " + (timeElapsed / campaignTime * 100).toFixed(0) + "%";
             timeElapsed += 1000;
         }, 1000);
         setTimeout(function() {
             clearInterval(timer);
             var result = getRandomArbitrary(minimumBound, maximumBound);
             console.log("Result of the latest promo campaign: +" + result.toFixed(1) + " Promo Points");
-            managerPromoLog.innerHTML = "Done! This promo campaign brought " + bandInfo[bandID][0] + " <b>+" + result.toFixed(1) + " Promo Points</b>.";
+            managerPromo.log.innerHTML = "Done! This promo campaign brought " + bandInfo[bandID][0] + " <b>+" + result.toFixed(1) + " Promo Points</b>.";
             bandPoints[bandID][0] += result;
 
             var closeButton = new ButtonAcceptDecline("decline", "Close");
@@ -398,7 +399,7 @@ function ManagerPromoCampaign(bandID, managerID) {
                         break;
                 }
 
-                UpdateFinalSummary();
+                UpdateSummary();
                 startButton.innerHTML = "Start! ($" + campaignPrice.toFixed(0) + ")";
             }
 
@@ -408,8 +409,8 @@ function ManagerPromoCampaign(bandID, managerID) {
         
     }
 
-    function UpdateFinalSummary() {
-        managerPromoFinalSummary.innerHTML =  "Result guaranteed: " + 
+    function UpdateSummary() {
+        managerPromo.summary.innerHTML =  "Result guaranteed: " + 
         "between <b>" + minimumBound.toFixed(1) + "</b> and " + 
         "<b>" + maximumBound.toFixed(2) + "</b> Promo Points.<br>" +
         "Campaign speed: " + CampaignSpeed() + ".";
@@ -430,7 +431,7 @@ function ManagerBoostSkills(managerID) {
 
     managerBoostSkills.header = document.createElement("div");
     managerBoostSkills.header.className = "managerheader";
-    managerBoostSkills.header.innerHTML = "Boost skills menu [" + managerInfo[managerID][0]; + "]";
+    managerBoostSkills.header.innerHTML = "Boost skills menu [" + managerInfo[managerID][0] + "]";
     
     managerBoostSkills.text = document.createElement("p");
     managerBoostSkills.text.innerHTML = "Choose one from available courses:";
