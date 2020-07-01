@@ -22,51 +22,51 @@ function buttonHandler(event) {
 }
 
 function ManagerEmployment() {
-    var manName, experience;
-    var manEmpDialog = new DraggableElement();
-    manEmpDialog.className = "managerdialog";
+    var managerName, experience;
 
-    var manEmpHeader = document.createElement("div");
-    manEmpHeader.className = "dialogheader";
-    manEmpHeader.style.backgroundColor = "rgb(133, 102, 0)";
-    manEmpHeader.style.color = "white";
-    manEmpHeader.innerHTML = "EMO Client Center";
+    var managerEmployment = {
+        dialog: new DraggableElement(),
+        header: document.createElement("div"),
+        content: document.createElement("div"),
+        textChoose: document.createElement("p"),
+        chooseArtistButtonSection: document.createElement("div")
+    }
+    
+    managerEmployment.dialog.className = "managerdialog";
 
-    var manEmpContent = document.createElement("div");
-    var textChoose = document.createElement("p");
-    textChoose.innerHTML = "Choose one of your artists to let us match some candidates:<br>";
+    managerEmployment.header.className = "managerheader";
+    managerEmployment.header.innerHTML = "EMO Client Center";
 
-    var manEmpChooseArtistButtonSection = document.createElement("div");
-    manEmpChooseArtistButtonSection.style.padding = "5px";
-    manEmpChooseArtistButtonSection.style.display = "flex";
+    managerEmployment.textChoose.innerHTML = "Choose one of your artists to let us match some candidates:<br>";
+
+    managerEmployment.chooseArtistButtonSection.style.padding = "5px";
+    managerEmployment.chooseArtistButtonSection.style.display = "flex";
 
     ShowAllGroupButtons();
 
-    manEmpContent.appendChild(textChoose);
-    manEmpContent.appendChild(manEmpChooseArtistButtonSection);
+    managerEmployment.content.appendChild(managerEmployment.textChoose);
+    managerEmployment.content.appendChild(managerEmployment.chooseArtistButtonSection);
 
     function ManEmpChooseArtistButton(bandID) {
         var button = document.createElement("div");
-        button.style.border = "1px solid black";
-        button.style.cursor = "pointer";
-        button.style.margin = button.style.padding = "5px";
+        button.id = "manager_tile_button";
         button.onmouseover = button.onmouseout = buttonHandler;
         button.onclick = function() {
-            manEmpDialog.removeChild(manEmpContent);
-            manEmpDialog.removeChild(manEmpCloseButton);
+            managerEmployment.dialog.removeChild(managerEmployment.content);
+            managerEmployment.dialog.removeChild(manEmpCloseButton);
             
             MatchResult();
             var employButton = new ButtonAcceptDecline("accept", "Employ");
             employButton.onclick = function() {
-                CreateManager(manName, bandID, experience);
-                document.body.removeChild(manEmpDialog);
+                CreateManager(managerName, bandID, experience);
+                document.body.removeChild(managerEmployment.dialog);
             }
             var declineButton = new ButtonAcceptDecline("decline", "Decline offer");
             declineButton.onclick = function() {
-                document.body.removeChild(manEmpDialog);
+                document.body.removeChild(managerEmployment.dialog);
             }
-            manEmpDialog.appendChild(employButton);
-            manEmpDialog.appendChild(declineButton);
+            managerEmployment.dialog.appendChild(employButton);
+            managerEmployment.dialog.appendChild(declineButton);
         }
         
         FillInnerHTML();
@@ -78,17 +78,17 @@ function ManagerEmployment() {
 
         function MatchResult() {
             experience = getRandomArbitrary(1, 6).toFixed(2);
-            manName = managerRandomNames[getRandomInt(managerRandomNames.length)];
+            managerName = managerRandomNames[getRandomInt(managerRandomNames.length)];
             
             var resultsHeader = document.createElement("p");
             resultsHeader.innerHTML = "Here are some results of matching a perfect employee for you.";
 
             var resultsContent = document.createElement("p");
-            resultsContent.innerHTML = "Name: " + manName + 
+            resultsContent.innerHTML = "Name: " + managerName + 
                                        "<br>Experience: " + experience + 
                                        "<br>Wage: $" + (experience / 2).toFixed(1) + " per sec";
-            manEmpDialog.appendChild(resultsHeader);
-            manEmpDialog.appendChild(resultsContent);
+            managerEmployment.dialog.appendChild(resultsHeader);
+            managerEmployment.dialog.appendChild(resultsContent);
         }
 
         function FansText() {
@@ -105,16 +105,18 @@ function ManagerEmployment() {
     var manEmpCloseButton = new ButtonAcceptDecline("decline", "Close");
     manEmpCloseButton.style.width = "fit-content";
     manEmpCloseButton.onclick = function() {
-        document.body.removeChild(manEmpDialog);
+        document.body.removeChild(managerEmployment.dialog);
     }
 
-    var managerEmploymentDialogElements = [manEmpHeader, manEmpContent, manEmpCloseButton];
-    managerEmploymentDialogElements.forEach(element => manEmpDialog.appendChild(element));    
-    document.body.appendChild(manEmpDialog);
+    var managerEmploymentDialogElements = [managerEmployment.header,
+                                           managerEmployment.content,
+                                           manEmpCloseButton];
+    managerEmploymentDialogElements.forEach(element => managerEmployment.dialog.appendChild(element));    
+    document.body.appendChild(managerEmployment.dialog);
 
     function ShowAllGroupButtons() {
         for (var i = 0; i < totalBandCount; i++) {
-            manEmpChooseArtistButtonSection.appendChild(new ManEmpChooseArtistButton(i));
+            managerEmployment.chooseArtistButtonSection.appendChild(new ManEmpChooseArtistButton(i));
         }
     }   
 }
@@ -269,7 +271,7 @@ function ManagerPromoCampaign(bandID, managerID) {
 
             var closeButton = new ButtonAcceptDecline("decline", "Close");
             closeButton.onclick = function() {
-                document.getElementById("workflow").removeChild(managerPromoCampaignWindow);
+                document.getElementById("workflow").removeChild(managerPromo.window);
             }
             buttonSection.appendChild(closeButton);
 
